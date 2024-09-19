@@ -14,6 +14,8 @@
 
 <?php
 
+$url = "/practicas/ejercicios-practica/ejercicio1/ejercicio1.php";
+
 if (!isset($_REQUEST['name'])) {
 	echo '
 		<form action="ejercicio1.php" method="get">
@@ -28,10 +30,10 @@ if (!isset($_REQUEST['name'])) {
 
 	if (strlen($name) < 1) {
 		echo "<h1>No eres nadie</h1>";
-		echo '<a href="/">Volver</a>';
+		echo "<a href=\"{$url}\">Volver</a>";
 	} else {
 		echo "Tu nombre es {$name}";
-		echo '<a href="/">Volver al formulario</a>';
+		echo "<a href=\"{$url}\">Volver al formulario</a>";
 	}
 }
 
