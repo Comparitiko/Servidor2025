@@ -11,9 +11,7 @@ services:
       - php
 
   php:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: php:8.3-fpm-alpine
     container_name: php
     volumes:
       - ./src:/var/www/html
