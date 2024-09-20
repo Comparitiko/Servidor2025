@@ -40,9 +40,6 @@
 	<?php
 	echo "<h2>NGINX y PHP funcionan correctamente</h2>";
 	?>
-	<a href="/practicas">
-		<h1>Ir a las practicas</h1>
-	</a>
 </body>
 
 </html>

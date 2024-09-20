@@ -30,10 +30,10 @@ if (!isset($_REQUEST['name'])) {
 
 	if (strlen($name) < 1) {
 		echo "<h1>No eres nadie</h1>";
-		echo "<a href=\"{$url}\">Volver</a>";
+		echo "<a href=\"$url\">Volver</a>";
 	} else {
 		echo "Tu nombre es {$name}";
-		echo "<a href=\"{$url}\">Volver al formulario</a>";
+		echo "<a href=\"$url\">Volver al formulario</a>";
 	}
 }
 
