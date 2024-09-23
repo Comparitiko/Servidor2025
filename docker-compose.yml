@@ -14,7 +14,7 @@ services:
 
   # Configuración de php
   php-fpm:
-    container_name: php
+    container_name: php-fpm
     build: .
     restart: unless-stopped
     volumes:
