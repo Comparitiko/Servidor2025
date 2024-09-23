@@ -23,13 +23,13 @@ services:
       - mariadb
       - mongo
 
-  #MariaDB
+  # MariaDB
   mariadb:
     container_name: mariadb
     image: mariadb:lts-noble
     restart: unless-stopped
     environment:
-      MARIADB_ROOT_PASSWORD: ${MARIADB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
       MARIADB_DATABASE: ${MARIADB_DATABASE}
       MARIADB_USER: ${MARIADB_USER}
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
@@ -38,7 +38,7 @@ services:
     volumes:
       - ./mariadb:/var/lib/mysql
 
-  #MongoDB
+  # MongoDB
   mongo:
     container_name: mongo
     image: mongo:7.0
