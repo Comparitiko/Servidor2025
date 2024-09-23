@@ -1,9 +1,9 @@
 FROM php:8.3-fpm
 
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install git libssl-dev -y
-RUN pecl install mongodb && docker-php-ext-enable mongodb
-RUN echo "extension=mongodb.so" >> /usr/local/etc/php/php.ini
+RUN apt-get install git nano libssl-dev -y
+# RUN pecl install mongodb && docker-php-ext-enable mongodb
+# RUN echo "extension=mongodb.so" >> /usr/local/etc/php/php.ini
 
 RUN apt install unzip
 RUN cd ~
