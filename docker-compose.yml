@@ -21,7 +21,6 @@ services:
       - ./src:/var/www/html
     depends_on:
       - mariadb
-      - mongo
 
   # MariaDB
   mariadb:
@@ -37,16 +36,3 @@ services:
       - 3306:3306
     volumes:
       - ./mariadb:/var/lib/mysql
-
-  # MongoDB
-  mongo:
-    container_name: mongo
-    image: mongo:7.0
-    restart: unless-stopped
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
-    ports:
-      - 27017:27017
-    volumes:
-      - ./mongodb:/data/db
