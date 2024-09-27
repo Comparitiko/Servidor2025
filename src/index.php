@@ -5,43 +5,48 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>NGINX y PHP</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<style>
-	*,
-	*::before,
-	*::after {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-	}
+<body class="bg-slate-900 color-white flex flex-col gap-4">
+<?php
+  function pintarAnchor($filePath) {
+    if (str_contains($filePath, "index.php")) return;
 
-	body {
-		background-color: #3f3f3f;
-		color: white;
-	}
-</style>
+    $urlPath = explode("html", $filePath);
 
-<body>
-	<?=
-	"<h1>Generado con php</h1>";
-	?>
-	<?php
-    if (isset($_GET['name'])) {
-	$nombre = $_GET['name'];
-	echo "<h2>Hola $nombre</h2>";
+    $indexUrl = "http://localhost:8080{$urlPath[1]}";
+    echo "<div class='text-white text-2xl m-auto'>";
+    echo "<a class='hover:text-red-800' href='{$indexUrl}'>{$urlPath[1]}</a>";
+    echo "</div>";
+  }
+
+  function scanDirectory($path) {
+    $dir = scandir($path);
+
+    if (!$dir) return;
+
+    foreach($dir as $file) {
+      if ($file === "." || $file === "..") continue;
+
+      $filePath = "{$path}/{$file}";
+
+      if (str_contains($filePath, ".php")) {
+        pintarAnchor($filePath);
+        continue;
+      }
+
+      if (!is_dir($filePath)) {
+        continue;
+      };
+
+      scanDirectory($filePath);
     }
-    $precio = $_GET['price'];
+  }
 
-	echo !empty($precio) ? "<h2>El precio es: $precio</h2>" : "<h2>No hay precio</h2>";
-
-    $frutas = ['pera', 'manzana', 'limón'];
-
-    foreach ($frutas as $fruta) {
-	    echo "<h2>$fruta</h2>";
-    }
-
-	?>
+  $rootPath = realpath($_SERVER["DOCUMENT_ROOT"]);
+  scanDirectory($rootPath);
+?>
 </body>
 
 </html>
