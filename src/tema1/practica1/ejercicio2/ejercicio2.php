@@ -23,7 +23,7 @@ $libreria = [
     "ISBN" => "0000000000003",
     "titulo" => "Nenúfares negros",
     "descripcion" => "Desde lo alto de su molino una anciana vigila el día a día del pueblo, los autobuses de los turistas siluetas y vidas que van pasando. Dos mujeres en particular destacan: una tiene los ojos del color de los nenúfares y sueña con el amor y la evasión; la otra, de once años, solo vive obsesionada para y por la pintura.",
-    "categoria" => "romántica, thriller",
+    "categoria" => "romántica",
     "editorial" => "HarperCollins",
     "foto" => "{$imagesUrl}/0000000000003.jpg",
     "precio" => 5.65
@@ -136,7 +136,70 @@ $libreria = [
     "foto" => "{$imagesUrl}/0000000000015.jpg",
     "precio" => 9.45
   ],
-]
+];
+
+/**
+ * @param $string string String que se va a modificar la primera letra para convertirlo a mayuscula
+ * @return string String modificado
+ */
+function firstCharToUpper($string) {
+  $string[0] = strtoupper($string[0]);
+  return $string;
+}
+
+/**
+ * Funcion para pintar el html necesario para la card de un libro
+ * @param $libro array Array asociativo que represente un libro
+ * @return void
+ */
+function pintarLibro($libro) {
+  echo "<article class='group transition-all duration-500 size-80 border shadow-lg shadow-black flex flex-col gap-10 p-6 rounded hover:text-black hover:bg-slate-400'>";
+  echo "<img class='w-[100px] h-[150px] duration-500 group-hover:scale-125 shadow-xl shadow-black m-auto' src='{$libro["foto"]}' alt='Portada del libro {$libro["titulo"]}' />";
+  echo "<h2 class='text-lg text-white text-pretty text-center duration-500 group-hover:text-black'>{$libro["titulo"]}</h2>";
+  echo "<p class='text-red-500'>{$libro["precio"]}€</p>";
+  echo "</article>";
+}
+
+/**
+ * Filtar por categoría un libro de la librería
+ * @param $libreria array Libreria de la que se van a filtrar los libros
+ * @param $category string Categoria a filtrar
+ * @return array de libros que coinciden
+ */
+function filterByCategory($libreria, $category) {
+  return array_filter($libreria, fn($libro) => $libro["categoria"] === $category);
+}
+
+/**
+ * @param $libreria array Libreria de la que se van a filtrar los libros
+ * @param $category string Categoria a pintar
+ * @return void
+ */
+function pintarLibrosPorCategoria($libreria, $category) {
+  $librosCat = filterByCategory($libreria, $category);
+
+  echo "<section class='grid gap-8 w-full p-8'>";
+
+  $category = firstCharToUpper($category);
+
+  echo "<h1 class='text-4xl text-white'>{$category}</h1>";
+
+  echo "<div class='w-fit grid gap-8 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>";
+  while (count($librosCat) > 4) {
+    array_pop($librosCat);
+  }
+
+  foreach ($librosCat as $libroCat) {
+    pintarLibro($libroCat);
+  }
+
+  echo "</div>";
+
+  echo "</section>";
+}
+
+// Crear un array sin duplicados con las categorias que existen en la librería;
+$categories = array_unique(array_map(fn($libro) => $libro["categoria"], $libreria));
 
 ?>
 
@@ -145,36 +208,21 @@ $libreria = [
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ejercicio 2</title>
+  <title>Práctica 1 Ejercicio 2</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
   <div>
-    <header>
-      <h1>Librerìa Jaroso</h1>
+    <header class="flex justify-center items-center p-4 bg-slate-800">
+      <h1 class="text-3xl text-white">Librería Jaroso</h1>
     </header>
-    <?php
-      function pintarLibro($libro) {
-        echo "<article>";
-        echo "<img src='{$libro["foto"]}' alt='Portada del libro {$libro["titulo"]}' />";
-        echo "<h2>{$libro["titulo"]}</h2>";
-        echo "<h3>{$libro["editorial"]}</h3>";
-        echo "<p>{$libro["precio"]}</p>";
-        echo "</article>";
+    <main class="w-full bg-slate-900 grid gap-8">
+      <?php
+      foreach ($categories as $category) {
+        pintarLibrosPorCategoria($libreria, $category);
       }
-
-      function filterByCategory($libro, $category) {
-        return $libro["categoria"] === $category;
-      }
-
-      $novelasNegras = array_filter($libreria, function ($libro) {
-        return $libro["categoria"] === "novela negra";
-      });
-
-      foreach ($novelasNegras as $novelaNegra) {
-        pintarLibro($novelaNegra);
-      }
-    ?>
+      ?>
+    </main>
   </div>
 </body>
 </html>
