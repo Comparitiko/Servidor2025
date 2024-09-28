@@ -212,17 +212,20 @@ $categories = array_unique(array_map(fn($libro) => $libro["categoria"], $libreri
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-  <div>
+  <div class="bg-slate-900">
     <header class="flex justify-center items-center p-4 bg-slate-800">
       <h1 class="text-3xl text-white">Librería Jaroso</h1>
     </header>
-    <main class="w-full bg-slate-900 grid gap-8">
+    <main class="w-full grid gap-8">
       <?php
       foreach ($categories as $category) {
         pintarLibrosPorCategoria($libreria, $category);
       }
       ?>
     </main>
+    <footer>
+      <p class="text-lg text-white">Realizado por Gabriel Collado Yañez</p>
+    </footer>
   </div>
 </body>
 </html>
