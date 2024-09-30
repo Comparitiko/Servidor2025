@@ -13,11 +13,7 @@ enum STATS: string {
 $pokemons = [
   [
     "name" => "Mewtwo",
-    "image" => "{$imagesPath}/mewtwo",
-    "types" => [
-      "first_type" => "psiquico",
-      "second_type" => "",
-    ],
+    "image" => "{$imagesPath}/mewtwo.png",
     "stats" => [
       STATS::HP->value => 106,
       STATS::ATTACK->value => 110,
@@ -26,16 +22,10 @@ $pokemons = [
       STATS::SPECIAL_DEFENSE->value => 90,
       STATS::SPEED->value => 130,
     ],
-    "altura" => 20,
-    "peso" => 1220,
   ],
   [
     "name" => "Raichu",
-    "image" => "{$imagesPath}/raichu",
-    "types" => [
-      "first_type" => "eléctrico",
-      "second_type" => "",
-    ],
+    "image" => "{$imagesPath}/raichu.png",
     "stats" => [
       STATS::HP->value => 60,
       STATS::ATTACK->value => 90,
@@ -44,16 +34,10 @@ $pokemons = [
       STATS::SPECIAL_DEFENSE->value => 80,
       STATS::SPEED->value => 110,
     ],
-    "altura" => 8,
-    "peso" => 300,
   ],
   [
     "name" => "Zamazenta",
-    "image" => "{$imagesPath}/zamazenta",
-    "types" => [
-      "first_type" => "lucha",
-      "second_type" => "",
-    ],
+    "image" => "{$imagesPath}/zamazenta.png",
     "stats" => [
       STATS::HP->value => 92,
       STATS::ATTACK->value => 120,
@@ -62,16 +46,10 @@ $pokemons = [
       STATS::SPECIAL_DEFENSE->value => 115,
       STATS::SPEED->value => 138,
     ],
-    "altura" => 29,
-    "peso" => 2100,
   ],
   [
     "name" => "Zacian",
-    "image" => "{$imagesPath}/zacian",
-    "types" => [
-      "first_type" => "hada",
-      "second_type" => "",
-    ],
+    "image" => "{$imagesPath}/zacian.png",
     "stats" => [
       STATS::HP->value => 92,
       STATS::ATTACK->value => 120,
@@ -80,16 +58,10 @@ $pokemons = [
       STATS::SPECIAL_DEFENSE->value => 138,
       STATS::SPEED->value => 130,
     ],
-    "altura" => 28,
-    "peso" => 1100,
   ],
   [
     "name" => "Pikachu",
-    "image" => "{$imagesPath}/pikachu",
-    "types" => [
-      "first_type" => "eléctrico",
-      "second_type" => "",
-    ],
+    "image" => "{$imagesPath}/pikachu.png",
     "stats" => [
       STATS::HP->value => 35,
       STATS::ATTACK->value => 55,
@@ -98,16 +70,10 @@ $pokemons = [
       STATS::SPECIAL_DEFENSE->value => 50,
       STATS::SPEED->value => 90,
     ],
-    "altura" => 4,
-    "peso" => 60,
   ],
   [
     "name" => "Charizard",
-    "image" => "{$imagesPath}/charizard",
-    "types" => [
-      "first_type" => "fuego",
-      "second_type" => "volador",
-    ],
+    "image" => "{$imagesPath}/charizard.png",
     "stats" => [
       STATS::HP->value => 78,
       STATS::ATTACK->value => 84,
@@ -116,16 +82,10 @@ $pokemons = [
       STATS::SPECIAL_DEFENSE->value => 85,
       STATS::SPEED->value => 100,
     ],
-    "altura" => 17,
-    "peso" => 905,
   ],
   [
     "name" => "Bulbasaur",
-    "image" => "{$imagesPath}/bulbasaur",
-    "types" => [
-      "first_type" => "planta",
-      "second_type" => "",
-    ],
+    "image" => "{$imagesPath}/bulbasaur.png",
     "stats" => [
       STATS::HP->value => 45,
       STATS::ATTACK->value => 49,
@@ -134,16 +94,10 @@ $pokemons = [
       STATS::SPECIAL_DEFENSE->value => 65,
       STATS::SPEED->value => 45,
     ],
-    "altura" => 7,
-    "peso" => 69,
   ],
   [
     "name" => "Squirtle",
-    "image" => "{$imagesPath}/squirtle",
-    "types" => [
-      "first_type" => "agua",
-      "second_type" => "",
-    ],
+    "image" => "{$imagesPath}/squirtle.png",
     "stats" => [
       STATS::HP->value => 44,
       STATS::ATTACK->value => 48,
@@ -152,11 +106,13 @@ $pokemons = [
       STATS::SPECIAL_DEFENSE->value => 64,
       STATS::SPEED->value => 43,
     ],
-    "altura" => 5,
-    "peso" => 90,
   ]
 ];
 
+/**
+ * @param $pokemon array Pokemon to get the total points of his stats
+ * @return int total points of the stats
+ */
 function calculateTotalStatsPoints($pokemon) {
   $totalStatsPoints = 0;
   foreach ($pokemon["stats"] as $stat) {
@@ -181,12 +137,27 @@ function getClassForStat($stat) {
 }
 
 /**
+ * @param $stat STATS stat to get the name
+ * @return string name for the html
+ */
+function getStatName($stat) {
+  return match ($stat) {
+    STATS::HP => "HP",
+    STATS::ATTACK => "Ataque",
+    STATS::DEFENSE => "Defensa",
+    STATS::SPECIAL_ATTACK => "Ataque especial",
+    STATS::SPECIAL_DEFENSE => "Defensa especial",
+    STATS::SPEED => "Velocidad",
+  };
+}
+
+/**
  * @param $statValue int Value of the stat
  * @param $totalStatsPoints int total stats points
  * @return int percentage of stat
  */
 function calculatePercentage($statValue, $totalStatsPoints) {
-  return round($statValue * 100 / $totalStatsPoints);
+  return round($statValue * 250 / $totalStatsPoints);
 }
 
 /**
@@ -198,10 +169,12 @@ function calculatePercentage($statValue, $totalStatsPoints) {
 function createStat($stat, $statValue, $totalStatsPoints) {
   $percentage = calculatePercentage($statValue, $totalStatsPoints);
   $colorClass = getClassForStat($stat);
+  $statName = getStatName($stat);
+
   echo "<section>";
-  echo "<h1>{$stat->value}</h1>";
+  echo "<h1 class='fw-semibold'>{$statName}</h1>";
   echo "<div class='progress' role='progressbar' aria-label='Basic example' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100'>";
-  echo "<div class='progress-bar progress-bar-striped progress-bar-animated {$colorClass}' style=\"width: {$percentage}%\">{$percentage}</div>";
+  echo "<div class='progress-bar progress-bar-striped progress-bar-animated {$colorClass}' style=\"width: {$percentage}%\">{$statValue}</div>";
   echo "</div>";
   echo "</section>";
 }
@@ -212,14 +185,17 @@ function createStat($stat, $statValue, $totalStatsPoints) {
  */
 function createPokemonCard($pokemon) {
   $totalStatPoints = calculateTotalStatsPoints($pokemon);
+  $cases = STATS::cases();
 
-  echo "<section class='card'>";
-  echo "<article>";
-
-  echo "</article>";
-  echo "<article>";
-  foreach ($pokemon["stats"] as $stat)
-  echo "</article>";
+  echo "<section class='card p-4 shadow-lg rounded-end bg-light'>";
+  echo "<h1 class='text-center fw-bolder mt-5'>{$pokemon["name"]}</h1>";
+  echo "<article class='d-flex flex-wrap justify-content-around gap-1'>";
+  echo "<img class='mb-5' src='{$pokemon["image"]}' alt='Imagen de {$pokemon["name"]}' />";
+  echo "<section>";
+  foreach ($cases as $case) {
+    createStat($case, $pokemon["stats"][$case->value], $totalStatPoints);
+  }
+  echo "</section>";
   echo "</section>";
 }
 ?>
@@ -230,11 +206,15 @@ function createPokemonCard($pokemon) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Práctica 1 Ejercicio 3</title>
+  <link rel="icon" type="image/svg+xml" href="./images/pokeball.svg" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
-<div class="container">
-  <main>
+<div class="bg-dark p-4">
+  <header>
+    <h1 class="text-center text-white">Pokémon</h1>
+  </header>
+  <main class="d-grid gap-5 p-5">
     <?php
     foreach ($pokemons as $pokemon) {
       createPokemonCard($pokemon);
@@ -242,11 +222,6 @@ function createPokemonCard($pokemon) {
     ?>
   </main>
 </div>
-
-  <header>
-
-  </header>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
