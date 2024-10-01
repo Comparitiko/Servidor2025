@@ -153,7 +153,7 @@ function firstCharToUpper($string) {
  * @return void
  */
 function pintarLibro($libro) {
-  echo "<article class='group transition-all duration-500 size-80 border shadow-lg shadow-black flex flex-col gap-10 p-6 rounded hover:text-black hover:bg-slate-400'>";
+  echo "<article class='group transition-all duration-500 size-[22rem] border shadow-lg shadow-black flex flex-col gap-10 p-6 rounded hover:text-black hover:bg-slate-400'>";
   echo "<img class='w-[100px] h-[150px] duration-500 group-hover:scale-125 shadow-xl shadow-black m-auto' src='{$libro["foto"]}' alt='Portada del libro {$libro["titulo"]}' />";
   echo "<h2 class='text-lg text-white text-pretty text-center duration-500 group-hover:text-black'>{$libro["titulo"]}</h2>";
   echo "<p class='text-red-500'>{$libro["precio"]}€</p>";
