@@ -14,6 +14,9 @@ $pokemons = [
   [
     "name" => "Mewtwo",
     "image" => "{$imagesPath}/mewtwo.png",
+    "types" => [
+      "primary_type" => "psiquico"
+    ],
     "stats" => [
       STATS::HP->value => 106,
       STATS::ATTACK->value => 110,
@@ -26,6 +29,9 @@ $pokemons = [
   [
     "name" => "Raichu",
     "image" => "{$imagesPath}/raichu.png",
+    "types" => [
+      "primary_type" => "electrico"
+    ],
     "stats" => [
       STATS::HP->value => 60,
       STATS::ATTACK->value => 90,
@@ -38,6 +44,9 @@ $pokemons = [
   [
     "name" => "Zamazenta",
     "image" => "{$imagesPath}/zamazenta.png",
+    "types" => [
+      "primary_type" => "lucha"
+    ],
     "stats" => [
       STATS::HP->value => 92,
       STATS::ATTACK->value => 120,
@@ -50,6 +59,9 @@ $pokemons = [
   [
     "name" => "Zacian",
     "image" => "{$imagesPath}/zacian.png",
+    "types" => [
+      "primary_type" => "hada"
+    ],
     "stats" => [
       STATS::HP->value => 92,
       STATS::ATTACK->value => 120,
@@ -62,6 +74,9 @@ $pokemons = [
   [
     "name" => "Pikachu",
     "image" => "{$imagesPath}/pikachu.png",
+    "types" => [
+      "primary_type" => "electrico"
+    ],
     "stats" => [
       STATS::HP->value => 35,
       STATS::ATTACK->value => 55,
@@ -74,6 +89,10 @@ $pokemons = [
   [
     "name" => "Charizard",
     "image" => "{$imagesPath}/charizard.png",
+    "types" => [
+      "primary_type" => "fuego",
+      "second_type" => "volador"
+    ],
     "stats" => [
       STATS::HP->value => 78,
       STATS::ATTACK->value => 84,
@@ -86,6 +105,9 @@ $pokemons = [
   [
     "name" => "Bulbasaur",
     "image" => "{$imagesPath}/bulbasaur.png",
+    "types" => [
+      "primary_type" => "planta"
+    ],
     "stats" => [
       STATS::HP->value => 45,
       STATS::ATTACK->value => 49,
@@ -98,6 +120,9 @@ $pokemons = [
   [
     "name" => "Squirtle",
     "image" => "{$imagesPath}/squirtle.png",
+    "types" => [
+      "primary_type" => "agua"
+    ],
     "stats" => [
       STATS::HP->value => 44,
       STATS::ATTACK->value => 48,
@@ -190,7 +215,14 @@ function createPokemonCard($pokemon) {
   echo "<section class='card p-4 shadow-lg rounded-end bg-light'>";
   echo "<h1 class='text-center fw-bolder mt-5'>{$pokemon["name"]}</h1>";
   echo "<article class='d-flex flex-wrap justify-content-around gap-1'>";
+  echo "<div class='d-grid gap-2'>";
   echo "<img class='mb-5' src='{$pokemon["image"]}' alt='Imagen de {$pokemon["name"]}' />";
+  echo "<section class='d-flex justify-content-around'>";
+  foreach ($pokemon["types"] as $type) {
+    echo "<h3 class='{$type} badge rounded-pill p-2 fw-bolder type'>" . strtoupper($type) . "</h3>";
+  }
+  echo "</section>";
+  echo "</div>";
   echo "<section>";
   foreach ($cases as $case) {
     createStat($case, $pokemon["stats"][$case->value], $totalStatPoints);
@@ -208,6 +240,36 @@ function createPokemonCard($pokemon) {
   <title>Práctica 1 Ejercicio 3</title>
   <link rel="icon" type="image/svg+xml" href="./images/pokeball.svg" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <style>
+    .type {
+      color: white;
+      width: 100px;
+    }
+    .psiquico {
+        background-color: hotpink;
+    }
+    .electrico {
+        background-color: yellow;
+    }
+    .lucha {
+        background-color: saddlebrown;
+    }
+    .hada {
+        background-color: hotpink;
+    }
+    .fuego {
+        background-color: red;
+    }
+    .volador {
+        background-color: cornflowerblue;
+    }
+    .planta {
+        background-color: green;
+    }
+    .agua {
+        background-color: blue;
+    }
+  </style>
 </head>
 <body>
 <div class="bg-dark p-4">
