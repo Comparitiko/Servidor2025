@@ -62,7 +62,7 @@
 
 
 
-    $indexUrl = "/{$urlPath}";
+    $indexUrl = "./{$urlPath}";
     echo "<div class='text-white text-xl'>";
     echo "<a class='hover:text-red-800 group' href='{$indexUrl}'>" . firstLetterToUpperCase
       ($messageArr[5]) . " <span class='text-yellow-500 group-hover:text-red-600'>" .
