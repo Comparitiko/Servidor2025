@@ -1,5 +1,5 @@
 <?php
-$imagesPath = "http://localhost:8080/tema1/practica1/ejercicio3/images";
+$imagesPath = "./images";
 
 enum STATS: string {
   case HP = "hp";
