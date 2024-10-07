@@ -1,5 +1,5 @@
 <?php
-$imagesUrl = "../images";
+$imagesUrl = "./images";
 $libreria = [
   [
     "ISBN" => "0000000000001",
