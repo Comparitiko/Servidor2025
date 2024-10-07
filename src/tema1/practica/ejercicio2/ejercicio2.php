@@ -1,5 +1,5 @@
 <?php
-$imagesUrl = "http://localhost:8080/tema1/practica1/ejercicio2/images";
+$imagesUrl = "../images";
 $libreria = [
   [
     "ISBN" => "0000000000001",
