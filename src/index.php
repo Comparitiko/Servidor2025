@@ -75,7 +75,7 @@
 /**
  * Scan all the server dirs
  * @param $filePaths array Array to save the filepaths
- * @param $path string Path to search all the .php files except index.php
+ * @param $path string Path to search all the .php files except tme.php
  * @return void
  */
   function scanDirectory(&$filePaths, $path) {
@@ -88,8 +88,8 @@
 
       $filePath = "{$path}/{$file}";
 
-      // Los archivos index.php no se guardan
-      if (str_contains($filePath, "index.php")) continue;
+      // Los archivos tme.php no se guardan
+      if (str_contains($filePath, "tme.php")) continue;
 
       // Guardar los demás archivos .php
       if (str_contains($filePath, ".php")) {
