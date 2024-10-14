@@ -1,5 +1,9 @@
 <?php
-  session_start()
+  session_start();
+
+  if (!isset($_SESSION["usuario"])) {
+    header("Location: login.php");
+  }
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -101,7 +105,11 @@
       </div>
       <div class="sb-sidenav-footer">
         <div class="small">Logged in as:</div>
-        Start Bootstrap
+        <?php
+          if (isset($_SESSION["usuario"])) {
+            echo $_SESSION["usuario"]["email"];
+          }
+        ?>
       </div>
     </nav>
   </div>

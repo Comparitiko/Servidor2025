@@ -1,5 +1,5 @@
   <?php
-  $title = "Login";
+  $title = "Create a new project";
   include( "cabecera.php")
   ?>
         <main>
