@@ -5,7 +5,7 @@ services:
     image: nginx:1.27.1
     restart: on-failure
     ports:
-      - 8080:80
+      - "8080:80"
     volumes:
       - ./src:/var/www/
       - ./nginx/default.conf:/etc/nginx/nginx.conf:ro
@@ -34,6 +34,6 @@ services:
       MARIADB_USER: ${MARIADB_USER}
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
     ports:
-      - 3306:3306
+      - "3306:3306"
     volumes:
       - ./mariadb:/var/lib/mysql

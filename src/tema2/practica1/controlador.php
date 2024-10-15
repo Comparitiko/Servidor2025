@@ -11,5 +11,8 @@ if ($_POST) {
 
 if ($_GET) {
   // Cerrar sesión
-  if (isset($_GET["accion"]) && strcmp($_GET["accion"], "logout") == 0) session_destroy();
+  if (isset($_GET["accion"]) && strcmp($_GET["accion"], "logout") == 0) {
+    session_destroy();
+    header("Location: login.php");
+  };
 }
