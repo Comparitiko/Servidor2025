@@ -33,4 +33,10 @@ if ($_GET) {
 
     header("Location: proyectos.php?info=success-delete-project");
   }
+
+  // Eliminar todos los proyectos
+  if (isset($_GET["accion"]) && strcmp($_GET["accion"], "eliminar-todos") == 0) {
+    unset($_SESSION["proyectos"]);
+    header("Location: proyectos.php?info=success-delete-all-projects");
+  }
 }

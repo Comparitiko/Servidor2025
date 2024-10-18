@@ -9,7 +9,9 @@ include "cabecera.php"
         <ol class="breadcrumb mb-4">
           <li class="breadcrumb-item active">Dashboard</li>
         </ol>
-        <a class="btn btn-primary" href="nuevo-proyecto.php" style="margin: 20px 0" role="button">Crear Proyecto</a>
+        <a class="btn btn-primary" href="nuevo-proyecto.php" style="margin: 20px 0" role="button">Crear proyecto</a>
+        <a class="btn btn-danger" href="controlador.php?accion=eliminar-todos" style="margin: 20px 0"
+           role="button">Eliminar todos</a>
         <?php
           if (isset($_GET["error"]) && strcmp($_GET["error"], "deleting-project") == 0) {
             echo "<h4 class='text-danger'>Error al eliminar el proyecto seleccionado</h4>";
@@ -17,6 +19,9 @@ include "cabecera.php"
 
           if (isset($_GET["info"]) && strcmp($_GET["info"], "success-delete-project") == 0) {
             echo "<h4 class='text-success'>Proyecto eliminado correctamente</h4>";
+          }
+          if (isset($_GET["info"]) && strcmp($_GET["info"], "success-delete-all-projects") == 0) {
+            echo "<h4 class='text-success'>Proyectos eliminados correctamente</h4>";
           }
         ?>
         <div class="card mb-4">
