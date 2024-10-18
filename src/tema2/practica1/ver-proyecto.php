@@ -24,9 +24,21 @@
           <i class="fa-solid fa-diagram-project"></i>
           Proyecto
         </div>
-        <div class="card-body">
+        <div class="card-body p-4">
           <?php
-
+            echo "<h2 class='card-title text-center'>Proyecto {$proyecto["nombre"]}</h2>";
+            echo "
+              <div class='container'>
+                <p class='card-text'>Fecha inicio: <span class='text-danger'>{$proyecto["fecha_inicio"]}</span></p>
+                <p class='card-text'>Fecha fin prevista: <span class='text-danger'>{$proyecto["fecha_fin_prevista"]}</span></p>
+                <p class='card-text'>Dias transcurridos: <span class='text-danger'>{$proyecto["dias_transcurridos"]}</span></p>
+                <p>Porcentaje completado:</p>
+                <div class='progress' role='progressbar' aria-label='Default striped example' aria-valuenow='{$proyecto["porcentaje_completado"]}' aria-valuemin='0' aria-valuemax='100'>
+                  <div class='progress-bar progress-bar-animated progress-bar-striped' style='width: {$proyecto["porcentaje_completado"]}%'>{$proyecto["porcentaje_completado"]}%</div>
+                </div>
+                <p class='card-text'>Importancia: <span class='text-danger'>{$proyecto["importancia"]}</span></p>
+              </div>
+            ";
           ?>
         </div>
       </div>
@@ -35,5 +47,3 @@
       <?php
       include "pie.php"
       ?>
-  </body>
-</html>
