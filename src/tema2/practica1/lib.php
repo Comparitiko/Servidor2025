@@ -11,11 +11,14 @@
  * @param $importancia int importancia del proyecto numero del 1 al 5
  * @return void
  */
-  function createProject($id, $nombre, $fecha_inicio, $fecha_fin_prevista,
+  function createProject($nombre, $fecha_inicio, $fecha_fin_prevista,
                          $porcentaje_completado, $importancia) {
     if (!isset($_SESSION["proyectos"])) $_SESSION["proyectos"] = [];
 
     $dias_transcurridos = calcularDiasTranscurridos($fecha_inicio);
+
+    $id = $_SESSION["lastId"] + 1;
+    $_SESSION["lastId"] = $id;
 
     $_SESSION["proyectos"][] = ["id" => $id, "nombre" => $nombre, "fecha_inicio" =>
       $fecha_inicio, "fecha_fin_prevista" => $fecha_fin_prevista, "dias_transcurridos" =>
@@ -36,17 +39,16 @@
   }
 
   function createInitialProjects() {
-    createProject(1, "Innovación 1", "2023-01-15",
+    createProject("Innovación 1", "2023-01-15",
       "2024-01-30", 75, 4);
-    createProject(2, "Expansión Regional", "2023-03-10",
+    createProject("Expansión Regional", "2023-03-10",
       "2024-05-20", 40, 5);
-    createProject(3, "Desarrollo de Plataforma Online", "2023-06-25",
+    createProject("Desarrollo de Plataforma Online", "2023-06-25",
       "2024-07-15", 30, 3);
-    createProject(4, "Automatización de Procesos", "2022-11-05",
+    createProject("Automatización de Procesos", "2022-11-05",
       "2023-12-20", 90, 5);
-    createProject(5, "Mejora de Calidad Interna", "2023-02-14",
+    createProject("Mejora de Calidad Interna", "2023-02-14",
       "2024-03-30", 65, 4);
-    $_SESSION["lastId"] = 5;
   }
 
   // Loguearse en el sistema si cumple ciertos requisitos
@@ -55,6 +57,7 @@
       return header("Location: login.php?error=bad_request");
     }
     $_SESSION["usuario"] = ["email" => $email];
+    $_SESSION["lastId"] = 0;
     createInitialProjects();
     return header("Location: proyectos.php");
   }

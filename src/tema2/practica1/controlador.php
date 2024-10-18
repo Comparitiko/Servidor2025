@@ -7,6 +7,16 @@ if ($_POST) {
   if (isset($_POST["login"]) && isset($_POST["email"]) && isset($_POST["password"])) {
     return login($_POST["email"], $_POST["password"]);
   }
+
+  if (isset($_POST["nuevo-proyecto"])) {
+    $nombre = $_POST["nombre"];
+    $fecha_inicio = $_POST["fecha-inicio"];
+    $fecha_fin = $_POST["fecha-fin"];
+    $porcentaje = $_POST["porcentaje-completado"];
+    $importancia = $_POST["importancia"];
+    createProject($nombre, $fecha_inicio, $fecha_fin, $porcentaje, $importancia);
+    header("Location: proyectos.php");
+  }
 };
 
 if ($_GET) {
