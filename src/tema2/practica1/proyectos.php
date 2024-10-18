@@ -9,6 +9,15 @@ include "cabecera.php"
         <ol class="breadcrumb mb-4">
           <li class="breadcrumb-item active">Dashboard</li>
         </ol>
+        <?php
+          if (isset($_GET["error"]) && strcmp($_GET["error"], "deleting-project") == 0) {
+            echo "<h4 class='text-danger'>Error al eliminar el proyecto seleccionado</h4>";
+          }
+
+          if (isset($_GET["info"]) && strcmp($_GET["info"], "success-delete-project") == 0) {
+            echo "<h4 class='text-success'>Proyecto eliminado correctamente</h4>";
+          }
+        ?>
         <div class="card mb-4">
           <div class="card-header">
             <i class="fas fa-table me-1"></i>
@@ -24,6 +33,7 @@ include "cabecera.php"
                 <th>Dias transcurridos</th>
                 <th>Portcentaje completado</th>
                 <th>Importancia</th>
+                <th>Ver proyecto</th>
                 <th>Eliminar</th>
               </tr>
               </thead>
@@ -35,6 +45,7 @@ include "cabecera.php"
                 <th>Dias transcurridos</th>
                 <th>Portcentaje completado</th>
                 <th>Importancia</th>
+                <th>Ver proyecto</th>
                 <th>Eliminar</th>
               </tr>
               </tfoot>
@@ -46,10 +57,19 @@ include "cabecera.php"
                   echo "<td>{$proyecto["fecha_inicio"]}</td>";
                   echo "<td>{$proyecto["fecha_fin_prevista"]}</td>";
                   echo "<td>{$proyecto["dias_transcurridos"]}</td>";
-                  echo "<td>{$proyecto["porcentaje_completado"]}</td>";
+                  echo "<td>
+                          <div class='progress' role='progressbar' aria-label='Default striped example' aria-valuenow='{$proyecto["porcentaje_completado"]}' aria-valuemin='0' aria-valuemax='100'>
+                            <div class='progress-bar progress-bar-animated progress-bar-striped' style='width: {$proyecto["porcentaje_completado"]}%'>{$proyecto["porcentaje_completado"]}%</div>
+                          </div>
+                        </td>";
                   echo "<td>{$proyecto["importancia"]}</td>";
                   echo "<td>
-                          <a href='controlador.php?accion=delete_project&id={$proyecto["id"]}'>
+                          <a href='ver-proyecto.php?id={$proyecto["id"]}'>
+                            <i class='fa-solid fa-eye'></i>
+                          </a>
+                        </td>";
+                  echo "<td>
+                          <a href='controlador.php?accion=delete-project&id={$proyecto["id"]}'>
                             <i class='fa-solid fa-trash text-center text-danger'></i>
                           </a>
                         </td>";
