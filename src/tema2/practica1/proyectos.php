@@ -9,6 +9,7 @@ include "cabecera.php"
         <ol class="breadcrumb mb-4">
           <li class="breadcrumb-item active">Dashboard</li>
         </ol>
+        <a class="btn btn-primary" href="nuevo-proyecto.php" style="margin: 20px 0" role="button">Crear Proyecto</a>
         <?php
           if (isset($_GET["error"]) && strcmp($_GET["error"], "deleting-project") == 0) {
             echo "<h4 class='text-danger'>Error al eliminar el proyecto seleccionado</h4>";
@@ -21,7 +22,7 @@ include "cabecera.php"
         <div class="card mb-4">
           <div class="card-header">
             <i class="fas fa-table me-1"></i>
-            DataTable Example
+            Tabla de proyectos
           </div>
           <div class="card-body">
             <table id="datatablesSimple">

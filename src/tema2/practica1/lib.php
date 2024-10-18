@@ -46,6 +46,7 @@
       "2023-12-20", 90, 5);
     createProject(5, "Mejora de Calidad Interna", "2023-02-14",
       "2024-03-30", 65, 4);
+    $_SESSION["lastId"] = 5;
   }
 
   // Loguearse en el sistema si cumple ciertos requisitos
