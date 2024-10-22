@@ -72,6 +72,18 @@ function crearBarajaCartas() {
 }
 
 /**
+ * Reiniciar partida borrando los arrays de la sesion
+ * @param $baraja
+ * @param $cartasSacadas
+ * @param $ganador
+ * @return void
+ */
+function resetPartida(&$baraja, &$cartasSacadas) {
+  $baraja = crearBarajaCartas();
+  $cartasSacadas = [];
+}
+
+/**
  * Barajar la baraja que se pasa por referencia para modificarla
  * @param $baraja Baraja baraja que se barajara
  * @return void
@@ -113,4 +125,38 @@ function eliminarCartasSobrantes(&$baraja) {
   foreach ($posicionesABorrar as $posicion) {
     unset($baraja[$posicion]);
   }
+}
+
+/**
+ * Funcion para volver a index.php pasandole una informacion en la url
+ * @param $info
+ * @return void
+ */
+function volverAIndex($info = "") {
+  header("Location: index.php{$info}");
+}
+
+function devolverValorCarta($carta) {
+
+  return match ($carta["carta"]) {
+    "A" =>  1,
+    "2" => 2,
+    "3" => 3,
+    "4" => 4,
+    "5" => 5,
+    "6" => 6,
+    "7" => 7,
+    "J", "Q", "K" => 0.5,
+  };
+}
+
+function ganadorDeLaPartida(&$cartasSacadas) {
+  $sumaCartas = 0;
+  foreach ($cartasSacadas as $carta) {
+    $sumaCartas += devolverValorCarta($carta);
+  }
+
+  if ($sumaCartas == 7.5) volverAIndex("?jugador=ganador");
+  else if ($sumaCartas > 7.5) volverAIndex("?jugador=perdedor");
+  else volverAIndex();
 }
