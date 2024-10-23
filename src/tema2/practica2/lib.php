@@ -66,7 +66,7 @@ function crearBarajaCartas() {
   ];
   // Eliminar cartas sobrantes y barajar la baraja
   eliminarCartasSobrantes($baraja);
-  barajar($baraja);
+  shuffle($baraja);
 
   return $baraja;
 }
@@ -84,21 +84,11 @@ function resetPartida(&$baraja, &$cartasSacadas) {
 }
 
 /**
- * Barajar la baraja que se pasa por referencia para modificarla
- * @param $baraja Baraja baraja que se barajara
- * @return void
- */
-function barajar(&$baraja) {
-  shuffle($baraja);
-}
-
-/**
  * Pedir una carta de la baraja que se pasa por parametro como referencia para modificarla
  * @param $baraja Baraja baraja de la que se sacara una carta
  * @return mixed|null Carta que se ha sacado
  */
 function pedirCarta(&$baraja) {
-  barajar($baraja);
   return array_pop($baraja);
 }
 
