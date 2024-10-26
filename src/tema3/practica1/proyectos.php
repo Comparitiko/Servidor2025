@@ -130,7 +130,7 @@ include "cabecera.php"
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-              <button type="submit" form="nuevoProducto" name="nuevo-proyecto" class="btn
+              <button type="submit" form="nuevoProyecto" name="nuevo-proyecto" class="btn
               btn-primary">Crear</button>
             </div>
           </div>
