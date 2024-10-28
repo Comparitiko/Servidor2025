@@ -65,19 +65,20 @@ if ($_POST) {
     exit();
   }
 
-  if (isset($_POST["nuevo-proyecto"])) {
+  // Formulario de edición de un proyecto
+  if (isset($_POST["editar-proyecto"])) {
     // Recuperar datos del formulario
+    $id = $_POST["id"];
     $nombre = $_POST["nombre"];
-    $fecha_inicio = $_POST["fecha-inicio"];
-    $fecha_fin = $_POST["fecha-fin"];
+    $fechaInicio = $_POST["fecha-inicio"];
+    $fechaFin = $_POST["fecha-fin"];
     $porcentaje = $_POST["porcentaje-completado"];
     $importancia = $_POST["importancia"];
-    $id_usuario = $_SESSION["usuario"]["id"];
-    $isInserted = crearProyecto($nombre, $fecha_inicio, $fecha_fin, $porcentaje, $importancia, $id_usuario);
+    $isEdited = editarProyectoPorId($id, $nombre, $fechaInicio, $fechaFin, $porcentaje, $importancia);
 
     // Comprobar si se insertó correctamente
-    if (!$isInserted) {
-      header("Location: proyectos.php?error=create_project_failed");
+    if (!$isEdited) {
+      header("Location: proyectos.php?error=update_project_failed");
       exit();
     }
 

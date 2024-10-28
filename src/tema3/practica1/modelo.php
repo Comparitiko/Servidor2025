@@ -234,3 +234,44 @@ function buscarProyectoPorNombre($nombre) {
 
   return $stmt->fetchAll();
 }
+
+function getProyectoPorId($id) {
+  $dbh = conectarDB();
+
+  if (is_null($dbh)) return null;
+
+  $stmt = $dbh->prepare("SELECT * FROM proyectos WHERE id = :id");
+  $stmt->bindParam(":id", $id);
+
+  $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+  $stmt->execute();
+
+  $dbh = null;
+
+  return $stmt->fetch();
+}
+
+function editarProyectoPorId($id, $nombre, $fechaInicio, $fechaFin, $porcentaje, $importancia) {
+  $dbh = conectarDB();
+
+  if (is_null($dbh)) return null;
+
+  $stmt = $dbh->prepare("UPDATE proyectos 
+                        SET nombre = :nombre, fecha_inicio = :fecha_inicio, fecha_fin_prevista = :fecha_fin, 
+                        porcentaje_completado = :porcentaje, importancia = :importancia
+                        WHERE id = :id");
+
+  $stmt->bindParam(":nombre", $nombre);
+  $stmt->bindParam(":fecha_inicio", $fechaInicio);
+  $stmt->bindParam(":fecha_fin", $fechaFin);
+  $stmt->bindParam(":porcentaje", $porcentaje);
+  $stmt->bindParam(":importancia", $importancia);
+  $stmt->bindParam(":id", $id);
+
+  $stmt->execute();
+
+  $dbh = null;
+
+  return $stmt->rowCount() > 0;
+}

@@ -50,6 +50,9 @@ include "cabecera.php"
 
           echo "<h4 class='text-success'>{$mensaje}</h4>";
         }
+        if (isset($_GET["error"]) && strcmp($_GET["error"], "update_project_failed") == 0) {
+          echo "<h4 class='text-danger'>Error al actualizar el proyecto intentelo de nuevo mas tarde</h4>";
+        }
         if (isset($_GET["error"]) && strcmp($_GET["error"], "create_project_failed") == 0) {
           echo "<h4 class='text-danger'>Error al crear el proyecto intentelo de nuevo mas tarde</h4>";
         }
@@ -78,6 +81,7 @@ include "cabecera.php"
                 <th>Dias transcurridos</th>
                 <th>Portcentaje completado</th>
                 <th>Importancia</th>
+                <th>Editar</th>
                 <th>Eliminar</th>
               </tr>
               </thead>
@@ -89,6 +93,7 @@ include "cabecera.php"
                 <th>Dias transcurridos</th>
                 <th>Portcentaje completado</th>
                 <th>Importancia</th>
+                <th>Editar</th>
                 <th>Eliminar</th>
               </tr>
               </tfoot>
@@ -108,6 +113,11 @@ include "cabecera.php"
                           </div>
                         </td>";
                   echo "<td>{$proyecto["importancia"]}</td>";
+                  echo "<td>
+                          <a href='editar-proyecto.php?id={$proyecto["id"]}'>
+                            <i class='fa-solid fa-pen text-center text-primary'></i>
+                          </a>
+                        </td>";
                   echo "<td>
                           <a href='controlador.php?accion=delete_project&id={$proyecto["id"]}'>
                             <i class='fa-solid fa-trash text-center text-danger'></i>
