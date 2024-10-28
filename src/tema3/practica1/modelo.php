@@ -8,7 +8,7 @@ include "lib.php";
  */
 function conectarDB() {
   try {
-    $dsn = "mysql:host=mariadb:3306;dbname=practica1-db;charset=utf8mb4";
+    $dsn = "mysql:host=mariadb:3306;dbname=practica1-db-gabriel;charset=utf8mb4";
     $dbh = new PDO($dsn, "root", "mysql?");
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     return $dbh;
