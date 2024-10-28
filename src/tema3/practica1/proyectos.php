@@ -39,9 +39,12 @@ include "cabecera.php"
           </div>
         </form>
         <?php
+        // Comprobamos si hay un mensaje de se  eliminó correctamente el proyecto
         if (isset($_GET["info"]) && strcmp($_GET["info"], "success-delete-project") == 0) {
           echo "<h4 class='text-success'>Proyecto eliminado correctamente</h4>";
         }
+
+        // Comprobamos si hay un mensaje de se eliminaron correctamente todos los proyectos
         if (isset($_GET["info"]) && strcmp($_GET["info"], "success_delete_all_projects") == 0) {
           $proyectosEliminados = $_GET["num_proyectos"];
           $mensaje = $proyectosEliminados > 1 || $proyectosEliminados == 0
@@ -50,18 +53,28 @@ include "cabecera.php"
 
           echo "<h4 class='text-success'>{$mensaje}</h4>";
         }
+
+        // Comprobamos si hay un mensaje de error al actualizar el proyecto
         if (isset($_GET["error"]) && strcmp($_GET["error"], "update_project_failed") == 0) {
           echo "<h4 class='text-danger'>Error al actualizar el proyecto intentelo de nuevo mas tarde</h4>";
         }
+
+        // Comprobamos si hay un mensaje de error al crear el proyecto
         if (isset($_GET["error"]) && strcmp($_GET["error"], "create_project_failed") == 0) {
           echo "<h4 class='text-danger'>Error al crear el proyecto intentelo de nuevo mas tarde</h4>";
         }
+
+        // Comprobamos si hay un mensaje de error al eliminar el proyecto
         if (isset($_GET["error"]) && strcmp($_GET["error"], "deleting_project") == 0) {
           echo "<h4 class='text-danger'>Error al eliminar el proyecto seleccionado</h4>";
         }
+
+        // Comprobamos si hay un mensaje de error al eliminar todos los proyectos
         if (isset($_GET["error"]) && strcmp($_GET["error"], "deleting_all_projects") == 0) {
           echo "<h4 class='text-danger'>Error al eliminar los proyectos</h4>";
         }
+
+        // Comprobamos si hay un mensaje de error al obtener los proyectos
         if (is_null($proyectos)) {
           echo "<h4 class='text-danger'>Error al obtener los proyectos prueba mas tarde</h4>";
         }
