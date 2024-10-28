@@ -1,4 +1,11 @@
 <?php
+session_start();
+include_once "modelo.php";
+include_once "lib.php";
+
+if (isset($_GET["search"])) $proyectos = buscarProyectoPorNombre($_GET["search"]);
+else $proyectos = getProyectosPorUsuario($_SESSION["usuario"]["id"]);
+
 $title = "Proyectos";
 include "cabecera.php"
 ?>
@@ -14,21 +21,37 @@ include "cabecera.php"
           Crear Proyecto
         </button>
 
-        <a class="btn btn-danger" href="controlador.php?accion=eliminar-todos" style="margin: 20px 0"
+        <a class="btn btn-danger" href="controlador.php?accion=delete_all_projects" style="margin: 20px 0"
            role="button">Eliminar todos</a>
+        <form class="w-50" method="get" action="proyectos.php">
+          <div class="input-group mb-3">
+            <input type="search" class="form-control" name="search" placeholder="Buscar proyectos...">
+            <button type="submit" class="btn btn-secondary">Buscar</button>
+          </div>
+        </form>
         <?php
-        if (isset($_GET["error"]) && strcmp($_GET["error"], "deleting-project") == 0) {
-          echo "<h4 class='text-danger'>Error al eliminar el proyecto seleccionado</h4>";
-        }
-
         if (isset($_GET["info"]) && strcmp($_GET["info"], "success-delete-project") == 0) {
           echo "<h4 class='text-success'>Proyecto eliminado correctamente</h4>";
         }
-        if (isset($_GET["info"]) && strcmp($_GET["info"], "success-delete-all-projects") == 0) {
-          echo "<h4 class='text-success'>Proyectos eliminados correctamente</h4>";
+        if (isset($_GET["info"]) && strcmp($_GET["info"], "success_delete_all_projects") == 0) {
+          $proyectosEliminados = $_GET["num_proyectos"];
+          $mensaje = $proyectosEliminados > 1 || $proyectosEliminados == 0
+            ? "{$proyectosEliminados} proyectos eliminados"
+            : "{$proyectosEliminados} proyecto eliminado";
+
+          echo "<h4 class='text-success'>{$mensaje}</h4>";
         }
         if (isset($_GET["error"]) && strcmp($_GET["error"], "create_project_failed") == 0) {
           echo "<h4 class='text-danger'>Error al crear el proyecto intentelo de nuevo mas tarde</h4>";
+        }
+        if (isset($_GET["error"]) && strcmp($_GET["error"], "deleting_project") == 0) {
+          echo "<h4 class='text-danger'>Error al eliminar el proyecto seleccionado</h4>";
+        }
+        if (isset($_GET["error"]) && strcmp($_GET["error"], "deleting_all_projects") == 0) {
+          echo "<h4 class='text-danger'>Error al eliminar los proyectos</h4>";
+        }
+        if (is_null($proyectos)) {
+          echo "<h4 class='text-danger'>Error al obtener los proyectos prueba mas tarde</h4>";
         }
         ?>
         <div class="card mb-4">
@@ -46,7 +69,6 @@ include "cabecera.php"
                 <th>Dias transcurridos</th>
                 <th>Portcentaje completado</th>
                 <th>Importancia</th>
-                <th>Ver proyecto</th>
                 <th>Eliminar</th>
               </tr>
               </thead>
@@ -58,35 +80,32 @@ include "cabecera.php"
                 <th>Dias transcurridos</th>
                 <th>Portcentaje completado</th>
                 <th>Importancia</th>
-                <th>Ver proyecto</th>
                 <th>Eliminar</th>
               </tr>
               </tfoot>
               <tbody>
               <?php
-              foreach ($_SESSION["proyectos"] as $proyecto) {
-                echo "<tr>";
-                echo "<td>{$proyecto["nombre"]}</td>";
-                echo "<td>{$proyecto["fecha_inicio"]}</td>";
-                echo "<td>{$proyecto["fecha_fin_prevista"]}</td>";
-                echo "<td>{$proyecto["dias_transcurridos"]}</td>";
-                echo "<td>
+              if (is_array($proyectos)) {
+                foreach ($proyectos as $proyecto) {
+                  $diasTranscurridos = calcularDiasTranscurridos($proyecto["fecha_inicio"]);
+                  echo "<tr>";
+                  echo "<td>{$proyecto["nombre"]}</td>";
+                  echo "<td>{$proyecto["fecha_inicio"]}</td>";
+                  echo "<td>{$proyecto["fecha_fin_prevista"]}</td>";
+                  echo "<td>{$diasTranscurridos}</td>";
+                  echo "<td>
                           <div class='progress' role='progressbar' aria-label='Default striped example' aria-valuenow='{$proyecto["porcentaje_completado"]}' aria-valuemin='0' aria-valuemax='100'>
                             <div class='progress-bar progress-bar-animated progress-bar-striped' style='width: {$proyecto["porcentaje_completado"]}%'>{$proyecto["porcentaje_completado"]}%</div>
                           </div>
                         </td>";
-                echo "<td>{$proyecto["importancia"]}</td>";
-                echo "<td>
-                          <a href='ver-proyecto.php?id={$proyecto["id"]}'>
-                            <i class='fa-solid fa-eye'></i>
-                          </a>
-                        </td>";
-                echo "<td>
+                  echo "<td>{$proyecto["importancia"]}</td>";
+                  echo "<td>
                           <a href='controlador.php?accion=delete_project&id={$proyecto["id"]}'>
                             <i class='fa-solid fa-trash text-center text-danger'></i>
                           </a>
                         </td>";
-                echo "</tr>";
+                  echo "</tr>";
+                }
               }
               ?>
               </tbody>

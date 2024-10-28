@@ -27,16 +27,16 @@
             <form action="controlador.php" method="post">
               <?php
                 if (isset($_GET["error"]) && strcmp($_GET["error"], "bad_request") === 0) {
-                  echo "<h2 class='text-danger'>Error en el inicio de sesión</h2>";
+                  echo "<h2 class='text-danger'>Email o contraseña incorrectos</h2>";
                 }
-                if (isset($_GET["error"]) && strcmp($_GET["error"], "error_login_failed") === 0) {
+                if (isset($_GET["error"]) && strcmp($_GET["error"], "login_failed") === 0) {
                   echo "<h2 class='text-danger'>Error al registrar, intente de nuevo mas tarde</h2>";
                 }
               ?>
               <!-- Email input -->
               <div data-mdb-input-init class="form-outline mb-4">
                 <label class="form-label" for="form1Example13">Email</label>
-                <input type="text" id="form1Example13" class="form-control form-control-lg"
+                <input type="email" id="form1Example13" class="form-control form-control-lg"
                        name="email" required />
               </div>
 

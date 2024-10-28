@@ -54,9 +54,15 @@ function registroUsuario($username, $email, $password)
   return $id;
 }
 
+/**
+ * @param $email
+ * @param $password
+ *
+ * @return array|false
+ */
 function loginUsuario($email, $password) {
   $dbh = conectarDB();
-  if (!$dbh) return false;
+  if (!$dbh) return null;
 
   $stmt = $dbh->prepare("SELECT id, username, email, password 
                         FROM usuarios 
@@ -71,6 +77,8 @@ function loginUsuario($email, $password) {
 
   $usuario = $stmt->fetch();
   if (!$usuario) return false;
+
+  var_dump($usuario);
 
   if (!password_verify($password, $usuario["password"])) return false;
 
@@ -96,6 +104,8 @@ function existeUsuario($email, $username) {
   $stmt->bindParam(":email", $email);
   $stmt->bindParam(":username", $username);
 
+  $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
   $stmt->execute();
 
   $dbh = null;
@@ -113,11 +123,11 @@ function existeUsuario($email, $username) {
  * @param $fechaFin string fecha de fin del proyecto
  * @param $porcentajeCompletado int porcentaje completado del proyecto
  * @param $importancia int importancia del proyecto
- * @param $id_usuario int id del usuario que creo el proyecto
+ * @param $idUsuario int id del usuario que creo el proyecto
  *
  * @return bool|null
  */
-function crearProyecto($nombre, $fechaInicio, $fechaFin, $porcentajeCompletado, $importancia, $id_usuario) {
+function crearProyecto($nombre, $fechaInicio, $fechaFin, $porcentajeCompletado, $importancia, $idUsuario) {
   $dbh = conectarDB();
 
   if (is_null($dbh)) return null;
@@ -133,7 +143,7 @@ function crearProyecto($nombre, $fechaInicio, $fechaFin, $porcentajeCompletado, 
   $stmt->bindParam(":fecha_fin", $fechaFin);
   $stmt->bindParam(":porcentaje_completado", $porcentajeCompletado);
   $stmt->bindParam(":importancia", $importancia);
-  $stmt->bindParam(":id_usuario", $id_usuario);
+  $stmt->bindParam(":id_usuario", $idUsuario);
   $stmt->execute();
 
   $dbh = null;
@@ -141,3 +151,82 @@ function crearProyecto($nombre, $fechaInicio, $fechaFin, $porcentajeCompletado, 
   return $stmt->rowCount() > 0;
 }
 
+function getProyectosPorUsuario($idUsuario) {
+  $dbh = conectarDB();
+
+  if (is_null($dbh)) return null;
+
+  $stmt = $dbh->prepare("SELECT * FROM proyectos WHERE id_usuario = :id_usuario");
+  $stmt->bindParam(":id_usuario", $idUsuario);
+
+  $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+  $stmt->execute();
+
+  $dbh = null;
+
+  return $stmt->fetchAll();
+}
+
+/**
+ * Elimina todos los proyectos de un usuario y devuelve el numero de proyectos eliminados
+ * y null si no hay conexion con la base de datos
+ *
+ * @param $idUsuario int id del usuario
+ *
+ * @return int|null
+ */
+function eliminarTodosProyectosDeUnUsuario($idUsuario) {
+  $dbh = conectarDB();
+
+  if (is_null($dbh)) return null;
+
+  $stmt = $dbh->prepare("DELETE FROM proyectos WHERE id_usuario = :id_usuario");
+  $stmt->bindParam(":id_usuario", $idUsuario);
+
+  $stmt->execute();
+
+  $dbh = null;
+
+  return $stmt->rowCount();
+}
+
+function EliminarProyectoPorId($id) {
+  $dbh = conectarDB();
+
+  if (is_null($dbh)) return null;
+
+  $stmt = $dbh->prepare("DELETE FROM proyectos WHERE id = :id");
+  $stmt->bindParam(":id", $id);
+
+  $stmt->execute();
+
+  $dbh = null;
+
+  return $stmt->rowCount();
+}
+
+/**
+ * Busca un proyecto por su nombre o parte de su nombre y devuelve la informacion de los proyectos que contengan
+ * el texto buscado en su nombre o false si no se encuentra nada.
+ * @param $nombre string nombre o parte del nombre del proyecto
+ *
+ * @return array|false|null
+ */
+function buscarProyectoPorNombre($nombre) {
+  $nombre = strtolower($nombre);
+  $dbh = conectarDB();
+
+  if (is_null($dbh)) return null;
+
+  $stmt = $dbh->prepare("SELECT * FROM proyectos WHERE LOWER(nombre) LIKE %:nombre%");
+  $stmt->bindParam(":nombre", $nombre);
+
+  $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+  $stmt->execute();
+
+  $dbh = null;
+
+  return $stmt->fetchAll();
+}

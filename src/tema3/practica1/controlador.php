@@ -15,7 +15,12 @@ if ($_POST) {
       exit();
     }
 
-    $_SESSION["usuario"] = ["id" => $login["id"], "username" => $login["username"]];
+    if (!$login) {
+      header("Location: login.php?error=bad_request");
+      exit();
+    }
+
+    $_SESSION["usuario"] = $login;
 
     header("Location: proyectos.php");
     exit();
@@ -61,6 +66,7 @@ if ($_POST) {
   }
 
   if (isset($_POST["nuevo-proyecto"])) {
+    // Recuperar datos del formulario
     $nombre = $_POST["nombre"];
     $fecha_inicio = $_POST["fecha-inicio"];
     $fecha_fin = $_POST["fecha-fin"];
@@ -69,7 +75,8 @@ if ($_POST) {
     $id_usuario = $_SESSION["usuario"]["id"];
     $isInserted = crearProyecto($nombre, $fecha_inicio, $fecha_fin, $porcentaje, $importancia, $id_usuario);
 
-    if (is_null($isInserted || !$isInserted)) {
+    // Comprobar si se insertó correctamente
+    if (!$isInserted) {
       header("Location: proyectos.php?error=create_project_failed");
       exit();
     }
@@ -90,20 +97,35 @@ if ($_GET) {
   // Eliminar un proyecto
   if (isset($_GET["accion"]) && strcmp($_GET["accion"], "delete_project") == 0) {
     if (!isset($_GET["id"])) {
-      header("Location: proyectos.php?error=deleting-project");
+      header("Location: proyectos.php?error=deleting_project");
       exit();
     }
-    $id = $_GET["id"];
-    removeProjectById($id);
+    // Eliminar el proyecto por su id
+    $proyectoEliminado = EliminarProyectoPorId($_GET["id"]);
 
-    header("Location: proyectos.php?info=success-delete_project");
+    // Comprobar si se eliminó correctamente
+    if (!$proyectoEliminado) {
+      header("Location: proyectos.php?error=deleting_project");
+      exit();
+    }
+
+    header("Location: proyectos.php?info=success-delete-project");;
     exit();
   }
 
   // Eliminar todos los proyectos
-  if (isset($_GET["accion"]) && strcmp($_GET["accion"], "eliminar_todos") == 0) {
-    unset($_SESSION["proyectos"]);
-    header("Location: proyectos.php?info=success-delete-all-projects");
+  if (isset($_GET["accion"]) && strcmp($_GET["accion"], "delete_all_projects") == 0) {
+    // Eliminar todos los proyectos de un usuario
+    $proyectosEliminados = eliminarTodosProyectosDeUnUsuario($_SESSION["usuario"]["id"]);
+
+    // Comprobar si se eliminaron correctamente
+    if (is_null($proyectosEliminados)) {
+      header("Location: proyectos.php?error=deleting_all_projects");
+      exit();
+    }
+
+    // Redireccionar al proyectos y mostrar un mensaje de exito con el numero de proyectos eliminados
+    header("Location: proyectos.php?info=success_delete_all_projects&num_proyectos={$proyectosEliminados}");
     exit();
   }
 }

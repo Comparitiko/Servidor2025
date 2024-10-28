@@ -56,7 +56,7 @@
           </a>
           <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
             <nav class="sb-sidenav-menu-nested nav">
-              <a class="nav-link" href="nuevo-proyecto.php">Nuevo Proyecto</a>
+              <a class="nav-link" href="editar-proyecto.php">Editar proyecto</a>
             </nav>
           </div>
       </div>
