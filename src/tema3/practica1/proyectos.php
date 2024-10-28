@@ -31,6 +31,7 @@ include "cabecera.php"
               name="search"
               placeholder="Buscar proyectos..."
               <?php
+              // Si se envió una búsqueda, se muestra el valor de la búsqueda para poder seguir filtrando
               if (isset($_GET["search"])) echo "value='{$_GET["search"]}'";
               ?>
             >
