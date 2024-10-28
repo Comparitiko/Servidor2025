@@ -27,13 +27,13 @@ if (isset($_SESSION["usuario"])) {
           <form action="controlador.php" method="post">
 
             <?php
-              if (isset($_GET["error"]) && strcmp($_GET["error"], "passwords-not-match") === 0) {
+              if (isset($_GET["error"]) && strcmp($_GET["error"], "passwords_not_match") === 0) {
                 echo "<h2 class='text-danger'>Las contraseñas no coinciden</h2>";
               }
-              if (isset($_GET["error"]) && strcmp($_GET["error"], "user-already-exists") === 0) {
+              if (isset($_GET["error"]) && strcmp($_GET["error"], "user_already_exists") === 0) {
                 echo "<h2 class='text-danger'>El usuario ya existe</h2>";
               }
-              if (isset($_GET["error"]) && strcmp($_GET["error"], "register-failed") === 0) {
+              if (isset($_GET["error"]) && strcmp($_GET["error"], "register_failed") === 0) {
                 echo "<h2 class='text-danger'>Error al registrar, intente de nuevo mas tarde</h2>";
               }
             ?>

@@ -219,8 +219,10 @@ function buscarProyectoPorNombre($nombre) {
 
   if (is_null($dbh)) return null;
 
-  $stmt = $dbh->prepare("SELECT * FROM proyectos WHERE LOWER(nombre) LIKE %:nombre%");
-  $stmt->bindParam(":nombre", $nombre);
+  $nombreParam = "%$nombre%";
+
+  $stmt = $dbh->prepare("SELECT * FROM proyectos WHERE LOWER(nombre) LIKE :nombre");
+  $stmt->bindParam(":nombre", $nombreParam);
 
   $stmt->setFetchMode(PDO::FETCH_ASSOC);
 

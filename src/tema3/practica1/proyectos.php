@@ -25,7 +25,15 @@ include "cabecera.php"
            role="button">Eliminar todos</a>
         <form class="w-50" method="get" action="proyectos.php">
           <div class="input-group mb-3">
-            <input type="search" class="form-control" name="search" placeholder="Buscar proyectos...">
+            <input
+              type="search"
+              class="form-control"
+              name="search"
+              placeholder="Buscar proyectos..."
+              <?php
+              if (isset($_GET["search"])) echo "value='{$_GET["search"]}'";
+              ?>
+            >
             <button type="submit" class="btn btn-secondary">Buscar</button>
           </div>
         </form>
