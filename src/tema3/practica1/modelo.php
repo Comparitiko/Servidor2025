@@ -207,9 +207,10 @@ function EliminarProyectoPorId($id) {
 }
 
 /**
- * Busca un proyecto por su nombre o parte de su nombre y devuelve la informacion de los proyectos que contengan
- * el texto buscado en su nombre o false si no se encuentra nada.
+ * Busca un proyecto por su nombre o parte de su nombre y por el id del usuario logueado y devuelve la informacion de
+ * los proyectos que contengan el texto buscado en su nombre o false si no se encuentra nada.
  * @param $nombre string nombre o parte del nombre del proyecto
+ * @param $idUsuario int id del usuario que esta logueado
  *
  * @return array|false|null
  */
@@ -223,8 +224,9 @@ function buscarProyectoPorNombreEIdUsuario($nombre, $idUsuario) {
   // Se agrega un % al principio y al final para que la busqueda sea que lleve el nombre dentro de la cadena
   $nombreParam = "%$nombre%";
 
-  $stmt = $dbh->prepare("SELECT * FROM proyectos WHERE LOWER(nombre) LIKE :nombre" AND);
+  $stmt = $dbh->prepare("SELECT * FROM proyectos WHERE LOWER(nombre) LIKE :nombre AND id_usuario = :id_usuario");
   $stmt->bindParam(":nombre", $nombreParam);
+  $stmt->bindParam(":id_usuario", $idUsuario);
 
   $stmt->setFetchMode(PDO::FETCH_ASSOC);
 
