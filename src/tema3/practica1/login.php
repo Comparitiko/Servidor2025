@@ -30,7 +30,7 @@
                   echo "<h2 class='text-danger'>Email o contraseña incorrectos</h2>";
                 }
                 if (isset($_GET["error"]) && strcmp($_GET["error"], "login_failed") === 0) {
-                  echo "<h2 class='text-danger'>Error al registrar, intente de nuevo mas tarde</h2>";
+                  echo "<h2 class='text-danger'>Error al iniciar sesion, intente de nuevo mas tarde</h2>";
                 }
               ?>
               <!-- Email input -->

@@ -11,7 +11,7 @@ if ($_POST) {
     $login = loginUsuario($email, $password);
 
     if (is_null($login)) {
-      header("Location: login.php?error=error=login_failed");
+      header("Location: login.php?error=login_failed");
       exit();
     }
 
