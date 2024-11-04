@@ -3,7 +3,7 @@ session_start();
 include_once "modelo.php";
 include_once "lib.php";
 
-if (isset($_GET["search"])) $proyectos = buscarProyectoPorNombre($_GET["search"]);
+if (isset($_GET["search"])) $proyectos = buscarProyectoPorNombreEIdUsuario($_GET["search"], $_SESSION["usuario"]["id"]);
 else $proyectos = getProyectosPorUsuario($_SESSION["usuario"]["id"]);
 
 $title = "Proyectos";

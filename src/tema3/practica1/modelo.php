@@ -213,7 +213,7 @@ function EliminarProyectoPorId($id) {
  *
  * @return array|false|null
  */
-function buscarProyectoPorNombre($nombre) {
+function buscarProyectoPorNombreEIdUsuario($nombre, $idUsuario) {
   // Se convierte el nombre a minúsculas para que la busqueda sea mas exacta
   $nombre = strtolower($nombre);
   $dbh = conectarDB();
@@ -223,7 +223,7 @@ function buscarProyectoPorNombre($nombre) {
   // Se agrega un % al principio y al final para que la busqueda sea que lleve el nombre dentro de la cadena
   $nombreParam = "%$nombre%";
 
-  $stmt = $dbh->prepare("SELECT * FROM proyectos WHERE LOWER(nombre) LIKE :nombre");
+  $stmt = $dbh->prepare("SELECT * FROM proyectos WHERE LOWER(nombre) LIKE :nombre" AND);
   $stmt->bindParam(":nombre", $nombreParam);
 
   $stmt->setFetchMode(PDO::FETCH_ASSOC);
