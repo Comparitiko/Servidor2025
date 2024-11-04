@@ -1,7 +1,7 @@
 <?php
+session_start();
 include_once "modelo.php";
-
-$proyecto = getProyectoPorId($_GET["id"]);
+$proyecto = getProyectoPorIdYPorUsuario($_GET["id"], $_SESSION["usuario"]["id"]);
 
 include "cabecera.php";
 ?>

@@ -65,6 +65,29 @@ if ($_POST) {
     exit();
   }
 
+  // Formulario de añadir proyecto
+  if (isset($_POST["nuevo-proyecto"])) {
+    // Recuperar datos del formulario
+    $nombre = $_POST["nombre"];
+    $fechaInicio = $_POST["fecha-inicio"];
+    $fechaFin = $_POST["fecha-fin"];
+    $porcentajeCompletado = $_POST["porcentaje-completado"];
+    $importancia = $_POST["importancia"];
+    $idUsuario = $_SESSION["usuario"]["id"];
+    $isCreated = crearProyecto($nombre, $fechaInicio, $fechaFin, $porcentajeCompletado, $importancia, $idUsuario);
+    var_dump($isCreated);
+    if (is_null($isCreated)) {
+      header("Location: proyectos.php?error=create_project_failed");
+      exit();
+    } else if (!$isCreated) {
+      header("Location: proyectos.php?error=create_project_failed");
+      exit();
+    } else {
+      header("Location: proyectos.php");
+      exit();
+    }
+  }
+
   // Formulario de edición de un proyecto
   if (isset($_POST["editar-proyecto"])) {
     // Recuperar datos del formulario

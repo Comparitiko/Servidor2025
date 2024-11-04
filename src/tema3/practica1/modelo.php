@@ -235,13 +235,15 @@ function buscarProyectoPorNombre($nombre) {
   return $stmt->fetchAll();
 }
 
-function getProyectoPorId($id) {
+function getProyectoPorIdYPorUsuario($id, $idUsuario) {
   $dbh = conectarDB();
 
   if (is_null($dbh)) return null;
+  var_dump($idUsuario);
 
-  $stmt = $dbh->prepare("SELECT * FROM proyectos WHERE id = :id");
+  $stmt = $dbh->prepare("SELECT * FROM proyectos WHERE id = :id AND id_usuario = :id_usuario");
   $stmt->bindParam(":id", $id);
+  $stmt->bindParam(":id_usuario", $idUsuario);
 
   $stmt->setFetchMode(PDO::FETCH_ASSOC);
 
