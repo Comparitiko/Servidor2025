@@ -4,6 +4,7 @@
 
   use Coworking\controllers\UsersController;
   use Coworking\models\User;
+  use Coworking\views\LoginView;
 
   session_start();
 
@@ -17,11 +18,8 @@
   });
 
   // Router | Controller
-  if (!isset($_SESSION["user"]) && strcmp($_GET["action"], "show_register") != 0) {
-    // User is not logged in and not request the register form view
-    UsersController::showLoginForm();
-  } else if ($_GET) {
-    // Handle GET requests
+  if ($_GET) {
+    // Handle all GET requests
 
     // Handle action show_register
     if ($_GET["action"] && strcmp($_GET["action"], "show_register") == 0) {
@@ -32,16 +30,23 @@
     // Handle action show_login
     if ($_GET["action"] && strcmp($_GET["action"], "show_login") == 0) {
       $error = $_GET["error"];
-      UsersController::showLoginForm();
+      UsersController::showLoginForm($error);
+    }
+
+    // Handle GET request that need user logged in
+    if ($_SESSION["user"]) {
+      if ($_GET["action"] && strcmp($_GET["action"], "show_available_rooms") == 0) {
+        var_dump($_SESSION["user"]);
+      }
     }
 
   } else if ($_POST) {
-    // Handle POST requests
+    // Handle all POST requests
 
     // Handle submit of the register form
     if (isset($_POST["register"])) {
       $username = $_POST["username"];
-      $email = $_POST["email"];
+      $email = strtolower($_POST["email"]);
       $password = $_POST["password"];
       $confirmPassword = $_POST["confirm_password"];
       $phone = $_POST["phone"];
@@ -49,7 +54,15 @@
       UsersController::register($user, $confirmPassword);
     }
 
-  } else {
-    // User is logged
+    // Handle POST request that need user logged in
+    if ($_SESSION["user"]) {
 
+    }
+
+  } else if ($_SESSION["user"]) {
+    // User logged in
+
+  } else {
+    // User not logged in
+    UsersController::showLoginForm();
   }

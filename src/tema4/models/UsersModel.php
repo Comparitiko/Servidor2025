@@ -10,9 +10,9 @@ class UsersModel {
    * Create user in database with his data, return null if there is an error with database, if is inserted correctly
    * return true if not return false
    * @param $user User
-   * @return bool|null
+   * @return int|null
    */
-  public static function register(User $user): bool|null
+  public static function register(User $user): int|null
   {
     $connDB = new DBConnection();
 
@@ -33,9 +33,11 @@ class UsersModel {
 
     $stmt->execute();
 
+    $id = $conn->lastInsertId();
+
     $connDB->closeConnection();
 
-    return $stmt->rowCount() > 0;
+    return $id;
   }
 
   /**

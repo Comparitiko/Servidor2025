@@ -8,15 +8,18 @@ use Coworking\views\LoginView;
 use Coworking\views\RegisterView;
 
 class UsersController {
-  public static function showLoginForm($error = "") {
+  public static function showLoginForm($error = ""): void
+  {
     LoginView::render($error);
   }
 
-  public static function showRegisterForm($error = "") {
+  public static function showRegisterForm($error = ""): void
+  {
     RegisterView::render($error);
   }
 
-  public static function register(User $user, $confirmPassword) {
+  public static function register(User $user, $confirmPassword): void
+  {
     // Check if password and confirm password are not equals
     if (strcmp($user->getPassword(), $confirmPassword) != 0) {
       header("Location: index.php?action=show_register&error=passwords");
@@ -51,10 +54,12 @@ class UsersController {
     $id = UsersModel::register($user);
 
     // Check if database fail
-    if (is_null($registerCompleted)) {
+    if (!$id) {
       header("Location: index.php?action=show_register&error=server_error");
       exit();
     }
+
+    $user->setId($id);
 
     $_SESSION["user"] = ["username" => $user->getUsername(), "email" => $user->getEmail(), "id" => $user->getId()];
 
