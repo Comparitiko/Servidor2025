@@ -49,4 +49,7 @@
       UsersController::register($user, $confirmPassword);
     }
 
+  } else {
+    // User is logged
+
   }
