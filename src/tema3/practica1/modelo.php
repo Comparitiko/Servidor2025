@@ -30,7 +30,6 @@ function conectarDB() {
 function registroUsuario($username, $email, $password)
 {
   $dbh = conectarDB();
-  var_dump($dbh);
   if (!$dbh) return false;
 
   $hashedPassword = password_hash($password, PASSWORD_DEFAULT);

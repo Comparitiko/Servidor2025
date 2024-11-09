@@ -75,7 +75,6 @@ if ($_POST) {
     $importancia = $_POST["importancia"];
     $idUsuario = $_SESSION["usuario"]["id"];
     $isCreated = crearProyecto($nombre, $fechaInicio, $fechaFin, $porcentajeCompletado, $importancia, $idUsuario);
-    var_dump($isCreated);
     if (is_null($isCreated)) {
       header("Location: proyectos.php?error=create_project_failed");
       exit();
