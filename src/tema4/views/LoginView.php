@@ -3,6 +3,15 @@
 namespace Coworking\views;
 
 class LoginView {
+
+  private static function getErrorMessage($error): string
+  {
+    return match ($error) {
+      "login_fail" => "El email o la contraseña son incorrectos",
+      "server_error" => "Error en el inicio de sesión, intente de nuevo mas tarde",
+    };
+  }
+
   public static function render($error) {
     ?>
     <!doctype html>
@@ -38,6 +47,13 @@ class LoginView {
               <div class="card card-md">
                 <div class="card-body">
                   <h2 class="h2 text-center mb-4">Inicia sesión con tu cuenta</h2>
+                  <?php
+                  if (strlen($error) > 0) {
+                    ?>
+                    <p class="text-danger mb-2"><?=LoginView::getErrorMessage($error)?></p>
+                    <?php
+                  }
+                  ?>
                   <form action="index.php" method="POST">
                     <div class="mb-3">
                       <label for="email" class="form-label">Email</label>

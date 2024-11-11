@@ -73,4 +73,33 @@ class UsersModel {
 
     return $stmt->rowCount() > 0;
   }
+
+  /**
+   * Get the user information by email, if return null, database failed, if return false, user does not exist
+   * @param $email
+   * @return User|false|null
+   */
+  public static function getUserByEmail($email): false|User|null {
+    $connDB = new DBConnection();
+
+    $conn = $connDB->getConnection();
+
+    // Check if there is an error in the connection
+    if (is_null($conn)) return null;
+
+    $stmt = $conn->prepare("
+        SELECT * 
+        FROM users 
+        WHERE email = :email
+    ");
+
+    $stmt->bindValue(":email", $email);
+
+    $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Coworking\models\User');
+    $stmt->execute();
+
+    $connDB->closeConnection();
+
+    return $stmt->fetch();
+  }
 }

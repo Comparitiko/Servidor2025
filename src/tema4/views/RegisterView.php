@@ -75,7 +75,7 @@ class RegisterView {
                     </div>
                     <div class="mb-2">
                       <label for="phone" class="form-label">Numero de teléfono</label>
-                      <input id="phone" name="phone" type="tel" class="form-control" required>
+                      <input id="phone" name="phone" type="tel" class="form-control" required pattern="^[0-9]{9}$">
                     </div>
                     <div class="form-footer">
                       <button type="submit" name="register" class="btn btn-primary w-100">Registrarse</button>
