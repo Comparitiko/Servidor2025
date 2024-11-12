@@ -50,6 +50,17 @@ if ($_GET) {
     ReservationsController::showFutureAndConfirmedReservationsByRoomId($roomId);
   }
 
+  // Handle show_my_reservations of a workroom
+  if ($_GET["action"] && strcmp($_GET["action"], "show_my_reservations") == 0) {
+    ReservationsController::showFutureAndConfirmedReservationsByUserId();
+  }
+
+  // Handle cancel_reservation of the logged user
+  if ($_GET["action"] && strcmp($_GET["action"], "show_my_reservations") == 0) {
+    $reservationId = $_GET["reservation_id"];
+    ReservationsController::cancelReservationByUserIdAndReservationId($reservationId);
+  }
+
 } else if ($_POST) {
   // Handle all POST requests
 

@@ -11,6 +11,7 @@ class WorkRoomsView {
     ?>
 
     <main class="container p-3">
+      <h2 class="text-center m-5">Salas disponibles</h2>
       <table class="table table-hover w-75 m-auto">
         <thead>
           <th>Nombre</th>
