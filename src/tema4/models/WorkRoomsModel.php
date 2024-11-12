@@ -6,7 +6,12 @@ use \PDO;
 use Coworking\models\WorkRoom;
 
 class WorkRoomsModel {
-  public static function getAll() {
+  /**
+   * Get all workrooms of the database, if not db connection return null, if not workrooms in db return false
+   * @return false|array|null
+   */
+  public static function getAll(): false|array|null
+  {
     $connDB = new DBConnection();
 
     $conn = $connDB->getConnection();

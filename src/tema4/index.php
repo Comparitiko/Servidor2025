@@ -2,6 +2,7 @@
 
 namespace Coworking;
 
+use Coworking\controllers\ReservationsController;
 use Coworking\controllers\UsersController;
 use Coworking\controllers\WorkRoomsController;
 use Coworking\models\User;
@@ -40,8 +41,13 @@ if ($_GET) {
 
   // Handle show_available_rooms action
   if ($_GET["action"] && strcmp($_GET["action"], "show_available_rooms") == 0) {
-    $error = $_GET["error"];
-    WorkRoomsController::showAllWorkRooms($error);
+    WorkRoomsController::showAllWorkRooms();
+  }
+
+  // Handle show_reservations of a workroom
+  if ($_GET["action"] && strcmp($_GET["action"], "show_reservations") == 0) {
+    $roomId = $_GET["room_id"];
+    ReservationsController::showFutureAndConfirmedReservationsByRoomId($roomId);
   }
 
 } else if ($_POST) {
