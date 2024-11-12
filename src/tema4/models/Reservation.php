@@ -3,6 +3,8 @@
 namespace Coworking\models;
 
 use Coworking\enums\Status;
+use TypeError;
+use ValueError;
 
 class Reservation {
   private $id;
@@ -23,8 +25,7 @@ class Reservation {
    * @param $status
    */
   public function __construct($id = "", $userName = "", $roomName = "", $reservationDate = "", $startTime = "",
-                              $endTime = "",
-                              $status = Status::PENDING)
+                              $endTime = "")
   {
     $this->id = $id;
     $this->userName = $userName;
@@ -32,7 +33,7 @@ class Reservation {
     $this->reservationDate = $reservationDate;
     $this->startTime = $startTime;
     $this->endTime = $endTime;
-    $this->status = $status;
+    unset($this->status);
   }
 
   public function getId(): mixed
@@ -95,13 +96,21 @@ class Reservation {
     $this->endTime = $endTime;
   }
 
-  public function getStatus(): mixed
+  public function getStatus(): Status
   {
     return $this->status;
   }
 
-  public function setStatus(mixed $status): void
+  public function setStatus(Status $status): void
   {
     $this->status = $status;
+  }
+
+  // Se necesita el metodo para que haga la conversion de string a enum y en el constructor poner unset de la propiedad
+  public function __set($key, $value)
+  {
+    if ($key === 'status') {
+      $this->status = Status::from($value);
+    }
   }
 }

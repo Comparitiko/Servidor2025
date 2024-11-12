@@ -19,10 +19,9 @@ class WorkRoomsModel {
     // Check if there is an error in the connection
     if (is_null($conn)) return null;
 
-    $stmt = $conn->prepare("SELECT * FROM work_rooms");
+    $stmt = $conn->query("SELECT * FROM work_rooms");
 
     $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Coworking\models\WorkRoom');
-    $stmt->execute();
 
     $connDB->closeConnection();
 

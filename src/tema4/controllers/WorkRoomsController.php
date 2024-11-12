@@ -15,7 +15,6 @@ class WorkRoomsController {
     }
 
     $workRooms = WorkRoomsModel::getAll();
-
     WorkRoomsView::render($workRooms);
   }
 }

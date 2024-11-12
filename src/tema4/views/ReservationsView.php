@@ -21,7 +21,7 @@ class ReservationsView {
           <tr>
             <td><?=$reservation->getUserName()?></td>
             <td class="text-center"><?=$reservation->getRoomName()?></td>
-            <td class="text-center"><?=$reservation->getStatus()?></td>
+            <td class="text-center"><?=$reservation->getStatus()->value?></td>
           </tr>
           <?php
         }

@@ -21,7 +21,7 @@ class ReservationModel {
     // Check if there is an error in the connection
     if (is_null($conn)) return null;
 
-    $stmt = $conn->prepare("
+    $stmt = $conn->query("
       SELECT r.id, u.username as userName, wr.name as roomName, r.reservation_date as reservationDate, r.start_time as startTime, r.end_time as endTime, r.status
       FROM reservations r
       JOIN users u ON r.user_id = u.id
@@ -31,7 +31,6 @@ class ReservationModel {
       ");
 
     $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Coworking\models\Reservation');
-    $stmt->execute();
 
     $connDB->closeConnection();
 

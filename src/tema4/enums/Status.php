@@ -8,4 +8,3 @@ enum Status: string {
   case PENDING = 'pendiente';
   case CANCELLED = 'cancelada';
 }
-?>
