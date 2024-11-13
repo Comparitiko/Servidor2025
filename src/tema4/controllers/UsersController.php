@@ -7,8 +7,9 @@ use Coworking\models\UsersModel;
 use Coworking\views\LoginView;
 use Coworking\views\RegisterView;
 
-class UsersController {
-  public static function showLoginForm($error = ""): void
+class UsersController
+{
+  public static function showLoginForm($info = ""): void
   {
     // Check if user is logged, if is logged redirect to show_available_rooms
     if ($_SESSION["user"]) {
@@ -16,10 +17,10 @@ class UsersController {
       exit();
     }
 
-    LoginView::render($error);
+    LoginView::render($info);
   }
 
-  public static function showRegisterForm($error = ""): void
+  public static function showRegisterForm($info = ""): void
   {
     // Check if user is logged, if is logged redirect to show_available_rooms
     if ($_SESSION["user"]) {
@@ -27,14 +28,14 @@ class UsersController {
       exit();
     }
 
-    RegisterView::render($error);
+    RegisterView::render($info);
   }
 
   public static function register(User $user, $confirmPassword): void
   {
     // Check if password and confirm password are not equals
     if (strcmp($user->getPassword(), $confirmPassword) != 0) {
-      header("Location: index.php?action=show_register&error=passwords");
+      header("Location: index.php?action=show_register&info=passwords");
       exit();
     }
 
@@ -43,12 +44,12 @@ class UsersController {
 
     // Check if method fail
     if (is_null($userExist)) {
-      header("Location: index.php?action=show_register&error=server_error");
+      header("Location: index.php?action=show_register&info=server_error");
       exit();
     }
 
     if ($userExist) {
-      header("Location: index.php?action=show_register&error=user_exist");
+      header("Location: index.php?action=show_register&info=user_exist");
       exit();
     }
 
@@ -57,7 +58,7 @@ class UsersController {
 
     // Check if there is an error creating the hashed password
     if (!$hashedPass) {
-      header("Location: index.php?action=show_register&error=server_error");
+      header("Location: index.php?action=show_register&info=server_error");
       exit();
     }
 
@@ -68,7 +69,7 @@ class UsersController {
 
     // Check if database fail
     if (!$id) {
-      header("Location: index.php?action=show_register&error=server_error");
+      header("Location: index.php?action=show_register&info=server_error");
       exit();
     }
 
@@ -87,12 +88,12 @@ class UsersController {
 
     // Check if user is null
     if (is_null($user)) {
-      header("Location: index.php?action=show_login&error=server_error");
+      header("Location: index.php?action=show_login&info=server_error");
       exit();
     }
 
     if (!$user || !password_verify($password, $user->getPassword())) {
-      header("Location: index.php?action=show_login&error=login_fail");
+      header("Location: index.php?action=show_login&info=login_fail");
       exit();
     }
 

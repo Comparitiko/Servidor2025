@@ -2,7 +2,8 @@
 
 namespace Coworking\models;
 
-class WorkRoom {
+class WorkRoom
+{
   private $id;
   private $name;
   private $capacity;
@@ -14,7 +15,8 @@ class WorkRoom {
    * @param $capacity
    * @param $location
    */
-  public function __construct($id = 0, $name = "", $capacity = "", $location = "") {
+  public function __construct($id = 0, $name = "", $capacity = "", $location = "")
+  {
     $this->id = $id;
     $this->name = $name;
     $this->capacity = $capacity;
@@ -60,8 +62,6 @@ class WorkRoom {
   {
     $this->location = $location;
   }
-
-
 
 
 }

@@ -5,7 +5,8 @@ namespace Coworking\controllers;
 use Coworking\models\WorkRoomsModel;
 use Coworking\views\WorkRoomsView;
 
-class WorkRoomsController {
+class WorkRoomsController
+{
   public static function showAllWorkRooms(): void
   {
     // Check if user is logged in

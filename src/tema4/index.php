@@ -13,7 +13,7 @@ session_start();
  * AUTOLOAD
  */
 spl_autoload_register(function ($class) {
-  $path = substr($class, strpos($class,"\\")+1);
+  $path = substr($class, strpos($class, "\\") + 1);
   $path = str_replace("\\", "/", $path);
   include_once "./" . $path . ".php";
 });
@@ -24,14 +24,14 @@ if ($_GET) {
 
   // Handle show_register action
   if ($_GET["action"] && strcmp($_GET["action"], "show_register") == 0) {
-    $error = $_GET["error"];
-    UsersController::showRegisterForm($error);
+    $info = $_GET["info"];
+    UsersController::showRegisterForm($info);
   }
 
   // Handle show_login action
   if ($_GET["action"] && strcmp($_GET["action"], "show_login") == 0) {
-    $error = $_GET["error"];
-    UsersController::showLoginForm($error);
+    $info = $_GET["info"];
+    UsersController::showLoginForm($info);
   }
 
   // Handle logout action
@@ -46,17 +46,18 @@ if ($_GET) {
 
   // Handle show_reservations of a workroom
   if ($_GET["action"] && strcmp($_GET["action"], "show_reservations") == 0) {
-    $roomId = $_GET["room_id"];
-    ReservationsController::showFutureAndConfirmedReservationsByRoomId($roomId);
+    $roomName = $_GET["room_name"];
+    ReservationsController::showFutureAndConfirmedReservationsByRoomName($roomName);
   }
 
   // Handle show_my_reservations of a workroom
   if ($_GET["action"] && strcmp($_GET["action"], "show_my_reservations") == 0) {
-    ReservationsController::showFutureAndConfirmedReservationsByUserId();
+    $info = $_GET["info"];
+    ReservationsController::showFutureAndConfirmedReservationsByUserId($info);
   }
 
   // Handle cancel_reservation of the logged user
-  if ($_GET["action"] && strcmp($_GET["action"], "show_my_reservations") == 0) {
+  if ($_GET["action"] && strcmp($_GET["action"], "cancel_reservation") == 0) {
     $reservationId = $_GET["reservation_id"];
     ReservationsController::cancelReservationByUserIdAndReservationId($reservationId);
   }

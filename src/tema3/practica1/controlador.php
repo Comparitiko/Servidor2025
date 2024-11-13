@@ -1,6 +1,6 @@
 <?php
-  session_start();
-  include "modelo.php";
+session_start();
+include "modelo.php";
 
 if ($_POST) {
   // Login form post

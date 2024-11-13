@@ -6,7 +6,8 @@ use Coworking\enums\Status;
 use TypeError;
 use ValueError;
 
-class Reservation {
+class Reservation
+{
   private $id;
   private $userName;
   private $roomName;

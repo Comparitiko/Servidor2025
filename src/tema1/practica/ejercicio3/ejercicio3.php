@@ -1,7 +1,8 @@
 <?php
 $imagesPath = "./images";
 
-enum STATS: string {
+enum STATS: string
+{
   case HP = "hp";
   case ATTACK = "attack";
   case DEFENSE = "defense";
@@ -138,7 +139,8 @@ $pokemons = [
  * @param $pokemon array Pokemon to get the total points of his stats
  * @return int total points of the stats
  */
-function calculateTotalStatsPoints($pokemon) {
+function calculateTotalStatsPoints($pokemon)
+{
   $totalStatsPoints = 0;
   foreach ($pokemon["stats"] as $stat) {
     $totalStatsPoints += $stat;
@@ -150,7 +152,8 @@ function calculateTotalStatsPoints($pokemon) {
  * @param $stat STATS stat to get the color
  * @return string class to add in the progress bar
  */
-function getClassForStat($stat) {
+function getClassForStat($stat)
+{
   return match ($stat) {
     STATS::HP => "bg-success",
     STATS::ATTACK => "bg-warning",
@@ -165,7 +168,8 @@ function getClassForStat($stat) {
  * @param $stat STATS stat to get the name
  * @return string name for the html
  */
-function getStatName($stat) {
+function getStatName($stat)
+{
   return match ($stat) {
     STATS::HP => "HP",
     STATS::ATTACK => "Ataque",
@@ -181,7 +185,8 @@ function getStatName($stat) {
  * @param $totalStatsPoints int total stats points
  * @return int percentage of stat
  */
-function calculatePercentage($statValue, $totalStatsPoints) {
+function calculatePercentage($statValue, $totalStatsPoints)
+{
   return round($statValue * 250 / $totalStatsPoints);
 }
 
@@ -191,7 +196,8 @@ function calculatePercentage($statValue, $totalStatsPoints) {
  * @param $totalStatsPoints int total stats points
  * @return void
  */
-function createStat($stat, $statValue, $totalStatsPoints) {
+function createStat($stat, $statValue, $totalStatsPoints)
+{
   $percentage = calculatePercentage($statValue, $totalStatsPoints);
   $colorClass = getClassForStat($stat);
   $statName = getStatName($stat);
@@ -208,7 +214,8 @@ function createStat($stat, $statValue, $totalStatsPoints) {
  * @param $pokemon array Pokémon to print the information in html
  * @return void
  */
-function createPokemonCard($pokemon) {
+function createPokemonCard($pokemon)
+{
   $totalStatPoints = calculateTotalStatsPoints($pokemon);
   $cases = STATS::cases();
 
@@ -230,6 +237,7 @@ function createPokemonCard($pokemon) {
   echo "</section>";
   echo "</section>";
 }
+
 ?>
 
 <!doctype html>
@@ -238,36 +246,45 @@ function createPokemonCard($pokemon) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Práctica 1 Ejercicio 3</title>
-  <link rel="icon" type="image/svg+xml" href="./images/pokeball.svg" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="icon" type="image/svg+xml" href="./images/pokeball.svg"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <style>
     .type {
       color: white;
       width: 100px;
     }
+
     .psiquico {
-        background-color: hotpink;
+      background-color: hotpink;
     }
+
     .electrico {
-        background-color: yellow;
+      background-color: yellow;
     }
+
     .lucha {
-        background-color: saddlebrown;
+      background-color: saddlebrown;
     }
+
     .hada {
-        background-color: hotpink;
+      background-color: hotpink;
     }
+
     .fuego {
-        background-color: red;
+      background-color: red;
     }
+
     .volador {
-        background-color: cornflowerblue;
+      background-color: cornflowerblue;
     }
+
     .planta {
-        background-color: green;
+      background-color: green;
     }
+
     .agua {
-        background-color: blue;
+      background-color: blue;
     }
   </style>
 </head>
@@ -284,6 +301,8 @@ function createPokemonCard($pokemon) {
     ?>
   </main>
 </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 </body>
 </html>

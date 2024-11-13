@@ -142,7 +142,8 @@ $libreria = [
  * @param $string string String que se va a modificar la primera letra para convertirlo a mayuscula
  * @return string String modificado
  */
-function firstCharToUpper($string) {
+function firstCharToUpper($string)
+{
   $string[0] = strtoupper($string[0]);
   return $string;
 }
@@ -152,7 +153,8 @@ function firstCharToUpper($string) {
  * @param $libro array Array asociativo que represente un libro
  * @return void
  */
-function pintarLibro($libro) {
+function pintarLibro($libro)
+{
   echo "<article class='group transition-all duration-500 size-[22rem] border shadow-lg shadow-black flex flex-col gap-10 p-6 rounded hover:text-black hover:bg-slate-400'>";
   echo "<img class='w-[100px] h-[150px] duration-500 group-hover:scale-125 shadow-xl shadow-black m-auto' src='{$libro["foto"]}' alt='Portada del libro {$libro["titulo"]}' />";
   echo "<h2 class='text-lg text-white text-pretty text-center duration-500 group-hover:text-black'>{$libro["titulo"]}</h2>";
@@ -166,7 +168,8 @@ function pintarLibro($libro) {
  * @param $category string Categoria a filtrar
  * @return array de libros que coinciden
  */
-function filterByCategory($libreria, $category) {
+function filterByCategory($libreria, $category)
+{
   return array_filter($libreria, fn($libro) => $libro["categoria"] === $category);
 }
 
@@ -175,7 +178,8 @@ function filterByCategory($libreria, $category) {
  * @param $category string Categoria a pintar
  * @return void
  */
-function pintarLibrosPorCategoria($libreria, $category) {
+function pintarLibrosPorCategoria($libreria, $category)
+{
   $librosCat = filterByCategory($libreria, $category);
 
   echo "<section class='grid gap-8 w-full p-8'>";
@@ -212,20 +216,20 @@ $categories = array_unique(array_map(fn($libro) => $libro["categoria"], $libreri
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-  <div class="bg-slate-900">
-    <header class="flex justify-center items-center p-4 bg-slate-800">
-      <h1 class="text-3xl text-white">Librería Jaroso</h1>
-    </header>
-    <main class="w-full grid gap-8">
-      <?php
-      foreach ($categories as $category) {
-        pintarLibrosPorCategoria($libreria, $category);
-      }
-      ?>
-    </main>
-    <footer>
-      <p class="text-lg text-white">Realizado por Gabriel Collado Yañez</p>
-    </footer>
-  </div>
+<div class="bg-slate-900">
+  <header class="flex justify-center items-center p-4 bg-slate-800">
+    <h1 class="text-3xl text-white">Librería Jaroso</h1>
+  </header>
+  <main class="w-full grid gap-8">
+    <?php
+    foreach ($categories as $category) {
+      pintarLibrosPorCategoria($libreria, $category);
+    }
+    ?>
+  </main>
+  <footer>
+    <p class="text-lg text-white">Realizado por Gabriel Collado Yañez</p>
+  </footer>
+</div>
 </body>
 </html>

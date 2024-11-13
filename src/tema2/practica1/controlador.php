@@ -1,6 +1,6 @@
 <?php
-  session_start();
-  include "lib.php";
+session_start();
+include "lib.php";
 
 if ($_POST) {
   // Login form post

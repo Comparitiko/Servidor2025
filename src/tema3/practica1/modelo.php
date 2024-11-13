@@ -6,13 +6,14 @@ include "lib.php";
  * Crear una conexion a la base de datos
  * @return PDO|null PDO conexión o null si no se pudo conectar
  */
-function conectarDB() {
+function conectarDB()
+{
   try {
     $dsn = "mysql:host=mariadb:3306;dbname=practica1-db-gabriel;charset=utf8mb4";
     $dbh = new PDO($dsn, "root", "mysql?");
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     return $dbh;
-  } catch (PDOException $e){
+  } catch (PDOException $e) {
     return null;
   }
 }
@@ -59,7 +60,8 @@ function registroUsuario($username, $email, $password)
  *
  * @return array|false
  */
-function loginUsuario($email, $password) {
+function loginUsuario($email, $password)
+{
   $dbh = conectarDB();
   if (!$dbh) return null;
 
@@ -93,7 +95,8 @@ function loginUsuario($email, $password) {
  *
  * @return bool|null
  */
-function existeUsuario($email, $username) {
+function existeUsuario($email, $username)
+{
   $dbh = conectarDB();
   var_dump($dbh);
   if (is_null($dbh)) return null;
@@ -126,7 +129,8 @@ function existeUsuario($email, $username) {
  *
  * @return bool|null
  */
-function crearProyecto($nombre, $fechaInicio, $fechaFin, $porcentajeCompletado, $importancia, $idUsuario) {
+function crearProyecto($nombre, $fechaInicio, $fechaFin, $porcentajeCompletado, $importancia, $idUsuario)
+{
   $dbh = conectarDB();
 
   if (is_null($dbh)) return null;
@@ -150,7 +154,8 @@ function crearProyecto($nombre, $fechaInicio, $fechaFin, $porcentajeCompletado, 
   return $stmt->rowCount() > 0;
 }
 
-function getProyectosPorUsuario($idUsuario) {
+function getProyectosPorUsuario($idUsuario)
+{
   $dbh = conectarDB();
 
   if (is_null($dbh)) return null;
@@ -175,7 +180,8 @@ function getProyectosPorUsuario($idUsuario) {
  *
  * @return int|null
  */
-function eliminarTodosProyectosDeUnUsuario($idUsuario) {
+function eliminarTodosProyectosDeUnUsuario($idUsuario)
+{
   $dbh = conectarDB();
 
   if (is_null($dbh)) return null;
@@ -190,7 +196,8 @@ function eliminarTodosProyectosDeUnUsuario($idUsuario) {
   return $stmt->rowCount();
 }
 
-function EliminarProyectoPorId($id) {
+function EliminarProyectoPorId($id)
+{
   $dbh = conectarDB();
 
   if (is_null($dbh)) return null;
@@ -213,7 +220,8 @@ function EliminarProyectoPorId($id) {
  *
  * @return array|false|null
  */
-function buscarProyectoPorNombreEIdUsuario($nombre, $idUsuario) {
+function buscarProyectoPorNombreEIdUsuario($nombre, $idUsuario)
+{
   // Se convierte el nombre a minúsculas para que la busqueda sea mas exacta
   $nombre = strtolower($nombre);
   $dbh = conectarDB();
@@ -236,7 +244,8 @@ function buscarProyectoPorNombreEIdUsuario($nombre, $idUsuario) {
   return $stmt->fetchAll();
 }
 
-function getProyectoPorIdYPorUsuario($id, $idUsuario) {
+function getProyectoPorIdYPorUsuario($id, $idUsuario)
+{
   $dbh = conectarDB();
 
   if (is_null($dbh)) return null;
@@ -255,7 +264,8 @@ function getProyectoPorIdYPorUsuario($id, $idUsuario) {
   return $stmt->fetch();
 }
 
-function editarProyectoPorId($id, $nombre, $fechaInicio, $fechaFin, $porcentaje, $importancia) {
+function editarProyectoPorId($id, $nombre, $fechaInicio, $fechaFin, $porcentaje, $importancia)
+{
   $dbh = conectarDB();
 
   if (is_null($dbh)) return null;

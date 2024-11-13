@@ -4,7 +4,8 @@ namespace Coworking\views;
 
 use Coworking\models\WorkRoom;
 
-class WorkRoomsView {
+class WorkRoomsView
+{
   public static function render($workRooms)
   {
     include_once "./views/header.php";
@@ -14,25 +15,26 @@ class WorkRoomsView {
       <h2 class="text-center m-5">Salas disponibles</h2>
       <table class="table table-hover w-75 m-auto">
         <thead>
-          <th>Nombre</th>
-          <th class="text-center">Capacidad</th>
-          <th class="text-center">Localización</th>
-          <th class="text-center">Acciones</th>
+        <th>Nombre</th>
+        <th class="text-center">Capacidad</th>
+        <th class="text-center">Localización</th>
+        <th class="text-center">Acciones</th>
         </thead>
         <tbody>
         <?php
         foreach ($workRooms as $workRoom) {
-        ?>
+          ?>
           <tr>
-            <td><?=$workRoom->getName()?></td>
-            <td class="text-center"><?=$workRoom->getCapacity()?></td>
-            <td class="text-center"><?=$workRoom->getLocation()?></td>
+            <td><?= $workRoom->getName() ?></td>
+            <td class="text-center"><?= $workRoom->getCapacity() ?></td>
+            <td class="text-center"><?= $workRoom->getLocation() ?></td>
             <td class="text-center">
-              <a href="./index.php?action=show_reservations&room_id=<?=$workRoom->getId()?>" class="btn btn-outline-dark">Ver
+              <a href="./index.php?action=show_reservations&room_name=<?= $workRoom->getRoomName() ?>" class="btn
+              btn-outline-dark">Ver
                 reservas</a>
             </td>
           </tr>
-        <?php
+          <?php
         }
         ?>
         </tbody>

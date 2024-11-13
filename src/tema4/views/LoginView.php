@@ -2,17 +2,19 @@
 
 namespace Coworking\views;
 
-class LoginView {
+class LoginView
+{
 
-  private static function getErrorMessage($error): string
+  private static function getInfoMessage($info): array
   {
-    return match ($error) {
-      "login_fail" => "El email o la contraseña son incorrectos",
-      "server_error" => "Error en el inicio de sesión, intente de nuevo mas tarde",
+    return match ($info) {
+      "login_fail" => ["error", "El email o la contraseña son incorrectos"],
+      "server_error" => ["error", "Error en el inicio de sesión, intente de nuevo mas tarde"],
     };
   }
 
-  public static function render($error) {
+  public static function render($info)
+  {
     ?>
     <!doctype html>
     <html lang="es">
@@ -29,15 +31,17 @@ class LoginView {
       <link href="./views/assets/css/demo.min.css?1692870487" rel="stylesheet"/>
       <style>
         @import url('https://rsms.me/inter/inter.css');
+
         :root {
           --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
         }
+
         body {
           font-feature-settings: "cv03", "cv04", "cv11";
         }
       </style>
     </head>
-    <body  class=" d-flex flex-column">
+    <body class=" d-flex flex-column">
     <script src="./views/assets/js/demo-theme.min.js?1692870487"></script>
     <div class="page page-center">
       <div class="container container-normal py-4">
@@ -48,10 +52,10 @@ class LoginView {
                 <div class="card-body">
                   <h2 class="h2 text-center mb-4">Inicia sesión con tu cuenta</h2>
                   <?php
-                  if (strlen($error) > 0) {
-                    ?>
-                    <p class="text-danger mb-2"><?=LoginView::getErrorMessage($error)?></p>
-                    <?php
+                  if (strlen($info) > 0) {
+                    $infoMessage = self::getInfoMessage($info);
+
+                    if ($infoMessage[0] === "error") echo "<p class='text-danger mb-2'>{$infoMessage[1]}</p>";
                   }
                   ?>
                   <form action="index.php" method="POST">
@@ -75,7 +79,8 @@ class LoginView {
             </div>
           </div>
           <div class="col-lg d-none d-lg-block">
-            <img src="./views/assets/static/illustrations/undraw_secure_login_pdn4.svg" height="300" class="d-block mx-auto"
+            <img src="./views/assets/static/illustrations/undraw_secure_login_pdn4.svg" height="300"
+                 class="d-block mx-auto"
                  alt="Secure login image">
           </div>
         </div>

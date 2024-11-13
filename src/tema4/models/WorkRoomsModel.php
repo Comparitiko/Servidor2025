@@ -5,7 +5,8 @@ namespace Coworking\models;
 use \PDO;
 use Coworking\models\WorkRoom;
 
-class WorkRoomsModel {
+class WorkRoomsModel
+{
   /**
    * Get all workrooms of the database, if not db connection return null, if not workrooms in db return false
    * @return false|array|null

@@ -5,10 +5,12 @@ namespace Coworking\models;
 use \PDO;
 use \PDOException;
 
-class DBConnection {
+class DBConnection
+{
   private PDO|null $conn;
 
-  public function __construct() {
+  public function __construct()
+  {
     $host = 'mariadb:3306'; // Ip of the docker container and the internal port
 
     try {
@@ -18,16 +20,18 @@ class DBConnection {
       $this->conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
 
-    } catch (PDOException $e){
+    } catch (PDOException $e) {
       $this->conn = null;
     }
   }
 
-  public function getConnection() {
+  public function getConnection()
+  {
     return $this->conn;
   }
 
-  public function closeConnection() {
+  public function closeConnection()
+  {
     unset($this->conn);
   }
 

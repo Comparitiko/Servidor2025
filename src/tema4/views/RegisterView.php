@@ -2,18 +2,19 @@
 
 namespace Coworking\views;
 
-class RegisterView {
+class RegisterView
+{
 
-  private static function getErrorMessage($error): string
+  private static function getInfoMessage($info): array
   {
-    return match ($error) {
-      "passwords" => "Las contraseñas introducidas no coinciden",
-      "user_exists" => "Usuario o email ya existen",
-      "server_error" => "Error en el registro, intente de nuevo mas tarde",
+    return match ($info) {
+      "passwords" => ["error", "Las contraseñas introducidas no coinciden"],
+      "user_exists" => ["error", "Usuario o email ya existen"],
+      "server_error" => ["error", "Error en el registro, intente de nuevo mas tarde"],
     };
   }
 
-  public static function render($error): void
+  public static function render($info): void
   {
     ?>
     <!doctype html>
@@ -31,15 +32,17 @@ class RegisterView {
       <link href="./views/assets/css/demo.min.css?1692870487" rel="stylesheet"/>
       <style>
         @import url('https://rsms.me/inter/inter.css');
+
         :root {
           --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
         }
+
         body {
           font-feature-settings: "cv03", "cv04", "cv11";
         }
       </style>
     </head>
-    <body  class=" d-flex flex-column">
+    <body class=" d-flex flex-column">
     <script src="./views/assets/js/demo-theme.min.js?1692870487"></script>
     <div class="page page-center">
       <div class="container container-normal py-4">
@@ -50,10 +53,9 @@ class RegisterView {
                 <div class="card-body">
                   <h2 class="h2 text-center mb-2">Crea una cuenta de usuario</h2>
                   <?php
-                  if (strlen($error) > 0) {
-                    ?>
-                    <p class="text-danger mb-2"><?=RegisterView::getErrorMessage($error)?></p>
-                    <?php
+                  if (strlen($info) > 0) {
+                    $infoMessage = self::getInfoMessage($info);
+                    if ($infoMessage[0] === "error") echo "<p class='text-danger mb-2'>{$infoMessage[1]}</p>";
                   }
                   ?>
                   <form action="index.php" method="POST">
@@ -71,7 +73,8 @@ class RegisterView {
                     </div>
                     <div class="mb-2">
                       <label for="confirm_password" class="form-label">Confirmar contraseña</label>
-                      <input id="confirm_password" name="confirm_password" type="password" class="form-control" required>
+                      <input id="confirm_password" name="confirm_password" type="password" class="form-control"
+                             required>
                     </div>
                     <div class="mb-2">
                       <label for="phone" class="form-label">Numero de teléfono</label>
@@ -89,7 +92,8 @@ class RegisterView {
             </div>
           </div>
           <div class="col-lg d-none d-lg-block">
-            <img src="./views/assets/static/illustrations/undraw_secure_login_pdn4.svg" height="300" class="d-block mx-auto"
+            <img src="./views/assets/static/illustrations/undraw_secure_login_pdn4.svg" height="300"
+                 class="d-block mx-auto"
                  alt="Secure login image">
           </div>
         </div>

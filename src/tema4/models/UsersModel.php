@@ -5,7 +5,8 @@ namespace Coworking\models;
 use PDO;
 use Coworking\models\User;
 
-class UsersModel {
+class UsersModel
+{
   /**
    * Create user in database with his data, return null if there is an error with database, if is inserted correctly
    * return true if not return false
@@ -79,7 +80,8 @@ class UsersModel {
    * @param $email
    * @return User|false|null
    */
-  public static function getUserByEmail($email): false|User|null {
+  public static function getUserByEmail($email): false|User|null
+  {
     $connDB = new DBConnection();
 
     $conn = $connDB->getConnection();

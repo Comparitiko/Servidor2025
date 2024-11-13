@@ -10,8 +10,8 @@ if (isset($_SESSION["usuario"])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-  <link href="css/styles.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
+  <link href="css/styles.css" rel="stylesheet"/>
   <title>Registro de usuario</title>
 </head>
 <body>
@@ -27,36 +27,36 @@ if (isset($_SESSION["usuario"])) {
           <form action="controlador.php" method="post">
 
             <?php
-              if (isset($_GET["error"]) && strcmp($_GET["error"], "passwords_not_match") === 0) {
-                echo "<h2 class='text-danger'>Las contraseñas no coinciden</h2>";
-              }
-              if (isset($_GET["error"]) && strcmp($_GET["error"], "user_already_exists") === 0) {
-                echo "<h2 class='text-danger'>El usuario ya existe</h2>";
-              }
-              if (isset($_GET["error"]) && strcmp($_GET["error"], "register_failed") === 0) {
-                echo "<h2 class='text-danger'>Error al registrar, intente de nuevo mas tarde</h2>";
-              }
+            if (isset($_GET["error"]) && strcmp($_GET["error"], "passwords_not_match") === 0) {
+              echo "<h2 class='text-danger'>Las contraseñas no coinciden</h2>";
+            }
+            if (isset($_GET["error"]) && strcmp($_GET["error"], "user_already_exists") === 0) {
+              echo "<h2 class='text-danger'>El usuario ya existe</h2>";
+            }
+            if (isset($_GET["error"]) && strcmp($_GET["error"], "register_failed") === 0) {
+              echo "<h2 class='text-danger'>Error al registrar, intente de nuevo mas tarde</h2>";
+            }
             ?>
 
             <!-- Username input -->
             <div data-mdb-input-init class="form-outline mb-4">
               <label class="form-label" for="form1Example03">Nombre de usuario</label>
               <input type="text" id="form1Example03" class="form-control form-control-lg"
-                     name="username" required />
+                     name="username" required/>
             </div>
 
             <!-- Email input -->
             <div data-mdb-input-init class="form-outline mb-4">
               <label class="form-label" for="form1Example13">Email</label>
               <input type="email" id="form1Example13" class="form-control form-control-lg"
-                     name="email" required />
+                     name="email" required/>
             </div>
 
             <!-- Password input -->
             <div data-mdb-input-init class="form-outline mb-4">
               <label class="form-label" for="form1Example23">Contraseña</label>
               <input type="password" id="form1Example23" class="form-control form-control-lg"
-                     name="password" required minlength="8" />
+                     name="password" required minlength="8"/>
             </div>
 
             <!-- Confirm password input -->
@@ -70,7 +70,8 @@ if (isset($_SESSION["usuario"])) {
               <!-- Submit button -->
               <button name="register" type="submit" data-mdb-button-init data-mdb-ripple-init
                       class="btn
-                btn-primary btn-lg btn-block">Registrarse</button>
+                btn-primary btn-lg btn-block">Registrarse
+              </button>
             </div>
             <p>¿Tienes una cuenta? <a href="login.php">Inicia sesión</a></p>
           </form>
@@ -79,6 +80,7 @@ if (isset($_SESSION["usuario"])) {
     </div>
   </section>
 </main>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
 </body>
 </html>

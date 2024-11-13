@@ -1,15 +1,15 @@
 <?php
-  session_start();
-  include "lib.php";
+session_start();
+include "lib.php";
 
-  if (!isset($_GET["id"])) return header("Location: proyectos.php");
+if (!isset($_GET["id"])) return header("Location: proyectos.php");
 
-  $id = $_GET["id"];
+$id = $_GET["id"];
 
-  $proyecto = getProjectById($id);
+$proyecto = getProjectById($id);
 
-  $title = "Proyecto {$proyecto["nombre"]}";
-  include "cabecera.php"
+$title = "Proyecto {$proyecto["nombre"]}";
+include "cabecera.php"
 ?>
 <div id="layoutSidenav_content">
   <main>
@@ -26,8 +26,8 @@
         </div>
         <div class="card-body p-4">
           <?php
-            echo "<h2 class='card-title text-center'>Proyecto {$proyecto["nombre"]}</h2>";
-            echo "
+          echo "<h2 class='card-title text-center'>Proyecto {$proyecto["nombre"]}</h2>";
+          echo "
               <div class='container'>
                 <p class='card-text'>Fecha inicio: <span class='text-danger'>{$proyecto["fecha_inicio"]}</span></p>
                 <p class='card-text'>Fecha fin prevista: <span class='text-danger'>{$proyecto["fecha_fin_prevista"]}</span></p>
@@ -44,6 +44,6 @@
       </div>
     </div>
   </main>
-      <?php
-      include "pie.php"
-      ?>
+  <?php
+  include "pie.php"
+  ?>

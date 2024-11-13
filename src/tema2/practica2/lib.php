@@ -4,7 +4,8 @@
  * Generar una baraja nueva con todas las cartas de la baraja
  * @return array[]
  */
-function crearBarajaCartas() {
+function crearBarajaCartas()
+{
   // Ruta al directorio de las imagenes
   $directorioImagenes = "./images";
   $baraja = [
@@ -78,7 +79,8 @@ function crearBarajaCartas() {
  * @param $ganador
  * @return void
  */
-function resetPartida(&$baraja, &$cartasSacadas) {
+function resetPartida(&$baraja, &$cartasSacadas)
+{
   $baraja = crearBarajaCartas();
   $cartasSacadas = [];
 }
@@ -88,7 +90,8 @@ function resetPartida(&$baraja, &$cartasSacadas) {
  * @param $baraja Baraja baraja de la que se sacara una carta
  * @return mixed|null Carta que se ha sacado
  */
-function pedirCarta(&$baraja) {
+function pedirCarta(&$baraja)
+{
   return array_pop($baraja);
 }
 
@@ -97,7 +100,8 @@ function pedirCarta(&$baraja) {
  * @param $baraja
  * @return void
  */
-function eliminarCartasSobrantes(&$baraja) {
+function eliminarCartasSobrantes(&$baraja)
+{
   // Guardar posiciones que se quieren eliminar recorriendo la baraja y comparando con cada carta sobrante
   $cartasSobrantes = ["8", "9", "10"];
   $posicionesABorrar = [];
@@ -122,14 +126,16 @@ function eliminarCartasSobrantes(&$baraja) {
  * @param $info
  * @return void
  */
-function volverAIndex($info = "") {
+function volverAIndex($info = "")
+{
   header("Location: index.php{$info}");
 }
 
-function devolverValorCarta($carta) {
+function devolverValorCarta($carta)
+{
 
   return match ($carta["carta"]) {
-    "A" =>  1,
+    "A" => 1,
     "2" => 2,
     "3" => 3,
     "4" => 4,
@@ -140,7 +146,8 @@ function devolverValorCarta($carta) {
   };
 }
 
-function ganadorDeLaPartida(&$cartasSacadas) {
+function ganadorDeLaPartida(&$cartasSacadas)
+{
   $sumaCartas = 0;
   foreach ($cartasSacadas as $carta) {
     $sumaCartas += devolverValorCarta($carta);
