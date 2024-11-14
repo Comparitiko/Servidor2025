@@ -54,9 +54,10 @@ class Carta
     return "{$this->getPalo()} - {$this->getFigura()}";
   }
 
+  // TODO hacer bien el metodo
   public function getValor()
   {
-
+    return $this->palo;
   }
 
 }
