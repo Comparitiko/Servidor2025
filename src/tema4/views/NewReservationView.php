@@ -77,7 +77,7 @@ class NewReservationView {
               ?>
             </select>
           </div>
-          <button name="new_reserva" type="submit" class="text-center btn btn-primary">Crear reserva</button>
+          <button name="new_reservation" type="submit" class="text-center btn btn-primary">Crear reserva</button>
         </form>
       </div>
     </main>

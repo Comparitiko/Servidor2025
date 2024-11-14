@@ -92,7 +92,8 @@ if ($_GET) {
     UsersController::login($email, $password);
   }
 
-  if (isset($_POST["new_reserva"])) {
+  // Handle submit of the new reservation form
+  if (isset($_POST["new_reservation"])) {
     // Check if user is not logged in
     if (!$_SESSION["user"]) {
       header("Location: index.php");
@@ -124,6 +125,7 @@ if ($_GET) {
       exit();
     }
 
+    // Save the variables and create a new Reservation instance
     $userId = $_SESSION["user"]["id"];
     $roomId = $_POST["workroom"];
     $reservationDate = $_POST["reservation_date"];
