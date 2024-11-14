@@ -3,7 +3,6 @@
 namespace Coworking\models;
 
 use \PDO;
-use Coworking\models\WorkRoom;
 
 class WorkRoomsModel
 {

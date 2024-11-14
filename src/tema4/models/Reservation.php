@@ -102,16 +102,21 @@ class Reservation
     return $this->status;
   }
 
-  public function setStatus(Status $status): void
+  public function setStatus(string $status): void
   {
-    $this->status = $status;
+    $this->status = Status::from($status);
   }
 
-  // Se necesita el metodo para que haga la conversion de string a enum y en el constructor poner unset de la propiedad
+  // Need this method for convert string to enum and in the constructor need to unser the property or save the enum
+  // directly if is created by user
   public function __set($key, $value)
   {
     if ($key === 'status') {
-      $this->status = Status::from($value);
+      if (gettype($value) === "string") {
+        $this->status = Status::from($value);
+      } else {
+        $this->status = $value;
+      }
     }
   }
 }

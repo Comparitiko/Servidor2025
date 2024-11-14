@@ -34,6 +34,4 @@ class DBConnection
   {
     unset($this->conn);
   }
-
-
 }

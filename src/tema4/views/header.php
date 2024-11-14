@@ -23,6 +23,8 @@
         <li><a href="./index.php" class="nav-link px-2 text-white fs-4">Inicio</a></li>
         <li><a href="./index.php?action=show_my_reservations" class="nav-link px-2 text-white fs-4 ms-5">Mis
             reservas</a></li>
+        <li><a href="./index.php?action=show_new_reservation" class="nav-link px-2 text-white fs-4 ms-5">Crear
+            reserva</a></li>
       </ul>
 
       <div class="text-end d-flex align-items-center gap-4">

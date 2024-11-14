@@ -29,7 +29,7 @@ class WorkRoomsView
             <td class="text-center"><?= $workRoom->getCapacity() ?></td>
             <td class="text-center"><?= $workRoom->getLocation() ?></td>
             <td class="text-center">
-              <a href="./index.php?action=show_reservations&room_name=<?= $workRoom->getRoomName() ?>" class="btn
+              <a href="./index.php?action=show_reservations&room_name=<?= $workRoom->getName() ?>" class="btn
               btn-outline-dark">Ver
                 reservas</a>
             </td>
