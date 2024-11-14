@@ -7,7 +7,8 @@ use Coworking\models\WorkRoom;
 class WorkRoomsView
 {
 
-  private static function getInfoMessage($info) {
+  private static function getInfoMessage($info)
+  {
     return match ($info) {
       "server_error" => ["error", "Ha ocurrido un al recuperar las salas, intentelo de nuevo mas tarde."],
     };
