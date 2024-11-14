@@ -11,7 +11,7 @@ use Coworking\views\ReservationsView;
 
 class ReservationsController
 {
-  public static function showFutureAndConfirmedReservationsByRoomName($roomName): void
+  public static function showFutureAndConfirmedReservationsByRoomName($roomName, $info = ""): void
   {
     if (!$_SESSION["user"]) {
       header("Location: index.php");
@@ -19,7 +19,13 @@ class ReservationsController
     }
 
     $reservations = ReservationModel::getFutureAndConfirmedReservationsByRoomName($roomName);
-    ReservationsView::render($reservations);
+
+    if (is_null($reservations)) {
+      header("Location: index.php?action=show_reservations&room_name=$roomName&info=server_error");
+      exit();
+    }
+
+    ReservationsView::render($reservations, $info);
   }
 
   public static function showFutureAndConfirmedReservationsByUserId($info = ""): void

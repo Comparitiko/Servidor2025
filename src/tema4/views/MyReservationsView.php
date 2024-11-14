@@ -23,7 +23,6 @@ class MyReservationsView
     <main class="container p-3">
       <h2 class="text-center m-4">Reservas confirmadas del usuario: <?= $_SESSION["user"]["username"] ?></h2>
       <?php
-      $buttonHtml = "";
       if (strlen($info) > 0) {
         $infoMessage = self::getInfoMessage($info);
 

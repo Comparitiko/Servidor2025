@@ -5,7 +5,6 @@ namespace Coworking;
 use Coworking\controllers\ReservationsController;
 use Coworking\controllers\UsersController;
 use Coworking\controllers\WorkRoomsController;
-use Coworking\enums\Status;
 use Coworking\models\Reservation;
 use Coworking\models\User;
 
@@ -43,13 +42,15 @@ if ($_GET) {
 
   // Handle show_available_rooms action
   if ($_GET["action"] && strcmp($_GET["action"], "show_available_rooms") == 0) {
-    WorkRoomsController::showAllWorkRooms();
+    $info = $_GET["info"];
+    WorkRoomsController::showAllWorkRooms($info);
   }
 
   // Handle show_reservations of a workroom
   if ($_GET["action"] && strcmp($_GET["action"], "show_reservations") == 0) {
     $roomName = $_GET["room_name"];
-    ReservationsController::showFutureAndConfirmedReservationsByRoomName($roomName);
+    $info = $_GET["info"];
+    ReservationsController::showFutureAndConfirmedReservationsByRoomName($roomName, $info);
   }
 
   // Handle show_my_reservations of a workroom
@@ -117,8 +118,10 @@ if ($_GET) {
     // Check if end_time is grant than start_time
     $startHour = intval($_POST["start_time"]);
     $endHour = intval($_POST["end_time"]);
+    var_dump($startHour, $endHour);
     if ($startHour > $endHour) {
       header("Location: index.php?action=show_new_reservation&info=start_gt_end");
+      exit();
     }
 
     $userId = $_SESSION["user"]["id"];
