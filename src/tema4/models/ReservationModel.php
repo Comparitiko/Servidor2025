@@ -37,6 +37,8 @@ class ReservationModel
 
     $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Coworking\models\Reservation');
 
+    $stmt->execute();
+
     $connDB->closeConnection();
 
     return $stmt->fetchAll();
