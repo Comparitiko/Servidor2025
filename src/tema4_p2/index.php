@@ -2,6 +2,8 @@
 
 namespace BlackJack;
 
+use BlackJack\controller\PartidaController;
+
 session_start();
 
 /**
@@ -12,3 +14,9 @@ spl_autoload_register(function ($class) {
   $path = str_replace("\\", "/", $path);
   include_once "./" . $path . ".php";
 });
+
+if ($_GET) {
+
+} else {
+  PartidaController::empezarPartida();
+}

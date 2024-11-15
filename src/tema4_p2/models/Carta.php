@@ -6,6 +6,7 @@ class Carta
 {
   private $palo;
   private $figura;
+  private $image;
 
   /**
    * @param $palo
@@ -15,6 +16,7 @@ class Carta
   {
     $this->palo = $palo;
     $this->figura = $figura;
+    $this->image = $this->getImageUrl();
   }
 
   /**
@@ -51,13 +53,21 @@ class Carta
 
   public function __toString(): string
   {
-    return "{$this->getPalo()} - {$this->getFigura()}";
+    return "<img src='{$this->image} alt='{$this->palo}' . '-' . '{$this->figura}'>";
   }
 
   // TODO hacer bien el metodo
   public function getValor()
   {
     return $this->palo;
+  }
+
+  private function getImageUrl(): string
+  {
+    $path = "./views/assets/images/cartas";
+    $figuraInicial = explode("", $this->figura);
+    $nombre = "{$this->palo}-" . strtoupper($figuraInicial[0] . ".png");
+    return "{$path}/{$nombre}";
   }
 
 }
