@@ -20,16 +20,25 @@ class Partida
     $this->victoriasJugador = 0;
     $this->empatesJugador = 0;
     $this->derrotasJugador = 0;
+    $this->sacarPrimerasCartas();
   }
 
-  public function pintarCartasCrupier(): void
+  private function sacarPrimerasCartas()
   {
-    echo $this->crupier;
+    $this->pedirCartaCrupier();
+    $this->pedirCartaJugador();
   }
 
-  public function pintarCartasJugador(): void
+  public function pedirCartaCrupier()
   {
-    echo $this->jugador;
+    $carta = $this->baraja->repartirCarta();
+    $this->crupier->nuevaCarta($carta);
+  }
+
+  public function pedirCartaJugador()
+  {
+    $carta = $this->baraja->repartirCarta();
+    $this->jugador->nuevaCarta($carta);
   }
 
   public function getVictoriasJugador(): int
@@ -60,6 +69,16 @@ class Partida
   public function setDerrotasJugador(int $derrotasJugador): void
   {
     $this->derrotasJugador = $derrotasJugador;
+  }
+
+  public function getCrupier(): Crupier
+  {
+    return $this->crupier;
+  }
+
+  public function getJugador(): Jugador
+  {
+    return $this->jugador;
   }
 
   public function hayGanador()

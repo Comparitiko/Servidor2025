@@ -11,6 +11,7 @@ class BarajaInglesa extends Baraja
   {
     parent::__construct();
     $this->generarMazo();
+    $this->barajar();
   }
 
   private function generarMazo()
@@ -27,5 +28,3 @@ class BarajaInglesa extends Baraja
     return array_shift($this->mazo);
   }
 }
-
-// https://es.wikipedia.org/wiki/Baraja_inglesa IMagenes de la baraja

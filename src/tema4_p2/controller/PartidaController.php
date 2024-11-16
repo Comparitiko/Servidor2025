@@ -3,16 +3,22 @@
 namespace BlackJack\controller;
 
 use BlackJack\models\Partida;
+use BlackJack\views\PartidaView;
 
 class PartidaController
 {
   public static function empezarPartida()
   {
-    // Comprobar que no haya una partida inicializada, si esta la partida no se inicializa de nuevo
-    if (!isset($_SESSION["partida"])) $_SESSION["partida"] = new Partida();
+    // Verificar si existe la partida en la sesión y, si no, crear una nueva instancia
+    if (!isset($_SESSION["partida"])) {
+      $partida = new Partida();
+      // Serializar el objeto y guárdalo en la sesión
+      $_SESSION["partida"] = serialize($partida);
+    } else {
+      // Deserializar el objeto para usarlo en esta instancia
+      $partida = unserialize($_SESSION["partida"], ["allowed_classes" => true]);
+    }
 
-    $partida = $_SESSION["partida"];
-
-
+    PartidaView::render($partida);
   }
 }

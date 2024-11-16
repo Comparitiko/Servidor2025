@@ -14,7 +14,7 @@ abstract class Baraja
 
   public abstract function repartirCarta();
 
-  public function barajar()
+  protected function barajar()
   {
     shuffle($this->mazo);
   }

@@ -53,7 +53,7 @@ class Carta
 
   public function __toString(): string
   {
-    return "<img src='{$this->image} alt='{$this->palo}' . '-' . '{$this->figura}'>";
+    return '<img src="' . $this->image . '" alt="' . $this->figura . ' de ' . $this->palo . '">';
   }
 
   // TODO hacer bien el metodo
@@ -65,8 +65,8 @@ class Carta
   private function getImageUrl(): string
   {
     $path = "./views/assets/images/cartas";
-    $figuraInicial = explode("", $this->figura);
-    $nombre = "{$this->palo}-" . strtoupper($figuraInicial[0] . ".png");
+    $paloInicial = str_split($this->palo);
+    $nombre = "{$this->figura}-" . strtoupper($paloInicial[0]) . ".png";
     return "{$path}/{$nombre}";
   }
 

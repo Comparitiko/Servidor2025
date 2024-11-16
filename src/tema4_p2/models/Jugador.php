@@ -13,6 +13,11 @@ class Jugador
     $this->estaPlantado = false;
   }
 
+  public function getMano(): array
+  {
+    return $this->mano;
+  }
+
   public function getEstaPlantado(): bool
   {
     return $this->estaPlantado;
