@@ -23,7 +23,7 @@ class BarajaInglesa extends Baraja
     }
   }
 
-  public function repartirCarta()
+  public function repartirCarta(): Carta
   {
     return array_shift($this->mazo);
   }

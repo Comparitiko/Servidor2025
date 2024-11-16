@@ -28,9 +28,10 @@ class Jugador
     $this->estaPlantado = true;
   }
 
-  public function nuevaCarta(Carta $carta)
+  public function nuevaCarta(Carta $carta): void
   {
     $this->mano[] = $carta;
+    $this->sePlanta();
   }
 
   public function __toString(): string
@@ -43,19 +44,18 @@ class Jugador
     return $str;
   }
 
-  public function sePlanta(): bool
+  protected function sePlanta(): void
   {
     $this->estaPlantado = $this->valorMano() == 21;
-    return $this->estaPlantado;
   }
 
   // TODO hacer bien el metodo
-  public function valorMano()
+  public function valorMano(): int
   {
     $suma = 0;
 
     foreach ($this->mano as $carta) {
-      $suma += $carta->valor();
+      $suma += $carta->getValor();
     }
     return $suma;
   }

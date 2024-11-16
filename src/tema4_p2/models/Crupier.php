@@ -12,11 +12,10 @@ class Crupier extends Jugador
 
   /**
    * Comprobar si el crupier se plantara
-   * @return bool
+   * @return void
    */
-  public function sePlanta(): bool
+  protected function sePlanta(): void
   {
     $this->estaPlantado = $this->valorMano() >= 17;
-    return $this->estaPlantado;
   }
 }

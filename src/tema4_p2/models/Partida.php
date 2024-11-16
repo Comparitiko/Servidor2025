@@ -8,67 +8,30 @@ class Partida
   private Jugador $jugador;
   private BarajaInglesa $baraja;
 
-  private $victoriasJugador;
-  private $empatesJugador;
-  private $derrotasJugador;
-
   public function __construct()
   {
     $this->crupier = new Crupier();
     $this->jugador = new Jugador();
     $this->baraja = new BarajaInglesa();
-    $this->victoriasJugador = 0;
-    $this->empatesJugador = 0;
-    $this->derrotasJugador = 0;
     $this->sacarPrimerasCartas();
   }
 
-  private function sacarPrimerasCartas()
+  private function sacarPrimerasCartas(): void
   {
     $this->pedirCartaCrupier();
     $this->pedirCartaJugador();
   }
 
-  public function pedirCartaCrupier()
+  public function pedirCartaCrupier(): void
   {
     $carta = $this->baraja->repartirCarta();
     $this->crupier->nuevaCarta($carta);
   }
 
-  public function pedirCartaJugador()
+  public function pedirCartaJugador(): void
   {
     $carta = $this->baraja->repartirCarta();
     $this->jugador->nuevaCarta($carta);
-  }
-
-  public function getVictoriasJugador(): int
-  {
-    return $this->victoriasJugador;
-  }
-
-  public function setVictoriasJugador(int $victoriasJugador): void
-  {
-    $this->victoriasJugador = $victoriasJugador;
-  }
-
-  public function getEmpatesJugador(): int
-  {
-    return $this->empatesJugador;
-  }
-
-  public function setEmpatesJugador(int $empatesJugador): void
-  {
-    $this->empatesJugador = $empatesJugador;
-  }
-
-  public function getDerrotasJugador(): int
-  {
-    return $this->derrotasJugador;
-  }
-
-  public function setDerrotasJugador(int $derrotasJugador): void
-  {
-    $this->derrotasJugador = $derrotasJugador;
   }
 
   public function getCrupier(): Crupier
@@ -81,18 +44,22 @@ class Partida
     return $this->jugador;
   }
 
+  /**
+   * Metodo para comprobar si hay un ganador, si lo hay devuelve si es victoria, empate o derrota del jugador
+   * @return false|string
+   */
   public function hayGanador()
   {
     // Comprobar si el jugador y el crupier estan plantados
-    if (!$this->jugador->getEstaPlantado() || !$this->crupier->getEstaPlantado()) return;
+    if (!$this->jugador->getEstaPlantado() || !$this->crupier->getEstaPlantado()) return false;
 
     // Hacer las comprobaciones necesarias para saber quien ha ganado la partida y sumar victoria, empate o derrota
-    if ($this->jugador->valorMano() > 21 && $this->crupier->valorMano() > 21) $this->empatesJugador++;
-    else if ($this->jugador->valorMano() > 21) $this->derrotasJugador++;
-    else if ($this->crupier->valorMano() > 21) $this->victoriasJugador++;
-    else if ($this->jugador->valorMano() == $this->crupier->valorMano()) $this->empatesJugador++;
-    else if ($this->jugador->valorMano() > $this->crupier->valorMano()) $this->victoriasJugador++;
-    else $this->derrotasJugador++;
+    if ($this->jugador->valorMano() > 21 && $this->crupier->valorMano() > 21) return "E";
+    else if ($this->jugador->valorMano() > 21) return "D";
+    else if ($this->crupier->valorMano() > 21) return "V";
+    else if ($this->jugador->valorMano() == $this->crupier->valorMano()) return "E";
+    else if ($this->jugador->valorMano() > $this->crupier->valorMano()) return "V";
+    else return "D";
   }
 
 }

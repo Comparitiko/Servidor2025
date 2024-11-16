@@ -7,7 +7,7 @@ use BlackJack\views\components\SeccionJugadorComponent;
 
 class PartidaView
 {
-  public static function render(Partida $partida): void
+  public static function render(Partida $partida, $resultado = ""): void
   {
     ?>
     <!doctype html>
@@ -20,7 +20,7 @@ class PartidaView
       <title>BlackJack Gabriel</title>
       <style>
         body {
-          background-image: url("./views/assets/images/tablero-blackjack-2.webp");
+          background-image: url("./views/assets/images/tablero-blackjack.webp");
           background-position: center;
         }
 
@@ -34,19 +34,21 @@ class PartidaView
           border-radius: 10px;
           opacity: 80%;
         }
+
+        .resultado {
+          opacity: 85%;
+          width: fit-content;
+          margin: 1rem auto;
+          padding: 5px 10px;
+        }
       </style>
     </head>
     <body class="min-vh-100">
     <header
-      class="position-absolute w-100 d-flex justify-content-between align-items-center p-3 text-white bg-black">
+      class="w-100 d-flex justify-content-center align-items-center p-3 text-white bg-black">
       <h1>BlackJack</h1>
-      <div class="d-flex gap-5">
-        <h3>Victorias: <span class="text-success"><?= $partida->getVictoriasJugador() ?></span></h3>
-        <h3>Empates: <span class="text-warning"><?= $partida->getEmpatesJugador() ?></span></h3>
-        <h3>Derrotas: <span class="text-danger"><?= $partida->getDerrotasJugador() ?></span></h3>
-      </div>
     </header>
-    <main class="pt-5">
+    <main>
       <div class="pt-5 d-flex flex-column gap-5">
         <!--Pintar la seccion del jugador y el crupier-->
         <?php
@@ -54,12 +56,28 @@ class PartidaView
         SeccionJugadorComponent::render("Jugador", $partida->getJugador()->getMano());
         ?>
       </div>
-      <div class="d-flex gap-5 justify-content-center pt-3 mt-3">
-        <a class="btn btn-primary" href="index.php?accion=pedir_carta">Pedir carta</a>
-        <a class="btn btn-dark" href="index.php?accion=plantarse">Plantarse</a>
-        <a class="btn btn-danger" href="index.php?accion=resetear">Resetear</a>
+      <div class="d-flex gap-5 justify-content-center pt-3 mt-3 flex-wrap">
+        <a class="btn btn-primary <?= strlen($resultado) > 0 ? "disabled" : "" ?>" href="index.php?accion=pedir_carta">Pedir
+          carta</a>
+        <a class="btn btn-dark <?= strlen($resultado) > 0 ? "disabled" : "" ?>" href="index.php?accion=plantarse">Plantarse</a>
+        <a class="btn btn-danger" href="index.php?accion=nueva_partida">Nueva partida</a>
       </div>
     </main>
+    <?php
+    if (strlen($resultado) > 0) {
+      ?>
+      <div class="resultado bg-black text-white">
+        <?php if ($resultado == "V") { ?>
+          <h2>Has ganado enhorabuena</h2>
+        <?php } else if ($resultado == "E") { ?>
+          <h2>Has empatado</h2>
+        <?php } else { ?>
+          <h2>Has perdido sigue intentandolo</h2>
+        <?php } ?>
+      </div>
+      <?php
+    }
+    ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>

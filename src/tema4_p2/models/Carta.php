@@ -57,9 +57,15 @@ class Carta
   }
 
   // TODO hacer bien el metodo
-  public function getValor()
+  public function getValor(): int
   {
-    return $this->palo;
+    if ($this->figura === "A") {
+      return 11;
+    } else if ($this->figura === "J" || $this->figura === "Q" || $this->figura === "K") {
+      return 10;
+    } else {
+      return intval($this->figura);
+    }
   }
 
   private function getImageUrl(): string
