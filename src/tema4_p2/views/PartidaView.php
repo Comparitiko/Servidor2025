@@ -49,11 +49,11 @@ class PartidaView
       <h1>BlackJack</h1>
     </header>
     <main>
-      <div class="pt-5 d-flex flex-column gap-5">
+      <div class="pt-1 d-flex flex-column gap-5">
         <!--Pintar la seccion del jugador y el crupier-->
         <?php
-        SeccionJugadorComponent::render("Crupier", $partida->getCrupier()->getMano());
-        SeccionJugadorComponent::render("Jugador", $partida->getJugador()->getMano());
+        SeccionJugadorComponent::render("Crupier", $partida->getCrupier());
+        SeccionJugadorComponent::render("Jugador", $partida->getJugador());
         ?>
       </div>
       <div class="d-flex gap-5 justify-content-center pt-3 mt-3 flex-wrap">

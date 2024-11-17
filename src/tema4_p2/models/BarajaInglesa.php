@@ -23,6 +23,7 @@ class BarajaInglesa extends Baraja
     }
   }
 
+  // Sacar la primera carta del array de cartas
   public function repartirCarta(): Carta
   {
     return array_shift($this->mazo);

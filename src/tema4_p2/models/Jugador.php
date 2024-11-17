@@ -46,10 +46,10 @@ class Jugador
 
   protected function sePlanta(): void
   {
-    $this->estaPlantado = $this->valorMano() == 21;
+    $this->estaPlantado = $this->valorMano() >= 21;
   }
 
-  // TODO hacer bien el metodo
+  // Calcular el valor de la mano
   public function valorMano(): int
   {
     $suma = 0;

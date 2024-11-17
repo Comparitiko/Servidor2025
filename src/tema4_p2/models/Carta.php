@@ -56,7 +56,7 @@ class Carta
     return '<img src="' . $this->image . '" alt="' . $this->figura . ' de ' . $this->palo . '">';
   }
 
-  // TODO hacer bien el metodo
+  // Devolver el valor de la carta
   public function getValor(): int
   {
     if ($this->figura === "A") {
@@ -68,6 +68,7 @@ class Carta
     }
   }
 
+  // Devolver la url de la imagen de la carta
   private function getImageUrl(): string
   {
     $path = "./views/assets/images/cartas";

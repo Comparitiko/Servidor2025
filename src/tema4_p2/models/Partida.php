@@ -16,18 +16,30 @@ class Partida
     $this->sacarPrimerasCartas();
   }
 
+  /**
+   * Funcion para que crupier y jugador saquen una carta cada uno
+   * @return void
+   */
   private function sacarPrimerasCartas(): void
   {
     $this->pedirCartaCrupier();
     $this->pedirCartaJugador();
   }
 
+  /**
+   * Metodo para que el crupier reciba una carta de la baraja
+   * @return void
+   */
   public function pedirCartaCrupier(): void
   {
     $carta = $this->baraja->repartirCarta();
     $this->crupier->nuevaCarta($carta);
   }
 
+  /**
+   * Metodo para que el jugador reciba una carta de la baraja
+   * @return void
+   */
   public function pedirCartaJugador(): void
   {
     $carta = $this->baraja->repartirCarta();
