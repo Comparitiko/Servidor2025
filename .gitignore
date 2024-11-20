@@ -1,5 +1,5 @@
 .env
 mariadb
-mongodb
+mongo
 .idea
 plantilla

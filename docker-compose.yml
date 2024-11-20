@@ -22,6 +22,7 @@ services:
       - ./php.ini:/usr/local/etc/php/conf.d/php.ini
     depends_on:
       - mariadb
+      - mongodb
 
   # MariaDB
   mariadb:
@@ -37,3 +38,16 @@ services:
       - "3306:3306"
     volumes:
       - ./mariadb:/var/lib/mysql
+
+  mongodb:
+    container_name: mongodb
+    image: mongo:8.0.3
+    restart: on-failure
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD}
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo:/data/db
+
