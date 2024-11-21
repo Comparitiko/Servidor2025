@@ -1,0 +1,443 @@
+/* CSS Reset */
+*,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Pagina principal sin modo oscuro y para escritorio */
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #ccc;
+  min-height: 100dvh;
+  max-width: 100dvw;
+  transition-property: background-color, color;
+  transition-duration: .6s;
+}
+
+#container {
+  display: grid;
+  position: relative;
+  min-height: 100dvh;
+  grid-template-rows: 120px auto 120px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: fit-content;
+  padding: 5px 0;
+}
+
+.logoConatiner {
+  flex: 10;
+}
+
+#title {
+  width: fit-content;
+  padding-left: 10px;
+  text-decoration: none;
+  color: black;
+}
+
+#toggleThemeContainer {
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 25px;
+  height: 30px;
+}
+
+.toggleTheme {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  animation-name: rotateSunMoon;
+  animation-duration: 1s;
+}
+
+#sun {
+  display: block;
+}
+
+#moon {
+  display: none;
+}
+
+.video {
+  width: 100dvw;
+  height: 100dvh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: none;
+}
+
+.playing {
+  display: block;
+}
+
+#characters {
+  display: grid;
+  gap: 20px;
+  margin: 50px 20px;
+  grid-template-columns: repeat(4, 1fr)
+}
+
+.card {
+  width: 100%;
+  height: 600px;
+  border: 2px solid black;
+  box-shadow: 5px 5px 1px black;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.card:hover {
+  background-color: #ccc;
+  box-shadow: 5px 5px 10px 2px black;
+
+  & .card-image {
+    scale: 1.20;
+  }
+}
+
+.card-link {
+  color: black;
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+  padding: 40px 10px;
+  display: grid;
+  justify-content: center;
+  gap: 5px;
+}
+
+.card-image {
+  transition: .5s;
+  height: 300px;
+  margin: 30px auto;
+}
+
+.card h1,
+h2 {
+  color: black;
+  text-align: center;
+}
+
+.card-race {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  width: 200px;
+  padding: 5px 10px;
+  border-radius: 30px;
+  border: 1px solid black;
+  transition: .5s;
+  color: black;
+  box-shadow: black 1px 1px 2px 1px;
+}
+
+/* Dar un color segun la raza */
+.saiyan {
+  background-color: yellow;
+}
+
+.human {
+  background-color: burlywood;
+}
+
+.frieza {
+  background-color: #e95d3c;
+}
+
+.namekian {
+  background-color: lightgreen;
+}
+
+.android {
+  background-color: green;
+}
+
+.majin {
+  background-color: pink;
+}
+
+.god {
+  background-color: orange;
+}
+
+.angel {
+  background-color: lightblue;
+}
+
+.zeno {
+  background: linear-gradient(to right, purple, lightblue, purple);
+}
+
+.evil {
+  background-color: red;
+}
+
+.jiren {
+  background-color: #CAA1B5;
+}
+
+.nucleico {
+  background-color: #EE6B78;
+}
+
+/* Estilos botones paginas */
+.buttons {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.button-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: white;
+  background-color: #3f3f3f;
+  width: fit-content;
+  font-size: 18px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.button-page:hover {
+  background-color: #1f1f1f;
+}
+
+p {
+  color: black;
+}
+
+#piePagina {
+  margin-top: 20px;
+  width: 100%;
+  height: fit-content;
+  font-size: 1.2em;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#nombre {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+#piePagina form {
+  width: fit-content;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+#piePagina form label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+#piePagina form button {
+  width: fit-content;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: white;
+  background-color: #3f3f3f;
+  font-size: 18px;
+  text-align: center;
+  cursor: pointer;
+}
+
+/* Estilos de la pagina de cada personaje individual */
+.character-container {
+  padding-top: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.character-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.character-name {
+  text-align: center;
+  font-size: 2em;
+  font-weight: 700;
+}
+
+.character-image {
+  height: 600px;
+}
+
+.character-ki {
+  font-weight: 500;
+}
+
+.character-race {
+  width: 200px;
+  padding: 5px 15px;
+  border-radius: 30px;
+  margin: 0 auto;
+  border: 1px solid black;
+  box-shadow: 1px 1px 2px 2px #3a4859;
+}
+
+.character-description {
+  width: 80ch;
+  font-size: 1.2rem;
+  text-wrap: pretty;
+}
+
+/* Poner dark mode usando css nesting para que cuando se aplique el .dark en el container se apliquen los estilos que he puesto con el & */
+.dark {
+  background-color: #3f3f3f;
+  color: #ccc;
+
+  & p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #ccc;
+  }
+
+  & .card h1,
+  .card-ki,
+  .card-race {
+    color: black;
+  }
+
+  & #title {
+    color: #ccc;
+  }
+
+  & #sun {
+    display: none;
+  }
+
+  & #moon {
+    display: block;
+  }
+
+  & .button-page {
+    color: black;
+    background-color: white;
+  }
+
+  & .button-page:hover {
+    background-color: #ccc;
+  }
+
+  & #piePagina form button {
+    color: black;
+    background-color: white;
+  }
+
+  & .contact {
+    color: white;
+  }
+
+  & .character-race {
+    color: black;
+  }
+}
+
+/* Animacion para que rote el sol o la luna */
+@keyframes rotateSunMoon {
+  to {
+    rotate: -360deg;
+  }
+}
+
+/* Media query para poner 3 columnas cuando este el dispositivo entre 1100 y 1500 */
+@media (min-width: 1100px) and (max-width: 1500px) {
+  #characters {
+    grid-template-columns: repeat(3, 1fr)
+  }
+}
+
+/* Media query para poner 2 columnas cuando este el dispositivo entre 600 y 1100 */
+@media (min-width: 600px) and (max-width: 1100px) {
+  #characters {
+    grid-template-columns: repeat(2, 1fr)
+  }
+
+  .character-container {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .character-description {
+    width: 50ch;
+  }
+
+  #contactYtext {
+    flex-direction: column;
+  }
+}
+
+/* Media query para poner 1 columna cuando el dispositivo sea menor que 600px */
+@media (max-width: 600px) {
+  #characters {
+    grid-template-columns: repeat(1, 1fr)
+  }
+
+  .character-container {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .character-description {
+    width: 30ch;
+    margin: 0 auto;
+  }
+
+  #piePagina {
+    font-size: .8em;
+  }
+
+  #contactYtext {
+    flex-direction: column;
+  }
+
+  #piePagina form {
+    gap: 40px;
+  }
+
+  #piePagina form label {
+    gap: 40px;
+  }
+
+  .character-image {
+    height: 550px;
+  }
+}
