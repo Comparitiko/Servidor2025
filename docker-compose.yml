@@ -19,7 +19,6 @@ services:
     restart: on-failure
     volumes:
       - ./src:/var/www/html
-      - ./php.ini:/usr/local/etc/php/conf.d/php.ini
     depends_on:
       - mariadb
       - mongodb
