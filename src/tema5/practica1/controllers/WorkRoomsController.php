@@ -2,10 +2,10 @@
 
 namespace CoworkingMongo\controllers;
 
-use Coworking\models\WorkRoomsModel;
-use Coworking\views\WorkRoomsView;
+use CoworkingMongo\models\WorkRoomsModel;
+use CoworkingMongo\views\WorkRoomsView;
 
-class WorkRoomsController
+class MongoWorkRoomsController
 {
   public static function showAllWorkRooms($info = ""): void
   {

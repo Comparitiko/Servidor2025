@@ -2,7 +2,6 @@
 
 namespace CoworkingMongo\models;
 
-use Coworking\models\User;
 use PDO;
 
 class UsersModel
@@ -67,7 +66,7 @@ class UsersModel
     $stmt->bindValue(":username", $username);
     $stmt->bindValue(":email", $email);
 
-    $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Coworking\models\User');
+    $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'CoworkingMongo\models\User');
     $stmt->execute();
 
     $connDB->closeConnection();
@@ -97,7 +96,7 @@ class UsersModel
 
     $stmt->bindValue(":email", $email);
 
-    $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Coworking\models\User');
+    $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'CoworkingMongo\models\User');
     $stmt->execute();
 
     $connDB->closeConnection();

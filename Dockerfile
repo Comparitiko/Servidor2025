@@ -6,8 +6,9 @@ RUN apt-get install git nano unzip libssl-dev -y
 RUN curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php
 
 RUN pecl install mongodb && docker-php-ext-enable mongodb
-
 RUN echo "extension=mongodb.so" >> /usr/local/etc/php/php.ini
+
+RUN curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php
 
 RUN cd ~
 

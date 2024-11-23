@@ -2,7 +2,6 @@
 
 namespace CoworkingMongo\models;
 
-use Coworking\models\Reservation;
 use PDO;
 
 class ReservationModel

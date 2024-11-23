@@ -2,36 +2,21 @@
 
 namespace CoworkingMongo\models;
 
-use PDO;
-use PDOException;
+use MongoDB\Driver\Manager;
 
 class DBConnection
 {
-  private PDO|null $conn;
+  private $client;
 
   public function __construct()
   {
-    $host = 'mariadb:3306'; // Ip of the docker container and the internal port
+    $mongoUri = 'mongodb://gabriel:gabriel123@mongodb:27017'; // Uri to connect to mongo database
 
-    try {
-
-      $this->conn = new PDO("mysql:host=" . $host . ";dbname=" . "salas_coworking_gabriel", "gabriel", "gabriel123");
-      $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $this->conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-
-
-    } catch (PDOException $e) {
-      $this->conn = null;
-    }
+    $this->client = new Manager($mongoUri);
   }
 
-  public function getConnection()
+  public function getClient()
   {
-    return $this->conn;
-  }
-
-  public function closeConnection()
-  {
-    unset($this->conn);
+    return $this->client;
   }
 }

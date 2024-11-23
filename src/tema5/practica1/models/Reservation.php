@@ -2,7 +2,7 @@
 
 namespace CoworkingMongo\models;
 
-use Coworking\enums\Status;
+use CoworkingMongo\enums\Status;
 
 class Reservation
 {

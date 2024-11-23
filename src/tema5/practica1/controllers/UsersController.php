@@ -2,10 +2,10 @@
 
 namespace CoworkingMongo\controllers;
 
-use Coworking\models\User;
-use Coworking\models\UsersModel;
-use Coworking\views\LoginView;
-use Coworking\views\RegisterView;
+use CoworkingMongo\models\User;
+use CoworkingMongo\models\UsersModel;
+use CoworkingMongo\views\LoginView;
+use CoworkingMongo\views\RegisterView;
 
 class UsersController
 {

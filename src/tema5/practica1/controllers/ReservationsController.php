@@ -2,12 +2,12 @@
 
 namespace CoworkingMongo\controllers;
 
-use Coworking\models\Reservation;
-use Coworking\models\ReservationModel;
-use Coworking\models\WorkRoomsModel;
-use Coworking\views\MyReservationsView;
-use Coworking\views\NewReservationView;
-use Coworking\views\ReservationsView;
+use CoworkingMongo\models\Reservation;
+use CoworkingMongo\models\ReservationModel;
+use CoworkingMongo\models\WorkRoomsModel;
+use CoworkingMongo\views\MyReservationsView;
+use CoworkingMongo\views\NewReservationView;
+use CoworkingMongo\views\ReservationsView;
 
 class ReservationsController
 {
