@@ -19,9 +19,7 @@ scanDirectory($filePathsArr, $rootPath);
 
 $temas = array_unique(array_map(fn($filePath) => explode("/", $filePath)[4], $filePathsArr));
 
-foreach ($temas as $tema) {
-  pintarTemas($tema, $filePathsArr);
-}
+pintarTemas($temas[1], $filePathsArr);
 
 function firstLetterToUpperCase($string)
 {
