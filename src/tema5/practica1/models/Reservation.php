@@ -4,17 +4,18 @@ namespace CoworkingMongo\models;
 
 use CoworkingMongo\enums\Status;
 use MongoDB\BSON\Document;
+use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Persistable;
 use stdClass;
 
 class Reservation implements Persistable
 {
-  private $id;
-  private $user;
-  private $room;
-  private $reservationDate;
-  private $startTime;
-  private $endTime;
+  private ObjectId $id;
+  private array $user;
+  private array $room;
+  private string $reservation_date;
+  private string $start_time;
+  private string $end_time;
   private Status $status;
 
   /**
@@ -26,16 +27,15 @@ class Reservation implements Persistable
    * @param $endTime
    * @param $status
    */
-  public function __construct($id = "", $userName = "", $roomName = "", $reservationDate = "", $startTime = "",
-                              $endTime = "")
+  public function __construct($user = [], $room = [], $reservation_date = "", $start_time = "",
+                              $end_time = "")
   {
-    $this->id = $id;
+    $this->id = new ObjectId();
     $this->userName = $userName;
     $this->roomName = $roomName;
     $this->reservationDate = $reservationDate;
     $this->startTime = $startTime;
     $this->endTime = $endTime;
-    unset($this->status);
   }
 
   public function getId(): mixed
@@ -106,19 +106,6 @@ class Reservation implements Persistable
   public function setStatus(string $status): void
   {
     $this->status = Status::from($status);
-  }
-
-  // Need this method for convert string to enum and in the constructor need to unser the property or save the enum
-  // directly if is created by user
-  public function __set($key, $value)
-  {
-    if ($key === 'status') {
-      if (gettype($value) === "string") {
-        $this->status = Status::from($value);
-      } else {
-        $this->status = $value;
-      }
-    }
   }
 
   public function bsonSerialize(): array|stdClass|Document
