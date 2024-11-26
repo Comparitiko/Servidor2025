@@ -3,12 +3,15 @@
 namespace CoworkingMongo\models;
 
 use CoworkingMongo\enums\Status;
+use MongoDB\BSON\Document;
+use MongoDB\BSON\Persistable;
+use stdClass;
 
-class Reservation
+class Reservation implements Persistable
 {
   private $id;
-  private $userName;
-  private $roomName;
+  private $user;
+  private $room;
   private $reservationDate;
   private $startTime;
   private $endTime;
@@ -116,5 +119,15 @@ class Reservation
         $this->status = $value;
       }
     }
+  }
+
+  public function bsonSerialize(): array|stdClass|Document
+  {
+    // TODO: Implement bsonSerialize() method.
+  }
+
+  public function bsonUnserialize(array $data)
+  {
+    // TODO: Implement bsonUnserialize() method.
   }
 }

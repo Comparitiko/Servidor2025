@@ -1,0 +1,56 @@
+[{
+  "_id": {
+    "$oid": "6745a0de72fd40e64043c15d"
+  },
+  "name": "Emmerich - Effertz",
+  "capacity": 8,
+  "location": "Paradigm"
+},
+{
+  "_id": {
+    "$oid": "6745a0de72fd40e64043c15e"
+  },
+  "name": "Gerhold - McClure",
+  "capacity": 7,
+  "location": "Quality"
+},
+{
+  "_id": {
+    "$oid": "6745a0de72fd40e64043c15f"
+  },
+  "name": "Runolfsdottir, Reilly and Dare",
+  "capacity": 3,
+  "location": "Integration"
+},
+{
+  "_id": {
+    "$oid": "6745a0de72fd40e64043c160"
+  },
+  "name": "Sanford - Weissnat",
+  "capacity": 7,
+  "location": "Creative"
+},
+{
+  "_id": {
+    "$oid": "6745a0de72fd40e64043c161"
+  },
+  "name": "Leffler Group",
+  "capacity": 10,
+  "location": "Intranet"
+},
+{
+  "_id": {
+    "$oid": "6745a0de72fd40e64043c162"
+  },
+  "name": "Koepp - Stracke",
+  "capacity": 10,
+  "location": "Brand"
+},
+{
+  "_id": {
+    "$oid": "6745a0de72fd40e64043c163"
+  },
+  "name": "Hoppe, Reynolds and Senger",
+  "capacity": 7,
+  "location": "Solutions"
+}]

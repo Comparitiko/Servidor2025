@@ -5,7 +5,7 @@ namespace CoworkingMongo\controllers;
 use CoworkingMongo\models\WorkRoomsModel;
 use CoworkingMongo\views\WorkRoomsView;
 
-class MongoWorkRoomsController
+class WorkRoomsController
 {
   public static function showAllWorkRooms($info = ""): void
   {

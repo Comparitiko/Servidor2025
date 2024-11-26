@@ -2,9 +2,9 @@
 
 namespace CoworkingMongo;
 
+use CoworkingMongo\controllers\WorkRoomsController;
 use CoworkingMongo\controllers\ReservationsController;
 use CoworkingMongo\controllers\UsersController;
-use CoworkingMongo\controllers\WorkRoomsController;
 use CoworkingMongo\models\Reservation;
 use CoworkingMongo\models\User;
 
@@ -24,49 +24,49 @@ if ($_GET) {
   // Handle all GET requests
 
   // Handle show_register action
-  if ($_GET["action"] && strcmp($_GET["action"], "show_register") == 0) {
+  if (isset($_GET["action"]) && strcmp($_GET["action"], "show_register") == 0) {
     $info = $_GET["info"];
     UsersController::showRegisterForm($info);
   }
 
   // Handle show_login action
-  if ($_GET["action"] && strcmp($_GET["action"], "show_login") == 0) {
+  if (isset($_GET["action"]) && strcmp($_GET["action"], "show_login") == 0) {
     $info = $_GET["info"];
     UsersController::showLoginForm($info);
   }
 
   // Handle logout action
-  if ($_GET["action"] && strcmp($_GET["action"], "logout") == 0) {
+  if (isset($_GET["action"]) && strcmp($_GET["action"], "logout") == 0) {
     UsersController::logout();
   }
 
   // Handle show_available_rooms action
-  if ($_GET["action"] && strcmp($_GET["action"], "show_available_rooms") == 0) {
+  if (isset($_GET["action"]) && strcmp($_GET["action"], "show_available_rooms") == 0) {
     $info = $_GET["info"];
     WorkRoomsController::showAllWorkRooms($info);
   }
 
   // Handle show_reservations of a workroom
-  if ($_GET["action"] && strcmp($_GET["action"], "show_reservations") == 0) {
+  if (isset($_GET["action"]) && strcmp($_GET["action"], "show_reservations") == 0) {
     $roomName = $_GET["room_name"];
     $info = $_GET["info"];
     ReservationsController::showFutureAndConfirmedReservationsByRoomName($roomName, $info);
   }
 
   // Handle show_my_reservations of a workroom
-  if ($_GET["action"] && strcmp($_GET["action"], "show_my_reservations") == 0) {
+  if (isset($_GET["action"]) && strcmp($_GET["action"], "show_my_reservations") == 0) {
     $info = $_GET["info"];
     ReservationsController::showFutureAndConfirmedReservationsByUserId($info);
   }
 
   // Handle cancel_reservation of the logged user
-  if ($_GET["action"] && strcmp($_GET["action"], "cancel_reservation") == 0) {
+  if (isset($_GET["action"]) && strcmp($_GET["action"], "cancel_reservation") == 0) {
     $reservationId = $_GET["reservation_id"];
     ReservationsController::cancelReservationByUserIdAndReservationId($reservationId);
   }
 
   // Handle show_new_reservation
-  if ($_GET["action"] && strcmp($_GET["action"], "show_new_reservation") == 0) {
+  if (isset($_GET["action"]) && strcmp($_GET["action"], "show_new_reservation") == 0) {
     $info = $_GET["info"];
     ReservationsController::showNewReservation($info);
   }
@@ -81,7 +81,7 @@ if ($_GET) {
     $password = $_POST["password"];
     $confirmPassword = $_POST["confirm_password"];
     $phone = $_POST["phone"];
-    $user = new User(0, $username, $email, $password, $phone);
+    $user = new User($username, $email, $password, $phone);
     UsersController::register($user, $confirmPassword);
   }
 
@@ -139,7 +139,7 @@ if ($_GET) {
     ReservationsController::createNewReservation($reservation, $userId, $roomId);
   }
 
-} else if ($_SESSION["user"]) {
+} else if (isset($_SESSION["user"])) {
   // User logged in
   WorkRoomsController::showAllWorkRooms();
 } else {

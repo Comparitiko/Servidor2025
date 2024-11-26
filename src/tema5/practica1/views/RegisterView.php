@@ -9,7 +9,7 @@ class RegisterView
   {
     return match ($info) {
       "passwords" => ["error", "Las contraseñas introducidas no coinciden"],
-      "user_exists" => ["error", "Usuario o email ya existen"],
+      "user_exist" => ["error", "Usuario o email ya existen"],
       "server_error" => ["error", "Error en el registro, intente de nuevo mas tarde"],
     };
   }

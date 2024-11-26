@@ -2,7 +2,8 @@
 
 namespace CoworkingMongo\models;
 
-use PDO;
+use CoworkingMongo\enums\Collections;
+use MongoDB\BSON\ObjectId;
 
 class UsersModel
 {
@@ -10,34 +11,24 @@ class UsersModel
    * Create user in database with his data, return null if there is an error with database, if is inserted correctly
    * return true if not return false
    * @param $user User
-   * @return int|null
+   * @return ObjectId
    */
-  public static function register(User $user): int|null
+  public static function register(User $user): ObjectId|false|null
   {
-    $connDB = new DBConnection();
+    $conn = new DBConnection();
 
-    $conn = $connDB->getConnection();
+    $userCollection = $conn->getCollection(Collections::USERS);
 
     // Check if there is an error in the connection
-    if (is_null($conn)) return null;
+    if (is_null($userCollection)) return null;
 
-    $stmt = $conn->prepare("
-        INSERT INTO users (username, email, password, phone) VALUES
-        (:username, :email, :password, :phone)
-    ");
+    $userInserted = $userCollection->insertOne($user);
 
-    $stmt->bindValue(":username", $user->getUsername());
-    $stmt->bindValue(":email", $user->getEmail());
-    $stmt->bindValue(":password", $user->getPassword());
-    $stmt->bindValue(":phone", $user->getPhone());
+    if (!isset($userInserted)) return false;
 
-    $stmt->execute();
+    $conn->closeConnection();
 
-    $id = $conn->lastInsertId();
-
-    $connDB->closeConnection();
-
-    return $id;
+    return $user->getId();
   }
 
   /**
@@ -49,58 +40,40 @@ class UsersModel
    */
   public static function userExists($username, $email): bool|null
   {
-    $connDB = new DBConnection();
+    $conn = new DBConnection();
 
-    $conn = $connDB->getConnection();
+    $userCollection = $conn->getCollection(Collections::USERS);
 
     // Check if there is an error in the connection
-    if (is_null($conn)) return null;
+    if (is_null($userCollection)) return null;
 
-    $stmt = $conn->prepare("
-        SELECT 1 
-        FROM users 
-        WHERE username = :username 
-        OR email = :email
-    ");
+    $documentsCount = $userCollection->countDocuments(["email" => $email, "username" => $username]);
 
-    $stmt->bindValue(":username", $username);
-    $stmt->bindValue(":email", $email);
+    $conn->closeConnection();
 
-    $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'CoworkingMongo\models\User');
-    $stmt->execute();
-
-    $connDB->closeConnection();
-
-    return $stmt->rowCount() > 0;
+    return $documentsCount > 0;
   }
 
   /**
    * Get the user information by email, if return null, database failed, if return false, user does not exist
    * @param $email
-   * @return User|false|null
+   * @return array|object|false|null
    */
-  public static function getUserByEmail($email): false|User|null
+  public static function getUserByEmail($email): array|object|false|null
   {
-    $connDB = new DBConnection();
+    $conn = new DBConnection();
 
-    $conn = $connDB->getConnection();
+    $userCollection = $conn->getCollection(Collections::USERS);
 
     // Check if there is an error in the connection
-    if (is_null($conn)) return null;
+    if (is_null($userCollection)) return null;
 
-    $stmt = $conn->prepare("
-        SELECT * 
-        FROM users 
-        WHERE email = :email
-    ");
+    $user = $userCollection->findOne(["email" => $email]);
 
-    $stmt->bindValue(":email", $email);
+    $conn->closeConnection();
 
-    $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'CoworkingMongo\models\User');
-    $stmt->execute();
+    if (!isset($user)) return false;
 
-    $connDB->closeConnection();
-
-    return $stmt->fetch();
+    return $user;
   }
 }

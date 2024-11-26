@@ -2,6 +2,7 @@
 
 namespace CoworkingMongo\models;
 
+use CoworkingMongo\enums\Collections;
 use PDO;
 
 class WorkRoomsModel
@@ -12,19 +13,22 @@ class WorkRoomsModel
    */
   public static function getAll(): false|array|null
   {
-    $connDB = new DBConnection();
+    $conn = new DBConnection();
 
-    $conn = $connDB->getConnection();
+    $workRoomsCollection = $conn->getCollection(Collections::WORK_ROOMS);
 
     // Check if there is an error in the connection
-    if (is_null($conn)) return null;
+    if (is_null($workRoomsCollection)) return null;
 
-    $stmt = $conn->query("SELECT * FROM work_rooms");
+    // Convert documents in objects of type WorkRoom
+    $workRooms = $workRoomsCollection->find([], [
+      'typeMap' => [
+        'root' => WorkRoom::class, // Devuelve los documentos como objetos
+      ],
+    ]);
 
-    $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Coworking\models\WorkRoom');
+    $conn->closeConnection();
 
-    $connDB->closeConnection();
-
-    return $stmt->fetchAll();
+    return $workRooms->toArray();
   }
 }

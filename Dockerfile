@@ -1,4 +1,4 @@
-FROM php:8.3-fpm
+FROM php:8.4-fpm
 
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get install git nano unzip libssl-dev -y
@@ -17,3 +17,14 @@ RUN php -r "if (hash_file('SHA384', '/tmp/composer-setup.php') === '$HASH') { ec
 RUN php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
 
 RUN docker-php-ext-install pdo pdo_mysql
+
+# Copiar el script de entrada
+COPY ./entrypoints/php.entrypoint.sh /entrypoints/entrypoint.sh
+
+# Asegurar permisos de ejecución
+RUN chmod +x /entrypoints/entrypoint.sh
+
+# Configurar el script de entrada como punto de entrada
+ENTRYPOINT ["/entrypoints/entrypoint.sh"]
+
+CMD ["php-fpm"]

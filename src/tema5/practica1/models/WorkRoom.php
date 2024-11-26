@@ -2,12 +2,17 @@
 
 namespace CoworkingMongo\models;
 
-class WorkRoom
+use MongoDB\BSON\Document;
+use MongoDB\BSON\ObjectId;
+use MongoDB\BSON\Persistable;
+use stdClass;
+
+class WorkRoom implements Persistable
 {
-  private $id;
-  private $name;
-  private $capacity;
-  private $location;
+  private ObjectId $id;
+  private string $name;
+  private int $capacity;
+  private string $location;
 
   /**
    * @param $id
@@ -15,20 +20,20 @@ class WorkRoom
    * @param $capacity
    * @param $location
    */
-  public function __construct($id = 0, $name = "", $capacity = "", $location = "")
+  public function __construct(string $name, int $capacity, string $location)
   {
-    $this->id = $id;
+    $this->id = new ObjectId();
     $this->name = $name;
     $this->capacity = $capacity;
     $this->location = $location;
   }
 
-  public function getId(): mixed
+  public function getId(): ObjectId
   {
     return $this->id;
   }
 
-  public function setId(mixed $id): void
+  public function setId(ObjectId $id): void
   {
     $this->id = $id;
   }
@@ -64,4 +69,21 @@ class WorkRoom
   }
 
 
+  public function bsonSerialize(): array|stdClass|Document
+  {
+    return [
+      "_id" => $this->id,
+      "name" => $this->name,
+      "capacity" => $this->capacity,
+      "location" => $this->location,
+    ];
+  }
+
+  public function bsonUnserialize(array $data)
+  {
+    $this->id = $data["_id"];
+    $this->name = $data["name"];
+    $this->capacity = $data["capacity"];
+    $this->location = $data["location"];
+  }
 }

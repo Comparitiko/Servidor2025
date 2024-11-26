@@ -2,21 +2,49 @@
 
 namespace CoworkingMongo\models;
 
-use MongoDB\Driver\Manager;
+use CoworkingMongo\enums\Collections;
+use MongoDB\Client;
+use MongoDB\Collection;
+use MongoDB\Exception\Exception;
+
+require "./vendor/autoload.php";
 
 class DBConnection
 {
-  private $client;
+  private Client|null $client;
 
+  /**
+   * Connect to database
+   * @return void
+   */
   public function __construct()
   {
     $mongoUri = 'mongodb://gabriel:gabriel123@mongodb:27017'; // Uri to connect to mongo database
-
-    $this->client = new Manager($mongoUri);
+    try {
+      $this->client = new Client($mongoUri);
+    } catch (Exception $e) {
+      $this->client = null;
+    }
   }
 
-  public function getClient()
+  /**
+   * Get the collection that is passed from parameter
+   * @param Collections $collection
+   * @return Collection|null
+   */
+  public function getCollection(Collections $collection): Collection|null
   {
-    return $this->client;
+    if (is_null($this->client)) return null;
+
+    return $this->client->selectCollection('coworking', $collection->value);
+  }
+
+  /**
+   * Close connection of the database
+   * @return void
+   */
+  public function closeConnection()
+  {
+    $this->client = null;
   }
 }
