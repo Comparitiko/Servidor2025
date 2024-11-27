@@ -1,0 +1,48 @@
+[{
+  "_id": {
+    "$oid": "6745a7e880e30f50f709b286"
+  },
+  "__pclass": {
+    "$binary": {
+      "base64": "Q293b3JraW5nTW9uZ29cbW9kZWxzXFVzZXI=",
+      "subType": "80"
+    }
+  },
+  "username": "Gabriel",
+  "email": "gabriel@gmail.com",
+  "password": "$2y$12$/wemh6/Q4IpbsToBsuRRQO/0a9se8kk3AZgBhqOctYXMsuj08ofKS",
+  "phone": "111222333",
+  "created_at": "2024-11-22"
+},
+{
+  "_id": {
+    "$oid": "6746e59c3101a347e60d79b2"
+  },
+  "__pclass": {
+    "$binary": {
+      "base64": "Q293b3JraW5nTW9uZ29cbW9kZWxzXFVzZXI=",
+      "subType": "80"
+    }
+  },
+  "username": "Manolo",
+  "email": "manolo@gmail.com",
+  "password": "$2y$12$nTtWKHkLBU5fDGYDikmlwe3saeL2p18bv3LBqOxw/ru0UlFLm0DcW",
+  "phone": "111222333",
+  "created_at": "2024-11-27"
+},
+{
+  "_id": {
+    "$oid": "6746e5b731ec7f09470c74b2"
+  },
+  "__pclass": {
+    "$binary": {
+      "base64": "Q293b3JraW5nTW9uZ29cbW9kZWxzXFVzZXI=",
+      "subType": "80"
+    }
+  },
+  "username": "Maria",
+  "email": "maria@gmail.com",
+  "password": "$2y$12$kb7Xg8gpXZSfuQ1pBlfb2OiBHa8v75h80Wm.3XODczpJyjnyc.YnK",
+  "phone": "999888777",
+  "created_at": "2024-11-27"
+}]

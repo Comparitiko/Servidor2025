@@ -2,7 +2,7 @@
 
 namespace CoworkingMongo\enums;
 
-enum Status: string
+enum ReservationStatus: string
 {
   case CONFIRMED = 'confirmada';
 

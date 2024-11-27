@@ -41,7 +41,7 @@ class NewReservationView
               } else {
               foreach ($woorkRooms as $woorkRoom) {
                 ?>
-                <option value="<?= $woorkRoom->getId() ?>"><?= $woorkRoom->getName() ?></option>
+                <option value="<?= $woorkRoom->getName() ?>"><?= $woorkRoom->getName() ?></option>
                 <?php
               }
               ?>

@@ -2,115 +2,128 @@
 
 namespace CoworkingMongo\models;
 
+use CoworkingMongo\enums\Collections;
+use CoworkingMongo\enums\ReservationStatus;
+use MongoDB\BSON\ObjectId;
+use MongoDB\BSON\UTCDateTime;
 use PDO;
 
 class ReservationModel
 {
   /**
-   * Get all future and confirmed reservations by room id, if not db connection return null, if none is found return
+   * Get all future and confirmed reservations by room name, if not db connection return null, if none is found return
    * false
-   * @param $roomId
+   * @param $room_name
    * @return false|array|null
    */
-  public static function getFutureAndConfirmedReservationsByRoomName($roomName): false|array|null
+  public static function getFutureAndConfirmedReservationsByRoomName($room_name): false|array|null
   {
-    $connDB = new DBConnection();
+    $conn = new DBConnection();
 
-    $conn = $connDB->getConnection();
+    $reservationsCollection = $conn->getCollection(Collections::RESERVATIONS);
 
     // Check if there is an error in the connection
-    if (is_null($conn)) return null;
+    if (is_null($reservationsCollection)) return null;
 
-    $stmt = $conn->prepare("
-      SELECT r.id, u.username as userName, wr.name as roomName, r.reservation_date as reservationDate, r.start_time as startTime, r.end_time as endTime, r.status
-      FROM reservations r
-      JOIN users u ON r.user_id = u.id
-      JOIN work_rooms wr ON r.room_id = wr.id
-      WHERE wr.name = :roomName
-      AND r.reservation_date > NOW()
-      AND status LIKE 'confirmada'
-      ORDER BY r.reservation_date
-      ");
+    $reservations = $reservationsCollection->find([
+        'room_name' => $room_name,
+        'reservation_date' => [
+          '$gt' => date("Y-m-d")
+        ],
+        'status' => ReservationStatus::CONFIRMED->value,
+      ],
+      [
+        'sort' => [
+          'reservation_date' => -1
+        ],
+        'typeMap' => [
+          'root' => Reservation::class, // Devuelve los documentos como objetos
+        ],
+      ]
+    );
 
-    $stmt->bindValue(":roomName", $roomName);
+    $conn->closeConnection();
 
-    $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Coworking\models\Reservation');
+    $resArr = $reservations->toArray();
 
-    $stmt->execute();
+    if (count($resArr) === 0) return false;
 
-    $connDB->closeConnection();
-
-    return $stmt->fetchAll();
+    return $resArr;
   }
 
   /**
-   * Get all future and confirmed reservations by user id, if not db connection return null, if none is found return
+   * Get all future and confirmed reservations by username, if not db connection return null, if none is found return
    * false
-   * @param $roomId
+   * @param $username
    * @return false|array|null
    */
-  public static function getFutureAndConfirmedReservationsByUserId($userId): false|array|null
+  public static function getFutureAndConfirmedReservationsByUserName($username): false|array|null
   {
-    $connDB = new DBConnection();
+    $conn = new DBConnection();
 
-    $conn = $connDB->getConnection();
+    $reservationCollection = $conn->getCollection(Collections::RESERVATIONS);
 
     // Check if there is an error in the connection
-    if (is_null($conn)) return null;
+    if (is_null($reservationCollection)) return null;
 
-    $stmt = $conn->prepare("
-      SELECT r.id, u.username as userName, wr.name as roomName, r.reservation_date as reservationDate, r.start_time as startTime, r.end_time as endTime, r.status
-      FROM reservations r
-      JOIN users u ON r.user_id = u.id
-      JOIN work_rooms wr ON r.room_id = wr.id
-      WHERE r.reservation_date > NOW()
-      AND status LIKE 'confirmada'
-      AND u.id = :userId
-      ");
+    $reservations = $reservationCollection->find([
+      'username' => $username,
+        'reservation_date' => [
+          '$gt' => date("Y-m-d")
+        ],
+        'status' => ReservationStatus::CONFIRMED->value,
+      ],
+      [
+        'sort' => [
+          'reservation_date' => -1
+        ],
+        'typeMap' => [
+          'root' => Reservation::class, // Devuelve los documentos como objetos
+        ],
+      ]);
 
-    $stmt->bindValue(":userId", $userId);
+    $resArr = $reservations->toArray();
 
-    $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Coworking\models\Reservation');
+    $conn->closeConnection();
 
-    $stmt->execute();
+    if (count($resArr) === 0) return false;
 
-    $connDB->closeConnection();
-
-    return $stmt->fetchAll();
+    return $resArr;
   }
 
   /**
-   * Cancel one reservation by user id and reservation id and return true if no error, if not db connection return null,
+   * Cancel one reservation by username and reservation id and return true if no error, if not db connection return
+   * null,
    * if none is modified
    * return false
    * @param $userId
    * @param $reservationId
    * @return bool|null
    */
-  public static function cancelReservationByUserIdAndReservationId($userId, $reservationId): bool|null
+  public static function cancelReservationByUserNameAndReservationId($username, $reservation_id): bool|null
   {
-    $connDB = new DBConnection();
+    $conn = new DBConnection();
 
-    $conn = $connDB->getConnection();
+    $reservationCollection = $conn->getCollection(Collections::RESERVATIONS);
 
     // Check if there is an error in the connection
-    if (is_null($conn)) return null;
+    if (is_null($reservationCollection)) return null;
 
-    $stmt = $conn->prepare("
-      UPDATE reservations
-      SET status = 'cancelada'
-      WHERE user_id = :userId
-      AND id = :reservationId
-      ");
+    $reservationMod = $reservationCollection->updateOne(
+      [
+        '_id' => new ObjectId($reservation_id),
+        'username' => $username,
+      ],
+      [
+        '$set' => [
+          'status' => ReservationStatus::CANCELLED->value,
+        ]
+      ],
+    );
 
-    $stmt->bindValue(":userId", $userId);
-    $stmt->bindValue(":reservationId", $reservationId);
+    $conn->closeConnection();
 
-    $stmt->execute();
-
-    $connDB->closeConnection();
-
-    return $stmt->rowCount() > 0;
+    return  $reservationMod->getModifiedCount() > 0;
   }
 
   /**
@@ -118,47 +131,56 @@ class ReservationModel
    * return null,
    * if none is inserted
    * return false
-   * @param \Coworking\models\Reservation $reservation
+   * @param Reservation $reservation
    * @param $roomId
    * @return bool|null
    */
-  public static function canBeInserted(Reservation $reservation, $roomId): ?bool
+  public static function canBeInserted(Reservation $reservation, $room_name): ?bool
   {
-    $connDB = new DBConnection();
+    $conn = new DBConnection();
 
-    $conn = $connDB->getConnection();
+    $reservationCollection = $conn->getCollection(Collections::RESERVATIONS);
 
     // Check if there is an error in the connection
-    if (is_null($conn)) return null;
+    if (is_null($reservationCollection)) return null;
 
-    $stmt = $conn->prepare("
-        SELECT 1
-        FROM reservations
-        WHERE room_id = :roomId
-        AND reservation_date = :reservationDate
-        AND status LIKE 'confirmada'
-        AND (
-            (:startTime BETWEEN start_time AND end_time)
-            OR (:endTime BETWEEN start_time AND end_time)
-            OR (start_time BETWEEN :startTime2 AND :endTime2)
-            OR (end_time BETWEEN :startTime3 AND :endTime3)
-        )
-      ");
+    $reservations = $reservationCollection->find([
+      'room_name' => $room_name,
+      'reservation_date' => $reservation->getReservationDate(),
+      'status' => ReservationStatus::CONFIRMED->value,
+      '$or' => [
+        [
+          '$and' => [
+            ['start_time' => ['$gte' => $reservation->getStartTime()]],
+            ['start_time' => ['$lte' => $reservation->getEndTime()]]
+          ],
+        ],
+        [
+          '$and' => [
+            ['end_time' => ['$gte' => $reservation->getStartTime()]],
+            ['end_time' => ['$lte' => $reservation->getEndTime()]]
+          ]
+        ],
+        [
+          '$and' => [
+            [
+              ['start_time' => ['$gte' => $reservation->getStartTime()]],
+              ['start_time' => ['$lte' => $reservation->getEndTime()]]
+            ],
+            [
+              ['end_time' => ['$gte' => $reservation->getStartTime()]],
+              ['end_time' => ['$lte' => $reservation->getEndTime()]]
+            ]
+          ]
+        ]
+      ]
+    ]);
 
-    $stmt->bindValue(":roomId", $roomId);
-    $stmt->bindValue(":reservationDate", $reservation->getReservationDate());
-    $stmt->bindValue(":startTime", $reservation->getStartTime());
-    $stmt->bindValue(":endTime", $reservation->getEndTime());
-    $stmt->bindValue(":startTime2", $reservation->getStartTime());
-    $stmt->bindValue(":endTime2", $reservation->getEndTime());
-    $stmt->bindValue(":startTime3", $reservation->getStartTime());
-    $stmt->bindValue(":endTime3", $reservation->getEndTime());
+    var_dump($reservations->toArray());
 
-    $stmt->execute();
+    $conn->closeConnection();
 
-    $connDB->closeConnection();
-
-    return $stmt->rowCount() === 0;
+    // return $reservations === 0;
   }
 
   /**
@@ -170,7 +192,7 @@ class ReservationModel
    * @param $roomId
    * @return bool|null
    */
-  public static function newReservation(Reservation $reservation, $userId, $roomId): ?bool
+  public static function newReservation(Reservation $reservation, $userName, $roomName): ?bool
   {
     $connDB = new DBConnection();
 

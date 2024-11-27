@@ -35,7 +35,7 @@ class ReservationsController
       exit();
     }
 
-    $reservations = ReservationModel::getFutureAndConfirmedReservationsByUserId($_SESSION["user"]["id"]);
+    $reservations = ReservationModel::getFutureAndConfirmedReservationsByUserName($_SESSION["user"]["username"]);
     MyReservationsView::render($reservations, $info);
   }
 
@@ -46,7 +46,7 @@ class ReservationsController
       exit();
     }
 
-    $modifiedCorrectly = ReservationModel::cancelReservationByUserIdAndReservationId($_SESSION["user"]["id"],
+    $modifiedCorrectly = ReservationModel::cancelReservationByUserNameAndReservationId($_SESSION["user"]["username"],
       $reservationId);
 
     if (is_null($modifiedCorrectly)) {
@@ -75,27 +75,27 @@ class ReservationsController
     NewReservationView::render($woorkRooms, $info);
   }
 
-  public static function createNewReservation(Reservation $reservation, $userId, $roomId): void
+  public static function createNewReservation(Reservation $reservation, $username, $room_name): void
   {
-    $canInsert = ReservationModel::canBeInserted($reservation, $roomId);
+    $canInsert = ReservationModel::canBeInserted($reservation, $room_name);
 
     if (is_null($canInsert)) {
       header("Location: index.php?action=show_new_reservation&info=server_error");
       exit();
     }
 
-    if (!$canInsert) {
-      header("Location: index.php?action=show_new_reservation&info=cant_reservate");
-      exit();
-    }
+//    if (!$canInsert) {
+//      header("Location: index.php?action=show_new_reservation&info=cant_reservate");
+//      exit();
+//    }
 
-    $isInserted = ReservationModel::newReservation($reservation, $userId, $roomId);
-
-    if (!$isInserted) {
-      header("Location: index.php?action=show_new_reservation&info=server_error");
-      exit();
-    }
-
-    header("Location: index.php?action=show_my_reservations&info=reserved_success");
+//    $isInserted = ReservationModel::newReservation($reservation, $username, $room_name);
+//
+//    if (!$isInserted) {
+//      header("Location: index.php?action=show_new_reservation&info=server_error");
+//      exit();
+//    }
+//
+//    header("Location: index.php?action=show_my_reservations&info=reserved_success");
   }
 }

@@ -95,7 +95,7 @@ if ($_GET) {
   // Handle submit of the new reservation form
   if (isset($_POST["new_reservation"])) {
     // Check if user is not logged in
-    if (!$_SESSION["user"]) {
+    if (!isset($_SESSION["user"])) {
       header("Location: index.php");
       exit();
     }
@@ -119,24 +119,24 @@ if ($_GET) {
     // Check if end_time is grant than start_time
     $startHour = intval($_POST["start_time"]);
     $endHour = intval($_POST["end_time"]);
-    var_dump($startHour, $endHour);
     if ($startHour > $endHour) {
       header("Location: index.php?action=show_new_reservation&info=start_gt_end");
       exit();
     }
 
     // Save the variables and create a new Reservation instance
-    $userId = $_SESSION["user"]["id"];
-    $roomId = $_POST["workroom"];
+    $username = $_SESSION["user"]["username"];
+    $room_name = $_POST["workroom"];
     $reservationDate = $_POST["reservation_date"];
-    $startTime = $_POST["start_time"] . ":00:00";
-    $endTime = $_POST["end_time"] . ":00:00";
+    $startTime = $_POST["start_time"] . ":00";
+    $endTime = $_POST["end_time"] . ":00";
     $status = "confirmada";
 
-    $reservation = new Reservation(0, "", "", $reservationDate, $startTime, $endTime);
+    $reservation = new Reservation("", "", $reservationDate, $startTime, $endTime);
+
     $reservation->setStatus($status);
 
-    ReservationsController::createNewReservation($reservation, $userId, $roomId);
+    ReservationsController::createNewReservation($reservation, $username, $room_name);
   }
 
 } else if (isset($_SESSION["user"])) {

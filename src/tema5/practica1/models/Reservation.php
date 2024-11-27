@@ -2,7 +2,7 @@
 
 namespace CoworkingMongo\models;
 
-use CoworkingMongo\enums\Status;
+use CoworkingMongo\enums\ReservationStatus;
 use MongoDB\BSON\Document;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Persistable;
@@ -11,12 +11,12 @@ use stdClass;
 class Reservation implements Persistable
 {
   private ObjectId $id;
-  private array $user;
-  private array $room;
+  private string $username;
+  private string $room_name;
   private string $reservation_date;
   private string $start_time;
   private string $end_time;
-  private Status $status;
+  private ReservationStatus $status;
 
   /**
    * @param $id
@@ -27,94 +27,107 @@ class Reservation implements Persistable
    * @param $endTime
    * @param $status
    */
-  public function __construct($user = [], $room = [], $reservation_date = "", $start_time = "",
-                              $end_time = "")
+  public function __construct($username, $room_name, $reservation_date, $start_time, $end_time)
   {
     $this->id = new ObjectId();
-    $this->userName = $userName;
-    $this->roomName = $roomName;
-    $this->reservationDate = $reservationDate;
-    $this->startTime = $startTime;
-    $this->endTime = $endTime;
+    $this->username = $username;
+    $this->room_name = $room_name;
+    $this->reservation_date = $reservation_date;
+    $this->start_time = $start_time;
+    $this->end_time = $end_time;
   }
 
-  public function getId(): mixed
+  public function getId(): ObjectId
   {
     return $this->id;
   }
 
-  public function setId(mixed $id): void
+  public function setId(ObjectId $id): void
   {
     $this->id = $id;
   }
 
-  public function getUserName(): mixed
+  public function getUsername(): string
   {
-    return $this->userName;
+    return $this->username;
   }
 
-  public function setUserName(mixed $userName): void
+  public function setUsername(string $username): void
   {
-    $this->userName = $userName;
+    $this->username = $username;
   }
 
-  public function getRoomName(): mixed
+  public function getRoomName(): string
   {
-    return $this->roomName;
+    return $this->room_name;
   }
 
-  public function setRoomName(mixed $roomName): void
+  public function setRoomName(string $room_name): void
   {
-    $this->roomName = $roomName;
+    $this->room_name = $room_name;
   }
 
-  public function getReservationDate(): mixed
+  public function getReservationDate(): string
   {
-    return $this->reservationDate;
+    return $this->reservation_date;
   }
 
-  public function setReservationDate(mixed $reservationDate): void
+  public function setReservationDate(string $reservation_date): void
   {
-    $this->reservationDate = $reservationDate;
+    $this->reservation_date = $reservation_date;
   }
 
-  public function getStartTime(): mixed
+  public function getStartTime(): string
   {
-    return $this->startTime;
+    return $this->start_time;
   }
 
-  public function setStartTime(mixed $startTime): void
+  public function setStartTime(string $start_time): void
   {
-    $this->startTime = $startTime;
+    $this->start_time = $start_time;
   }
 
-  public function getEndTime(): mixed
+  public function getEndTime(): string
   {
-    return $this->endTime;
+    return $this->end_time;
   }
 
-  public function setEndTime(mixed $endTime): void
+  public function setEndTime(string $end_time): void
   {
-    $this->endTime = $endTime;
+    $this->end_time = $end_time;
   }
 
-  public function getStatus(): Status
+  public function getStatus(): ReservationStatus
   {
     return $this->status;
   }
 
   public function setStatus(string $status): void
   {
-    $this->status = Status::from($status);
+    $this->status = ReservationStatus::from($status);
   }
 
   public function bsonSerialize(): array|stdClass|Document
   {
-    // TODO: Implement bsonSerialize() method.
+    return [
+      "_id" => $this->id,
+      "username" => $this->username,
+      "room_name" => $this->room_name,
+      "reservation_date" => $this->reservation_date,
+      "start_time" => $this->start_time,
+      "end_time" => $this->end_time,
+      "status" => $this->status->value,
+    ];
   }
 
-  public function bsonUnserialize(array $data)
+  public function bsonUnserialize(array $data): void
   {
-    // TODO: Implement bsonUnserialize() method.
+    $this->id = $data["_id"];
+    $this->username = $data["username"];
+    $this->room_name = $data["room_name"];
+    $this->reservation_date = $data["reservation_date"];
+    $this->start_time = $data["start_time"];
+    $this->end_time = $data["end_time"];
+    $this->status = ReservationStatus::from($data["status"]);
   }
 }
