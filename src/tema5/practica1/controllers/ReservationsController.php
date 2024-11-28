@@ -84,18 +84,18 @@ class ReservationsController
       exit();
     }
 
-//    if (!$canInsert) {
-//      header("Location: index.php?action=show_new_reservation&info=cant_reservate");
-//      exit();
-//    }
+    if (!$canInsert) {
+      header("Location: index.php?action=show_new_reservation&info=cant_reservate");
+      exit();
+    }
 
-//    $isInserted = ReservationModel::newReservation($reservation, $username, $room_name);
-//
-//    if (!$isInserted) {
-//      header("Location: index.php?action=show_new_reservation&info=server_error");
-//      exit();
-//    }
-//
-//    header("Location: index.php?action=show_my_reservations&info=reserved_success");
+    $isInserted = ReservationModel::newReservation($reservation, $username, $room_name);
+
+    if (!$isInserted) {
+      header("Location: index.php?action=show_new_reservation&info=server_error");
+      exit();
+    }
+
+    header("Location: index.php?action=show_my_reservations&info=reserved_success");
   }
 }

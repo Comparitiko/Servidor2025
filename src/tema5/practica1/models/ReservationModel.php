@@ -34,7 +34,7 @@ class ReservationModel
       ],
       [
         'sort' => [
-          'reservation_date' => -1
+          'reservation_date' => 1
         ],
         'typeMap' => [
           'root' => Reservation::class, // Devuelve los documentos como objetos
@@ -75,7 +75,7 @@ class ReservationModel
       ],
       [
         'sort' => [
-          'reservation_date' => -1
+          'reservation_date' => 1
         ],
         'typeMap' => [
           'root' => Reservation::class, // Devuelve los documentos como objetos
@@ -144,79 +144,69 @@ class ReservationModel
     // Check if there is an error in the connection
     if (is_null($reservationCollection)) return null;
 
-    $reservations = $reservationCollection->find([
+    $reservations = $reservationCollection->countDocuments([
       'room_name' => $room_name,
       'reservation_date' => $reservation->getReservationDate(),
       'status' => ReservationStatus::CONFIRMED->value,
       '$or' => [
+        // Caso 1: El inicio del nuevo rango cae dentro de un rango existente
         [
           '$and' => [
             ['start_time' => ['$gte' => $reservation->getStartTime()]],
             ['start_time' => ['$lte' => $reservation->getEndTime()]]
-          ],
+          ]
         ],
+        // Caso 2: El fin del nuevo rango cae dentro de un rango existente
         [
           '$and' => [
             ['end_time' => ['$gte' => $reservation->getStartTime()]],
             ['end_time' => ['$lte' => $reservation->getEndTime()]]
           ]
         ],
+        // Caso 3: El nuevo rango engloba completamente un rango existente
         [
           '$and' => [
-            [
-              ['start_time' => ['$gte' => $reservation->getStartTime()]],
-              ['start_time' => ['$lte' => $reservation->getEndTime()]]
-            ],
-            [
-              ['end_time' => ['$gte' => $reservation->getStartTime()]],
-              ['end_time' => ['$lte' => $reservation->getEndTime()]]
-            ]
+            ['start_time' => ['$lte' => $reservation->getStartTime()]],
+            ['end_time' => ['$gte' => $reservation->getEndTime()]]
           ]
         ]
       ]
     ]);
 
-    var_dump($reservations->toArray());
-
     $conn->closeConnection();
 
-    // return $reservations === 0;
+
+
+    return $reservations === 0;
   }
 
   /**
    * Insert one reservation and return true if no error, if not db connection return null,
    * if none is inserted
    * return false
-   * @param \Coworking\models\Reservation $reservation
-   * @param $userId
-   * @param $roomId
+   * @param Reservation $reservation
+   * @param $username
+   * @param $room_name
    * @return bool|null
    */
-  public static function newReservation(Reservation $reservation, $userName, $roomName): ?bool
+  public static function newReservation(Reservation $reservation, $username, $room_name): ?bool
   {
-    $connDB = new DBConnection();
+    $conn = new DBConnection();
 
-    $conn = $connDB->getConnection();
+    $reservationCollection = $conn->getCollection(Collections::RESERVATIONS);
 
     // Check if there is an error in the connection
-    if (is_null($conn)) return null;
+    if (is_null($reservationCollection)) return null;
 
-    $stmt = $conn->prepare("
-        INSERT INTO reservations (user_id, room_id, reservation_date, start_time, end_time, status) VALUES 
-        (:userId, :roomId, :reservationDate, :startTime, :endTime, :status)
-      ");
+    // Save in the reservation instance the username and room name
+    $reservation->setUsername($username);
+    $reservation->setRoomName($room_name);
 
-    $stmt->bindValue(":userId", $userId);
-    $stmt->bindValue(":roomId", $roomId);
-    $stmt->bindValue(":reservationDate", $reservation->getReservationDate());
-    $stmt->bindValue(":startTime", $reservation->getStartTime());
-    $stmt->bindValue(":endTime", $reservation->getEndTime());
-    $stmt->bindValue(":status", $reservation->getStatus()->value);
+    // Insert reservation in the database
+    $numInserts = $reservationCollection->insertOne($reservation)->getInsertedCount();
 
-    $stmt->execute();
+    $conn->closeConnection();
 
-    $connDB->closeConnection();
-
-    return $stmt->rowCount() > 0;
+    return $numInserts > 0;
   }
 }
