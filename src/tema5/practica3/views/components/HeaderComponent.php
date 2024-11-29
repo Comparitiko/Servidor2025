@@ -2,7 +2,7 @@
 
 namespace ChatGPTBlogs\views\components;
 
-class Header
+class HeaderComponent
 {
   public static function render(string $title): void
   {

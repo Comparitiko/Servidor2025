@@ -2,14 +2,14 @@
 
 namespace ChatGPTBlogs\views;
 
-use ChatGPTBlogs\views\components\Footer;
-use ChatGPTBlogs\views\components\Header;
+use ChatGPTBlogs\views\components\FooterComponent;
+use ChatGPTBlogs\views\components\HeaderComponent;
 
 class AdminLoginView
 {
   public static function render($info = ""): void
   {
-    Header::render("Registro de usuario");
+    HeaderComponent::render("Registro de usuario");
     ?>
     <main class="h-screen overflow-hidden bg-[#eaf2f5]">
       <div class="bg-grey-300 min-h-screen flex flex-col">
@@ -80,7 +80,7 @@ class AdminLoginView
       </div>
     </main>
     <?php
-    Footer::render();
+    FooterComponent::render();
   }
 
   /**

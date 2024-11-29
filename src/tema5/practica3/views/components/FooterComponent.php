@@ -2,7 +2,7 @@
 
 namespace ChatGPTBlogs\views\components;
 
-class Footer
+class FooterComponent
 {
   public static function render(): void
   {

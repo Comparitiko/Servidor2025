@@ -89,7 +89,7 @@ if ($_GET) {
     $password = $_POST["password"];
     $confirmPassword = $_POST["confirm_password"];
     $phone = $_POST["phone"];
-    $user = new User(0, $username, $email, $password, $phone);
+    $user = new User($username, $email, $password, $phone);
     UsersController::register($user, $confirmPassword);
   }
 
@@ -127,7 +127,6 @@ if ($_GET) {
     // Check if end_time is grant than start_time
     $startHour = intval($_POST["start_time"]);
     $endHour = intval($_POST["end_time"]);
-    var_dump($startHour, $endHour);
     if ($startHour > $endHour) {
       header("Location: index.php?action=show_new_reservation&info=start_gt_end");
       exit();
@@ -141,7 +140,7 @@ if ($_GET) {
     $endTime = $_POST["end_time"] . ":00:00";
     $status = "confirmada";
 
-    $reservation = new Reservation(0, "", "", $reservationDate, $startTime, $endTime);
+    $reservation = new Reservation("", "", $reservationDate, $startTime, $endTime);
     $reservation->setStatus($status);
 
     ReservationsController::createNewReservation($reservation, $userId, $roomId);

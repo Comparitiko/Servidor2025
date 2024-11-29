@@ -2,14 +2,14 @@
 
 namespace ChatGPTBlogs\views;
 
-use ChatGPTBlogs\views\components\Footer;
-use ChatGPTBlogs\views\components\Header;
+use ChatGPTBlogs\views\components\FooterComponent;
+use ChatGPTBlogs\views\components\HeaderComponent;
 
 class ArticlesView
 {
   public static function render(array $articles, $info): void
   {
-    Header::render("Blogs");
+    HeaderComponent::render("Blogs");
     ?>
     <div class="h-screen overflow-hidden bg-slate-900">
       <header class="text-white">
@@ -38,7 +38,7 @@ class ArticlesView
       </main>
     </div>
     <?php
-    Footer::render();
+    FooterComponent::render();
   }
 
   /**
