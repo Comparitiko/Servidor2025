@@ -5,8 +5,6 @@ namespace CoworkingMongo\models;
 use CoworkingMongo\enums\Collections;
 use CoworkingMongo\enums\ReservationStatus;
 use MongoDB\BSON\ObjectId;
-use MongoDB\BSON\UTCDateTime;
-use PDO;
 
 class ReservationModel
 {
@@ -26,12 +24,12 @@ class ReservationModel
     if (is_null($reservationsCollection)) return null;
 
     $reservations = $reservationsCollection->find([
-        'room_name' => $room_name,
-        'reservation_date' => [
-          '$gt' => date("Y-m-d")
-        ],
-        'status' => ReservationStatus::CONFIRMED->value,
+      'room_name' => $room_name,
+      'reservation_date' => [
+        '$gt' => date("Y-m-d")
       ],
+      'status' => ReservationStatus::CONFIRMED->value,
+    ],
       [
         'sort' => [
           'reservation_date' => 1
@@ -54,25 +52,32 @@ class ReservationModel
   /**
    * Get all future and confirmed reservations by username, if not db connection return null, if none is found return
    * false
-   * @param $username
+   * @param $userId
    * @return false|array|null
    */
-  public static function getFutureAndConfirmedReservationsByUserName($username): false|array|null
+  public static function getFutureAndConfirmedReservationsByUserId($userId): false|array|null
   {
     $conn = new DBConnection();
 
     $reservationCollection = $conn->getCollection(Collections::RESERVATIONS);
 
+
     // Check if there is an error in the connection
     if (is_null($reservationCollection)) return null;
 
+    $user = UsersModel::getUserById($userId);
+
+    if (is_null($user)) return null;
+
+    if (!$user->getId()) return null;
+
     $reservations = $reservationCollection->find([
-      'username' => $username,
-        'reservation_date' => [
-          '$gt' => date("Y-m-d")
-        ],
-        'status' => ReservationStatus::CONFIRMED->value,
+      'username' => $user->getUsername(),
+      'reservation_date' => [
+        '$gt' => date("Y-m-d")
       ],
+      'status' => ReservationStatus::CONFIRMED->value,
+    ],
       [
         'sort' => [
           'reservation_date' => 1
@@ -92,7 +97,7 @@ class ReservationModel
   }
 
   /**
-   * Cancel one reservation by username and reservation id and return true if no error, if not db connection return
+   * Cancel one reservation by user id and reservation id and return true if no error, if not db connection return
    * null,
    * if none is modified
    * return false
@@ -100,7 +105,7 @@ class ReservationModel
    * @param $reservationId
    * @return bool|null
    */
-  public static function cancelReservationByUserNameAndReservationId($username, $reservation_id): bool|null
+  public static function cancelReservationByUserIdAndReservationId($userId, $reservation_id): bool|null
   {
     $conn = new DBConnection();
 
@@ -109,10 +114,16 @@ class ReservationModel
     // Check if there is an error in the connection
     if (is_null($reservationCollection)) return null;
 
+    $user = UsersModel::getUserById($userId);
+
+    if (is_null($user)) return null;
+
+    if (!$user) return false;
+
     $reservationMod = $reservationCollection->updateOne(
       [
         '_id' => new ObjectId($reservation_id),
-        'username' => $username,
+        'username' => $user->getUsername(),
       ],
       [
         '$set' => [
@@ -123,7 +134,7 @@ class ReservationModel
 
     $conn->closeConnection();
 
-    return  $reservationMod->getModifiedCount() > 0;
+    return $reservationMod->getModifiedCount() > 0;
   }
 
   /**
@@ -135,7 +146,7 @@ class ReservationModel
    * @param $roomId
    * @return bool|null
    */
-  public static function canBeInserted(Reservation $reservation, $room_name): ?bool
+  public static function canBeInserted(Reservation $reservation, $roomId): ?bool
   {
     $conn = new DBConnection();
 
@@ -144,8 +155,14 @@ class ReservationModel
     // Check if there is an error in the connection
     if (is_null($reservationCollection)) return null;
 
+    $workRoom = WorkRoomsModel::getWorkRoomById($roomId);
+
+    if (is_null($workRoom)) return null;
+
+    if (!$workRoom) return false;
+
     $reservations = $reservationCollection->countDocuments([
-      'room_name' => $room_name,
+      'room_name' => $workRoom->getName(),
       'reservation_date' => $reservation->getReservationDate(),
       'status' => ReservationStatus::CONFIRMED->value,
       '$or' => [
@@ -176,7 +193,6 @@ class ReservationModel
     $conn->closeConnection();
 
 
-
     return $reservations === 0;
   }
 
@@ -185,11 +201,11 @@ class ReservationModel
    * if none is inserted
    * return false
    * @param Reservation $reservation
-   * @param $username
-   * @param $room_name
+   * @param $userId
+   * @param $roomId
    * @return bool|null
    */
-  public static function newReservation(Reservation $reservation, $username, $room_name): ?bool
+  public static function newReservation(Reservation $reservation, $userId, $roomId): ?bool
   {
     $conn = new DBConnection();
 
@@ -198,9 +214,17 @@ class ReservationModel
     // Check if there is an error in the connection
     if (is_null($reservationCollection)) return null;
 
+    $user = UsersModel::getUserById($userId);
+    $workRoom = WorkRoomsModel::getWorkRoomById($roomId);
+
+    if (is_null($user) || is_null($workRoom)) return null;
+
+    if (!$user || !$workRoom) return false;
+
+
     // Save in the reservation instance the username and room name
-    $reservation->setUsername($username);
-    $reservation->setRoomName($room_name);
+    $reservation->setUsername($user->getUsername());
+    $reservation->setRoomName($workRoom->getName());
 
     // Insert reservation in the database
     $numInserts = $reservationCollection->insertOne($reservation)->getInsertedCount();

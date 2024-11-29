@@ -5,15 +5,6 @@ namespace CoworkingMongo\views;
 class RegisterView
 {
 
-  private static function getInfoMessage($info): array
-  {
-    return match ($info) {
-      "passwords" => ["error", "Las contraseñas introducidas no coinciden"],
-      "user_exist" => ["error", "Usuario o email ya existen"],
-      "server_error" => ["error", "Error en el registro, intente de nuevo mas tarde"],
-    };
-  }
-
   public static function render($info): void
   {
     ?>
@@ -106,5 +97,14 @@ class RegisterView
     </body>
     </html>
     <?php
+  }
+
+  private static function getInfoMessage($info): array
+  {
+    return match ($info) {
+      "passwords" => ["error", "Las contraseñas introducidas no coinciden"],
+      "user_exists" => ["error", "Usuario o email ya existen"],
+      "server_error" => ["error", "Error en el registro, intente de nuevo mas tarde"],
+    };
   }
 }

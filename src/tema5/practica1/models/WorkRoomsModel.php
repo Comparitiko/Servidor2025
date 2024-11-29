@@ -3,7 +3,7 @@
 namespace CoworkingMongo\models;
 
 use CoworkingMongo\enums\Collections;
-use PDO;
+use MongoDB\BSON\ObjectId;
 
 class WorkRoomsModel
 {
@@ -30,5 +30,29 @@ class WorkRoomsModel
     $conn->closeConnection();
 
     return $workRooms->toArray();
+  }
+
+  /**
+   * Get the workroom information by his id
+   * if return null, database failed, if return false, user does not exist
+   * @param $id
+   * @return object|false|null
+   */
+  public static function getWorkRoomById($id): object|false|null
+  {
+    $conn = new DBConnection();
+
+    $workRoomsCollection = $conn->getCollection(Collections::WORK_ROOMS);
+
+    // Check if there is an error in the connection
+    if (is_null($workRoomsCollection)) return null;
+
+    $workRoom = $workRoomsCollection->findOne(["_id" => new ObjectId($id)], ['typeMap' => ['root' => WorkRoom::class]]);
+
+    $conn->closeConnection();
+
+    if (!isset($workRoom)) return false;
+
+    return $workRoom;
   }
 }

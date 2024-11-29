@@ -12,7 +12,7 @@ class UsersController
   public static function showLoginForm($info = ""): void
   {
     // Check if user is logged, if is logged redirect to show_available_rooms
-    if ($_SESSION["user"]) {
+    if (isset($_SESSION["user"])) {
       header("Location: index.php?action=show_available_rooms");
       exit();
     }
@@ -23,7 +23,7 @@ class UsersController
   public static function showRegisterForm($info = ""): void
   {
     // Check if user is logged, if is logged redirect to show_available_rooms
-    if ($_SESSION["user"]) {
+    if (isset($_SESSION["user"])) {
       header("Location: index.php?action=show_available_rooms");
       exit();
     }

@@ -35,7 +35,7 @@ class ReservationsController
       exit();
     }
 
-    $reservations = ReservationModel::getFutureAndConfirmedReservationsByUserName($_SESSION["user"]["username"]);
+    $reservations = ReservationModel::getFutureAndConfirmedReservationsByUserId($_SESSION["user"]["id"]);
     MyReservationsView::render($reservations, $info);
   }
 
@@ -46,7 +46,7 @@ class ReservationsController
       exit();
     }
 
-    $modifiedCorrectly = ReservationModel::cancelReservationByUserNameAndReservationId($_SESSION["user"]["username"],
+    $modifiedCorrectly = ReservationModel::cancelReservationByUserIdAndReservationId($_SESSION["user"]["id"],
       $reservationId);
 
     if (is_null($modifiedCorrectly)) {
@@ -75,9 +75,9 @@ class ReservationsController
     NewReservationView::render($woorkRooms, $info);
   }
 
-  public static function createNewReservation(Reservation $reservation, $username, $room_name): void
+  public static function createNewReservation(Reservation $reservation, $userId, $roomId): void
   {
-    $canInsert = ReservationModel::canBeInserted($reservation, $room_name);
+    $canInsert = ReservationModel::canBeInserted($reservation, $roomId);
 
     if (is_null($canInsert)) {
       header("Location: index.php?action=show_new_reservation&info=server_error");
@@ -89,7 +89,7 @@ class ReservationsController
       exit();
     }
 
-    $isInserted = ReservationModel::newReservation($reservation, $username, $room_name);
+    $isInserted = ReservationModel::newReservation($reservation, $userId, $roomId);
 
     if (!$isInserted) {
       header("Location: index.php?action=show_new_reservation&info=server_error");

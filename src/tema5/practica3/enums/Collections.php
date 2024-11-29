@@ -6,5 +6,5 @@ enum Collections: string
 {
   case USERS = 'users';
 
-  case BLOGS = 'blogs';
+  case ARTICLES = 'articles';
 }

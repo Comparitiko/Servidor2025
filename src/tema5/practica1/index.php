@@ -2,9 +2,9 @@
 
 namespace CoworkingMongo;
 
-use CoworkingMongo\controllers\WorkRoomsController;
 use CoworkingMongo\controllers\ReservationsController;
 use CoworkingMongo\controllers\UsersController;
+use CoworkingMongo\controllers\WorkRoomsController;
 use CoworkingMongo\models\Reservation;
 use CoworkingMongo\models\User;
 
@@ -42,20 +42,26 @@ if ($_GET) {
 
   // Handle show_available_rooms action
   if (isset($_GET["action"]) && strcmp($_GET["action"], "show_available_rooms") == 0) {
-    $info = $_GET["info"];
+    if (isset($_GET["info"])) {
+      $info = $_GET["info"];
+    }
     WorkRoomsController::showAllWorkRooms($info);
   }
 
   // Handle show_reservations of a workroom
   if (isset($_GET["action"]) && strcmp($_GET["action"], "show_reservations") == 0) {
     $roomName = $_GET["room_name"];
-    $info = $_GET["info"];
+    if (isset($_GET["info"])) {
+      $info = $_GET["info"];
+    }
     ReservationsController::showFutureAndConfirmedReservationsByRoomName($roomName, $info);
   }
 
   // Handle show_my_reservations of a workroom
   if (isset($_GET["action"]) && strcmp($_GET["action"], "show_my_reservations") == 0) {
-    $info = $_GET["info"];
+    if (isset($_GET["info"])) {
+      $info = $_GET["info"];
+    }
     ReservationsController::showFutureAndConfirmedReservationsByUserId($info);
   }
 
@@ -67,7 +73,9 @@ if ($_GET) {
 
   // Handle show_new_reservation
   if (isset($_GET["action"]) && strcmp($_GET["action"], "show_new_reservation") == 0) {
-    $info = $_GET["info"];
+    if (isset($_GET["info"])) {
+      $info = $_GET["info"];
+    }
     ReservationsController::showNewReservation($info);
   }
 
@@ -81,7 +89,7 @@ if ($_GET) {
     $password = $_POST["password"];
     $confirmPassword = $_POST["confirm_password"];
     $phone = $_POST["phone"];
-    $user = new User($username, $email, $password, $phone);
+    $user = new User(0, $username, $email, $password, $phone);
     UsersController::register($user, $confirmPassword);
   }
 
@@ -95,7 +103,7 @@ if ($_GET) {
   // Handle submit of the new reservation form
   if (isset($_POST["new_reservation"])) {
     // Check if user is not logged in
-    if (!isset($_SESSION["user"])) {
+    if (!$_SESSION["user"]) {
       header("Location: index.php");
       exit();
     }
@@ -119,24 +127,24 @@ if ($_GET) {
     // Check if end_time is grant than start_time
     $startHour = intval($_POST["start_time"]);
     $endHour = intval($_POST["end_time"]);
+    var_dump($startHour, $endHour);
     if ($startHour > $endHour) {
       header("Location: index.php?action=show_new_reservation&info=start_gt_end");
       exit();
     }
 
     // Save the variables and create a new Reservation instance
-    $username = $_SESSION["user"]["username"];
-    $room_name = $_POST["workroom"];
+    $userId = $_SESSION["user"]["id"];
+    $roomId = $_POST["workroom"];
     $reservationDate = $_POST["reservation_date"];
-    $startTime = $_POST["start_time"] . ":00";
-    $endTime = $_POST["end_time"] . ":00";
+    $startTime = $_POST["start_time"] . ":00:00";
+    $endTime = $_POST["end_time"] . ":00:00";
     $status = "confirmada";
 
-    $reservation = new Reservation("", "", $reservationDate, $startTime, $endTime);
-
+    $reservation = new Reservation(0, "", "", $reservationDate, $startTime, $endTime);
     $reservation->setStatus($status);
 
-    ReservationsController::createNewReservation($reservation, $username, $room_name);
+    ReservationsController::createNewReservation($reservation, $userId, $roomId);
   }
 
 } else if (isset($_SESSION["user"])) {

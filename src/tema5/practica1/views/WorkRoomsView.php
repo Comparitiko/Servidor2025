@@ -5,13 +5,6 @@ namespace CoworkingMongo\views;
 class WorkRoomsView
 {
 
-  private static function getInfoMessage($info)
-  {
-    return match ($info) {
-      "server_error" => ["error", "Ha ocurrido un al recuperar las salas, intentelo de nuevo mas tarde."],
-    };
-  }
-
   public static function render($workRooms, $info)
   {
     include_once "./views/header.php";
@@ -63,5 +56,12 @@ class WorkRoomsView
 
     <?php
     include_once "./views/footer.php";
+  }
+
+  private static function getInfoMessage($info)
+  {
+    return match ($info) {
+      "server_error" => ["error", "Ha ocurrido un al recuperar las salas, intentelo de nuevo mas tarde."],
+    };
   }
 }

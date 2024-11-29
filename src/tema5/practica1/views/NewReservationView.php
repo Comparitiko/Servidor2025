@@ -4,18 +4,6 @@ namespace CoworkingMongo\views;
 
 class NewReservationView
 {
-  private static function getInfoMessage($info): array
-  {
-    return match ($info) {
-      "no_room" => ["error", "Debes de especificar la sala que deseas reservar"],
-      "no_start_time" => ["error", "Debes de especificar una hora de inicio de reserva"],
-      "no_end_time" => ["error", "Debes de especificar una hora de fin de reserva"],
-      "start_gt_end" => ["error", "La hora de inicio de la reserva no puede ser mayor que la hora de fin"],
-      "server_error" => ["error", "Ha surgido un error al intentar realizar la reserva, intentelo de nuevo mas tarde"],
-      "cant_reservate" => ["error", "Existe una reserva en esa sala a esas horas el mismo dia"]
-    };
-  }
-
   public static function render($woorkRooms, $info): void
   {
     include_once "./views/header.php";
@@ -41,7 +29,7 @@ class NewReservationView
               } else {
               foreach ($woorkRooms as $woorkRoom) {
                 ?>
-                <option value="<?= $woorkRoom->getName() ?>"><?= $woorkRoom->getName() ?></option>
+                <option value="<?= $woorkRoom->getId() ?>"><?= $woorkRoom->getName() ?></option>
                 <?php
               }
               ?>
@@ -85,5 +73,17 @@ class NewReservationView
     <script src="./views/assets/js/newReservation.js"></script>
     <?php
     include_once "./views/footer.php";
+  }
+
+  private static function getInfoMessage($info): array
+  {
+    return match ($info) {
+      "no_room" => ["error", "Debes de especificar la sala que deseas reservar"],
+      "no_start_time" => ["error", "Debes de especificar una hora de inicio de reserva"],
+      "no_end_time" => ["error", "Debes de especificar una hora de fin de reserva"],
+      "start_gt_end" => ["error", "La hora de inicio de la reserva no puede ser mayor que la hora de fin"],
+      "server_error" => ["error", "Ha surgido un error al intentar realizar la reserva, intentelo de nuevo mas tarde"],
+      "cant_reservate" => ["error", "Existe una reserva en esa sala a esas horas el mismo dia"]
+    };
   }
 }

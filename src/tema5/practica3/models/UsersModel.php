@@ -1,8 +1,8 @@
 <?php
 
-namespace CoworkingMongo\models;
+namespace ChatGPTBlogs\models;
 
-use CoworkingMongo\enums\Collections;
+use ChatGPTBlogs\enums\Collections;
 use MongoDB\BSON\ObjectId;
 
 class UsersModel
@@ -11,7 +11,7 @@ class UsersModel
    * Create user in database with his data, return null if there is an error with database, if is inserted correctly
    * return true if not return false
    * @param $user User
-   * @return ObjectId
+   * @return ObjectId|false|null
    */
   public static function register(User $user): ObjectId|false|null
   {
@@ -32,13 +32,12 @@ class UsersModel
   }
 
   /**
-   * Check if the username and email exists in database, if exist return true, if not return false and if database fail
+   * Check if the email exists in database, if exist return true, if not return false and if database fail
    * return null
-   * @param $username
    * @param $email
    * @return bool|null
    */
-  public static function userExists($username, $email): bool|null
+  public static function userExists($email): bool|null
   {
     $conn = new DBConnection();
 
@@ -47,7 +46,7 @@ class UsersModel
     // Check if there is an error in the connection
     if (is_null($userCollection)) return null;
 
-    $documentsCount = $userCollection->countDocuments(["email" => $email, "username" => $username]);
+    $documentsCount = $userCollection->countDocuments(["email" => $email]);
 
     $conn->closeConnection();
 
@@ -57,33 +56,9 @@ class UsersModel
   /**
    * Get the user information by email, if return null, database failed, if return false, user does not exist
    * @param $email
-   * @return array|object|false|null
-   */
-  public static function getUserByEmail($email): array|object|false|null
-  {
-    $conn = new DBConnection();
-
-    $userCollection = $conn->getCollection(Collections::USERS);
-
-    // Check if there is an error in the connection
-    if (is_null($userCollection)) return null;
-
-    $user = $userCollection->findOne(["email" => $email], ['typeMap' => ['root' => User::class]]);
-
-    $conn->closeConnection();
-
-    if (!isset($user)) return false;
-
-    return $user;
-  }
-
-  /**
-   * Get all the user information by his id
-   * if return null, database failed, if return false, user does not exist
-   * @param $id
    * @return object|false|null
    */
-  public static function getUserById($id): object|false|null
+  public static function getUserByEmail($email): object|false|null
   {
     $conn = new DBConnection();
 
@@ -92,7 +67,15 @@ class UsersModel
     // Check if there is an error in the connection
     if (is_null($userCollection)) return null;
 
-    $user = $userCollection->findOne(["_id" => new ObjectId($id)], ['typeMap' => ['root' => User::class]]);
+    $user = $userCollection->findOne([
+      'email' => $email
+    ],
+      [
+        'typeMap' => [
+          'root' => User::class, // Devuelve los documentos como objetos
+        ],
+      ]
+    );
 
     $conn->closeConnection();
 

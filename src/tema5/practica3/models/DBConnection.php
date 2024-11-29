@@ -36,7 +36,7 @@ class DBConnection
   {
     if (is_null($this->client)) return null;
 
-    return $this->client->selectCollection('coworking', $collection->value);
+    return $this->client->selectCollection('gpt-blogs', $collection->value);
   }
 
   /**
