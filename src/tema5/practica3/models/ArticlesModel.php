@@ -44,6 +44,6 @@ class ArticlesModel
 
     $conn->closeConnection();
 
-    return $articleInserted->getInsertedId() === 1;
+    return $articleInserted->getInsertedCount() === 1;
   }
 }

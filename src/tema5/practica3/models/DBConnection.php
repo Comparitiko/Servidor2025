@@ -7,8 +7,6 @@ use MongoDB\Client;
 use MongoDB\Collection;
 use MongoDB\Exception\Exception;
 
-require "./vendor/autoload.php";
-
 class DBConnection
 {
   private Client|null $client;

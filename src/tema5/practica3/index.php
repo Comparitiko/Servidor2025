@@ -2,11 +2,7 @@
 
 namespace ChatGPTBlogs;
 
-use ChatGPTBlogs\controllers\AdminController;
-use ChatGPTBlogs\controllers\ArticlesController;
-use ChatGPTBlogs\models\User;
-
-session_start();
+require "./vendor/autoload.php";
 
 /**
  * AUTOLOAD
@@ -16,6 +12,12 @@ spl_autoload_register(function ($class) {
   $path = str_replace("\\", "/", $path);
   include_once "./" . $path . ".php";
 });
+
+use ChatGPTBlogs\controllers\AdminController;
+use ChatGPTBlogs\controllers\ArticlesController;
+use ChatGPTBlogs\models\User;
+
+session_start();
 
 if ($_GET) {
   if ($_GET["action"] === "show_admin_register") {
