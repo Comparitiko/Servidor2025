@@ -34,18 +34,13 @@ class ArticlesController
     }
 
     // Download image from $_POST["image"] with file_get_contents
-    $image = file_get_contents($imageUrl);
+    $imageContent = file_get_contents($imageUrl);
 
     $imagesPath = "./views/assets/images/articles";
 
-    // Create the images folder if it doesn't exist
-    if (!is_dir($imagesPath)) {
-      mkdir($imagesPath, 0777, true); // Crea la carpeta con permisos adecuados
-    }
-
     // Save image to the file system with file_put_contents
     $imagePath = $imagesPath . "/" . Uuid::uuid4()->toString() . ".jpg";
-    if (!file_put_contents($imagePath, $image)) {
+    if (!file_put_contents($imagePath, $imageContent)) {
       json_encode([
         "ok" => false,
         "info" => "Error interno del servidor, pruebe de nuevo mas tarde"

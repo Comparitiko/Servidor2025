@@ -14,5 +14,8 @@ rm -rf composer.lock
 # Instalar dependencias
 composer install
 
+# Dar permisos de escritura al directorio de imágenes a php
+chown -R www-data:www-data /var/www/html/tema5/practica3/assets/images/articles
+
 # Ejecutar PHP-FPM como proceso principal
 exec php-fpm
