@@ -11,17 +11,17 @@ class ArticlesView
   {
     HeaderComponent::render("Blogs");
     ?>
-    <div class="min-h-screen bg-slate-900 m-0">
-      <header class="mb-10 p-5 text-white flex justify-between items-center">
-        <h1 class="font-extrabold text-center text-3xl flex-1">Blogs</h1>
+    <div class="bg-gray-100">
+      <header class="mb-10 p-2 relative">
+        <h1 class="font-extrabold text-center text-3xl">Blogs</h1>
         <a
-          class="hover:underline hover:text-red-400 mr-12 text-end"
+          class="hover:underline hover:text-red-400 mr-12 text-end absolute right-0 top-5"
           href="index.php?action=show_admin_login"
         >
           Ir al panel de administrador
         </a>
       </header>
-      <main class="pb-10 m-0">
+      <main class="container mx-auto mt-8 px-4">
 
         <?php
         if (isset($info) && strlen($info) !== 0) {
@@ -31,27 +31,22 @@ class ArticlesView
           <?php
         }
         ?>
-        <div class="grid gap-10">
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <?php
           foreach ($articles as $article) {
             ?>
-            <article class="w-1/2 mx-auto flex items-center justify-center gap-5 text-white">
-              <section class="grid gap-5">
-                <h1 class="text-2xl text-center font-bold"><?= $article->getTitle() ?></h1>
-                <p><?= $article->getContent() ?></p>
-              </section>
-              <img
-                class="rounded-lg"
-                src="<?= $article->getImage() ?>"
-                alt="Imagen de artículo"
-                width="256"
-                height="256"
-              >
+            <article class="bg-white rounded-lg shadow-md overflow-hidden">
+              <img src="<?= $article->getImage() ?>" width="256" height="256" alt="Imagen de noticia 1"
+                   class="w-full h-64 object-cover">
+              <div class="p-4">
+                <h2 class="text-xl font-semibold mb-2"><?= $article->getTitle() ?></h2>
+                <p class="text-gray-600 mb-4"><?= $article->getContent() ?></p>
+              </div>
             </article>
             <?php
           }
           ?>
-        </div>
+        </section>
 
       </main>
     </div>
