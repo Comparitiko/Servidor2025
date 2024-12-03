@@ -53,7 +53,19 @@ const getArticleTextRes = async (apiKey, articleTitle) => {
  * @returns {Promise<any>}
  */
 const getArticleImageRes = async (apiKey, articleTitle) => {
-  return fetch('https://pokeapi.co/api/v2/pokemon/venusaur').then((res) => res.json())
+  return fetchApi('https://api.openai.com/v1/images/generations', {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${apiKey}`
+    },
+    body: JSON.stringify({
+      // model: "dall-e-3"
+      n: 1,
+      prompt: `Generame una imagen para una noticia sobre ${articleTitle}`,
+      size: "1024x1024"
+    })
+  })
 }
 
 /**
@@ -150,12 +162,10 @@ const saveArticle = async (articleTitle, articleText, articleImage) => {
     infoParagraph.classList.add("text-red-600");
   }
 
-  console.log({data, infoParagraph})
-
-  // const mainContainer = document.querySelector("#main-container");
-  // mainContainer.classList.add("max-w-sm")
-  // mainContainer.innerHTML = firstHTML;
-  // mainContainer.appendChild(infoParagraph);
+  const mainContainer = document.querySelector("#main-container");
+  mainContainer.classList.add("max-w-sm")
+  mainContainer.innerHTML = firstHTML;
+  mainContainer.appendChild(infoParagraph);
 }
 
 
@@ -194,6 +204,7 @@ const generateArticle = async () => {
   let articleInfo = []
   try {
     articleInfo = await Promise.all(promises)
+    console.log({articleInfo})
   } catch (error) {
     console.error(error);
     inpButton.disabled = false
@@ -203,7 +214,7 @@ const generateArticle = async () => {
 
   // Render the article
   const articleText = articleInfo[0].choices[0].message.content
-  const articleImage = articleInfo[1].sprites.front_default
+  const articleImage = articleInfo[1].data[0].url
 
   console.log({articleInfo, articleText, articleImage})
 
@@ -213,10 +224,10 @@ const generateArticle = async () => {
     <article class="m-5 grid">
       <h2 class="text-center mb-5 text-2xl">${articleTitle}</h2>
       <p class="text-balance m-auto mb-5 p-2">${articleText}</p>
-      <img class="m-auto" src="${articleImage}" alt="Imagen de artículo">
+      <img class="m-auto" width="512" height="512" src="${articleImage}" alt="Imagen de artículo">
       <button
       id="guardarArticulo"
-      class="m-auto py-2 px-4 rounded-lg bg-green-500 text-white hover:bg-green-700 focus:outline-none"
+      class="mt-4 mx-auto py-2 px-4 rounded-lg bg-green-500 text-white hover:bg-green-700 focus:outline-none"
     >
       Guardar artículo
     </button>
@@ -224,12 +235,13 @@ const generateArticle = async () => {
   `;
 
   const saveArticleButton = document.querySelector("#guardarArticulo")
-  saveArticleButton.addEventListener("click", () => {
-    saveArticle(articleTitle, articleText, articleImage)
+  saveArticleButton.addEventListener("click", async () => {
+    await saveArticle(articleTitle, articleText, articleImage)
+    iniciar()
   })
 }
 
-window.onload = () => {
+function iniciar() {
   const apiKey = localStorage.getItem("apiKey");
 
   if (apiKey) {
@@ -241,3 +253,5 @@ window.onload = () => {
 
   document.querySelector("#generarArticulo").addEventListener("click", generateArticle);
 }
+
+window.onload = iniciar;

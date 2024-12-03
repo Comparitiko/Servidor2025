@@ -23,7 +23,7 @@ class AdminDashboardView
       </header>
       <main
         id="main-container"
-        class="max-w-sm mx-auto px-2 min-h-screen">
+        class="max-w-sm mx-auto px-2 h-fit">
 
         <label for="apikey-input"></label>
         <input
