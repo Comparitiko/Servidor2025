@@ -14,6 +14,7 @@ class AdminDashboardView
     <div class="min-h-screen overflow-hidden bg-[#eaf2f5]">
       <header>
         <div class="flex items-center justify-between p-4">
+          <a href="index.php">Volver al blog</a>
           <h1 class="text-3xl">Panel de administración</h1>
           <a class="hover:underline hover:text-slate-700 mr-12" href="index.php?admin_logout">Cerrar sesión</a>
         </div>
