@@ -1,0 +1,14 @@
+[{
+  "_id": {
+    "$oid": "6748e30940fe72fc0a0d0e22"
+  },
+  "__pclass": {
+    "$binary": {
+      "base64": "Q2hhdEdQVEJsb2dzXG1vZGVsc1xVc2Vy",
+      "subType": "80"
+    }
+  },
+  "name": "Gabriel Collado",
+  "email": "gabriel@gmail.com",
+  "password": "$2y$12$SMKhi6/kSvQ86F8OaUW9TOJydgc5LzMo2fLfzLxUl9S6/lv7.R2pa"
+}]

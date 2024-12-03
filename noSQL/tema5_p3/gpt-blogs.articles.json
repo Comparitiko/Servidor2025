@@ -1,0 +1,60 @@
+[{
+  "_id": {
+    "$oid": "674ed2cb0b29fcd2bc04a9b2"
+  },
+  "__pclass": {
+    "$binary": {
+      "base64": "Q2hhdEdQVEJsb2dzXG1vZGVsc1xBcnRpY2xl",
+      "subType": "80"
+    }
+  },
+  "title": "El Real Madrid y el Barcelona se fuman un porro en navidad",
+  "content": "El Real Madrid y el Barcelona, dos de los equipos más emblemáticos del mundo, generan controversia al ser protagonistas de un video humorístico donde se muestran fumando un porro durante una reunión navideña. Este clip se ha vuelto viral, despertando una mezcla de risas y críticas entre los aficionados. La grabación, que parodia la rivalidad histórica entre ambos clubes, resalta la importancia del humor en el deporte. A pesar de la controversia, muchos ven esta acción como una forma de aliviar tensiones y promover la convivencia entre las aficiones.",
+  "image": "./views/assets/images/articles/6141058b-8707-41d0-902b-28a82685357c.jpg",
+  "date": "2024-12-03"
+},
+{
+  "_id": {
+    "$oid": "674ed6780b29fcd2bc04a9b3"
+  },
+  "__pclass": {
+    "$binary": {
+      "base64": "Q2hhdEdQVEJsb2dzXG1vZGVsc1xBcnRpY2xl",
+      "subType": "80"
+    }
+  },
+  "title": "Apache2 vs Nginx ¿Cual es mejor?",
+  "content": "Apache2 y Nginx son dos de los servidores web más populares, cada uno con sus propias ventajas y desventajas. Apache2 es conocido por su flexibilidad y la amplia gama de módulos que ofrece, lo que permite personalizar su funcionalidad. Es ideal para aplicaciones que requieren un procesamiento dinámico intensivo, gracias a su capacidad para manejar scripts.\r\n\r\nPor otro lado, Nginx destaca por su rendimiento y eficiencia en el manejo de altas cargas de tráfico. Su arquitectura basada en eventos le permite gestionar múltiples conexiones simultáneamente sin consumir demasiados recursos. Es una opción preferida para sitios que priorizan la velocidad y la estabilidad, especialmente si son principalmente estáticos.\r\n\r\nLa elección entre Apache2 y Nginx depende del tipo de proyecto. Aquellos que buscan una configuración simple y flexibilidad pueden inclinarse por Apache2, mientras que quienes necesiten alto rendimiento y escalabilidad probablemente opten por Nginx. En muchos casos, ambos servidores pueden complementarse, utilizando cada",
+  "image": "./views/assets/images/articles/7d73be34-2429-4f3d-a9b6-7fbe7dae66a2.jpg",
+  "date": "2024-12-03"
+},
+{
+  "_id": {
+    "$oid": "674ed7b8e4484cb76c0402f0"
+  },
+  "__pclass": {
+    "$binary": {
+      "base64": "Q2hhdEdQVEJsb2dzXG1vZGVsc1xBcnRpY2xl",
+      "subType": "80"
+    }
+  },
+  "title": "Ventajas y desventajas de Server Side Rendering vs Client Side Rendering",
+  "content": "El Server Side Rendering (SSR) y el Client Side Rendering (CSR) son enfoques utilizados para la generación de contenido en aplicaciones web, cada uno con sus propias ventajas y desventajas.\r\n\r\nEntre las principales ventajas del SSR se encuentra una mejor optimización para motores de búsqueda, ya que el contenido se genera en el servidor y se envía al navegador listo para ser indexado. Además, el tiempo de carga inicial puede ser más rápido porque la página se renderiza en el servidor antes de enviarse al cliente. Por otro lado, se pueden experimentar mayores cargas en el servidor y un aumento en la complejidad de la arquitectura.\r\n\r\nEn contraste, el CSR permite una experiencia de usuario más dinámica y fluida, ya que el contenido se carga de manera asíncrona, lo que puede llevar a interacciones más rápidas después de la carga inicial. Sin embargo, la carga inicial puede ser más lenta y las páginas pueden ser menos amigables para el SEO, ya que el contenido puede no",
+  "image": "./views/assets/images/articles/b7db38e2-85f2-477f-beb7-80a5d1aeda5f.jpg",
+  "date": "2024-12-03"
+},
+{
+  "_id": {
+    "$oid": "674edc48e4484cb76c0402f3"
+  },
+  "__pclass": {
+    "$binary": {
+      "base64": "Q2hhdEdQVEJsb2dzXG1vZGVsc1xBcnRpY2xl",
+      "subType": "80"
+    }
+  },
+  "title": "¿Que es apache tomcat?",
+  "content": "Apache Tomcat es un servidor web de código abierto que implementa las especificaciones de Java Servlet y JavaServer Pages. Desarrollado por la Fundación Apache, es ampliamente utilizado para desplegar aplicaciones web en Java. Tomcat permite a los desarrolladores ejecutar aplicaciones dinámicas en un entorno servidora compatible con Java, ofreciendo características como gestión de sesiones, soporte para múltiples procesos y capacidad de escalabilidad. Su popularidad se debe a su facilidad de uso, rendimiento y amplias posibilidades de configuración.",
+  "image": "./views/assets/images/articles/d958eb22-2a7b-4405-a36a-e6f97b8395ea.jpg",
+  "date": "2024-12-03"
+}]
