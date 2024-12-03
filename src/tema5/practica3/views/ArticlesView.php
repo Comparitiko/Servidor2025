@@ -12,14 +12,21 @@ class ArticlesView
     HeaderComponent::render("Blogs");
     ?>
     <div class="bg-gray-100">
-      <header class="mb-10 p-2 relative">
-        <h1 class="font-extrabold text-center text-3xl">Blogs</h1>
-        <a
-          class="hover:underline hover:text-red-400 mr-12 text-end absolute right-0 top-5"
-          href="index.php?action=show_admin_login"
-        >
-          Ir al panel de administrador
-        </a>
+      <header class="bg-blue-600 text-white p-4">
+        <div class="container mx-auto flex items-center justify-between">
+          <div class="w-1/3">
+            <!-- Espacio vacío a la izquierda para mantener el balance -->
+          </div>
+          <div class="w-1/3 text-center">
+            <h1 class="text-3xl font-extrabold">Blogs</h1>
+          </div>
+          <div class="w-1/3 text-right">
+            <a href="index.php?action=show_admin_dashboard"
+               class="text-white hover:underline hover:text-blue-200 transition duration-300 ease-in-out">
+              Ir al panel de administrador
+            </a>
+          </div>
+        </div>
       </header>
       <main class="container mx-auto mt-8 px-4">
 
