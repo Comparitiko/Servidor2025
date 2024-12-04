@@ -127,7 +127,6 @@ if ($_GET) {
     // Check if end_time is grant than start_time
     $startHour = intval($_POST["start_time"]);
     $endHour = intval($_POST["end_time"]);
-    var_dump($startHour, $endHour);
     if ($startHour > $endHour) {
       header("Location: index.php?action=show_new_reservation&info=start_gt_end");
       exit();
